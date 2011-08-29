@@ -19,8 +19,8 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>gov.nasa.pds</groupId>
-    <artifactId>2010</artifactId>
+    <groupId>gov.nasa.pds.2010</groupId>
+    <artifactId>preparation</artifactId>
     <version>0.0.0</version>
   </parent>
 
