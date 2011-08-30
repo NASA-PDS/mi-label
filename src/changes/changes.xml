@@ -23,6 +23,9 @@
   </properties>
 
   <body>
+    <release version="0.2.0" date="TBD" description="This release of the Generate Tool is a component of the integrated release 2.0.0 of the PDS 2010 System.">
+    </release>
+
     <release version="0.1.0" date="2011-08-29" description="This release of the Generate Tool is a component of the integrated release 1.2.0 of the PDS 2010 System.">
       <action dev="jpadams" type="add">
         Initial capabilities for generating PDS4 product labels from PDS3 product labels.
