@@ -31,7 +31,6 @@
       <ul>
         <li><a href="#Tool_Setup">Tool Setup</a></li>
         <li><a href="#Tool_Execution">Tool Execution</a></li>
-        <li><a href="#PDS3_to_PDS4_Translation">PDS3 to PDS4 Translation</a></li>
       </ul>
 
       <p>Note: The command-line examples in this section have been broken into multiple lines for readability. The commands should be reassembled into a single line prior to execution.
@@ -128,9 +127,6 @@ C:\&gt; PDS4Generate &lt;command-line arguments&gt;
 	<p>The output would go into a file &lt;pds3-label-path&gt;_pd4</p>
         
       </subsection>
-    </section>
-    <section name="PDS3_to_PDS4_Translation">
-      <p>Use these <a href="../ppt/PDS4_Generate_Tool_0.2.0.pptx">Powerpoint slides</a> as a reference point (<a href="../ppt/PDS4_Generate_Tool_0.2.0.pdf">pdf</a>).</p>
     </section>
   </body>
 </document>
