@@ -14,26 +14,26 @@
 #
 # $Id$
 
-# Bourne Shell script that allows easy execution of the PDS4 Generation Tool
+# Bourne Shell script that allows easy execution of the PDS4 Generate Tool
 # without the need to set the CLASSPATH or having to type in that long java
-# command (java gov.nasa.pds.imaging.generation.GenerationLauncher ...)
+# command (java gov.nasa.pds.imaging.generate.GenerateLauncher ...)
 
-# Expects the PDS4 Generation Tool jar file to be in the ../lib directory.
+# Expects the PDS4 Generate Tool jar file to be in the ../lib directory.
 
 SCRIPT_DIR=`dirname $0`
 PARENT_DIR=`cd ${SCRIPT_DIR}/.. && pwd`
 
 LIB_DIR=${PARENT_DIR}/lib
 
-if [ ! -f ${LIB_DIR}/generation-tool-*.jar ]; then
-    echo "Cannot find Generation Tool jar file in ${LIB_DIR}"
+if [ ! -f ${LIB_DIR}/generate-tool-*.jar ]; then
+    echo "Cannot find Generate Tool jar file in ${LIB_DIR}"
     exit 1
 fi
 
-GENERATION_TOOL_JAR=`ls ${LIB_DIR}/generation-tool-*.jar`
+GENERATE_TOOL_JAR=`ls ${LIB_DIR}/generate-tool-*.jar`
 
-# Executes PDS4 Generation Tool via the executable jar file
+# Executes PDS4 Generate Tool via the executable jar file
 # Arguments are passed in to the tool via '$@'
 
-java -jar ${GENERATION_TOOL_JAR} "$@"
+java -jar ${GENERATE_TOOL_JAR} "$@"
 

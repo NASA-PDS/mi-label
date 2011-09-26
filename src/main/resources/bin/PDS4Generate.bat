@@ -12,34 +12,34 @@
 ::
 :: $Id$
 
-:: Batch file that allows easy execution of the PDS4 Generation Tool
+:: Batch file that allows easy execution of the PDS4 Generate Tool
 :: without the need to set the CLASSPATH or having to type in that long java
-:: command (java gov.nasa.pds.pds4.generation.GenerationLauncher ...)
+:: command (java gov.nasa.pds.pds4.generate.GenerateLauncher ...)
 
 @echo off
 
-:: Expects PDS4 Generation Tool jar file to be located in the ../lib directory.
+:: Expects PDS4 Generate Tool jar file to be located in the ../lib directory.
 
 set SCRIPT_DIR=%~dps0
 set PARENT_DIR=%SCRIPT_DIR%..
 
 set LIB_DIR=%PARENT_DIR%\lib
 
-if exist "%LIB_DIR%\generation-tool-*.jar" (
-set GENERATION_TOOL_JAR=%LIB_DIR%\generation-tool-*.jar
+if exist "%LIB_DIR%\generate-tool-*.jar" (
+set GENERATE_TOOL_JAR=%LIB_DIR%\generate-tool-*.jar
 ) else (
-echo Cannot find Generation Tool jar file in %LIB_DIR%
+echo Cannot find Generate Tool jar file in %LIB_DIR%
 goto END
 )
 
-:: Finds the jar file in LIB_DIR and sets it to GENERATION_TOOL_JAR
+:: Finds the jar file in LIB_DIR and sets it to GENERATE_TOOL_JAR
 
-for %%i in ("%LIB_DIR%"\generation-tool-*.jar) do set GENERATION_TOOL_JAR=%%i
+for %%i in ("%LIB_DIR%"\generate-tool-*.jar) do set GENERATE_TOOL_JAR=%%i
 
-:: Executes GENERATION_TOOL via the executable jar file
+:: Executes GENERATE_TOOL via the executable jar file
 :: The special variable '%*' allows the arguments
 :: to be passed into the executable.
 
-java -jar "%GENERATION_TOOL_JAR%" %*
+java -jar "%GENERATE_TOOL_JAR%" %*
 
 :END

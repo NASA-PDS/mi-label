@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.Properties;
@@ -94,11 +95,17 @@ public class Generator {
                 .getBytes()));
 
         final TransformerFactory tFactory = TransformerFactory.newInstance();
+        System.out.println("/Users/jpadams/dev/workspace/2010-workspace/generate/src/main/resources/"+CLEAN_XSLT);
+        File temp = new File("/Users/jpadams/dev/workspace/2010-workspace/generate/src/main/resources/"+CLEAN_XSLT);
         final Transformer transformer = tFactory.newTransformer(new StreamSource(
                 Generator.class.getResourceAsStream(CLEAN_XSLT)));
+
+        //final Transformer transformer = tFactory.newTransformer(new StreamSource(
+        //        temp));
+        
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty(
-                "{http://xml.apache.org/xslt}indent-amount", "2");
+        		"{http://xml.apache.org/xslt}indent-amount", "2");
         doc.normalize();
         final StringWriter out = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(out));
