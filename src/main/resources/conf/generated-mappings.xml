@@ -2,14 +2,14 @@
 <generated>
 	<element>
 		<context>md5_checksum</context>
-		<class>gov.nasa.pds.imaging.generation.generate.elements.Md5Checksum</class>
+		<class>gov.nasa.pds.imaging.generate.automatic.elements.Md5Checksum</class>
 	</element>
 	<element>
 		<context>file_size</context>
-		<class>gov.nasa.pds.imaging.generation.generate.elements.FileSize</class>
+		<class>gov.nasa.pds.imaging.generate.automatic.elements.FileSize</class>
 	</element>
 	<element>
 		<context>file_name</context>
-		<class>gov.nasa.pds.imaging.generation.generate.elements.FileName</class>
+		<class>gov.nasa.pds.imaging.generate.automatic.elements.FileName</class>
 	</element>
 </generated>

@@ -23,7 +23,7 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with Demo data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationDemo() {
         String[] args = {"-d", "-p","src/main/resources/examples/pds3_example.lbl",
@@ -45,7 +45,7 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with MPF Data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationMPF() {
         String[] args = {"-d", "-p","src/main/resources/examples/i985135l.img",
