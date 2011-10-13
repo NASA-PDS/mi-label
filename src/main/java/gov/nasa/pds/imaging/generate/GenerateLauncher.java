@@ -37,30 +37,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
  * 
  */
 public class GenerateLauncher {
-    /**
-     * @param args
-     */
-    public static void main(final String[] args) {
-        if (args.length == 0) {
-            System.out.println("\nType 'PDS4Generate -h' for usage");
-            System.exit(0);
-        }
-        try {
-            final GenerateLauncher launcher = new GenerateLauncher();
-            final CommandLine commandline = launcher.parse(args);
-            launcher.query(commandline);
-            launcher.generate();
-            // launcher.closeHandlers();
-        } catch (final ParseException pEx) {
-            System.err.println("Command-line parse failure: "
-                    + pEx.getMessage());
-            System.exit(1);
-        } catch (final Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
-    }
 
     private PDSObject pdsObject = null;
     private String filePath = null;
@@ -70,7 +46,7 @@ public class GenerateLauncher {
     private File outputFile;
     private boolean debug;
 
-    Generator generator;
+    private Generator generator;
 
     public GenerateLauncher() {
         this.templateFile = null;
@@ -181,8 +157,7 @@ public class GenerateLauncher {
         }
         if (this.outputFile == null) { // Need to set output filename based on
                                        // label filename
-            this.outputFile = new File(this.pdsObject.getFilePath()
-                    .split("\\.")[0] + ".xml"); // TODO Currently just replaces
+            this.outputFile = new File(generateOutputFileName(this.pdsObject.getFilePath())); // TODO Currently just replaces
                                                 // file suffix with .xml
         }
         if (this.confPath == null) { // Need to set output filename based on
@@ -194,5 +169,40 @@ public class GenerateLauncher {
                 this.filePath, this.confPath, this.outputFile);
 
     }
+    
+    private final String generateOutputFileName(String filePath) {
+    	File file = new File(filePath);
+    	String[] fNameArr = file.getName().split("\\.");
+    	String fileName = "";
+    	for (int i=0; i<fNameArr.length-1; i++)
+    		fileName += fNameArr[i];
+    	
+    	return file.getParent()+"/"+fileName+".xml";
+    }
+    
+    /**
+     * @param args
+     */
+    public static void main(final String[] args) {
+        if (args.length == 0) {
+            System.out.println("\nType 'PDS4Generate -h' for usage");
+            System.exit(0);
+        }
+        try {
+            final GenerateLauncher launcher = new GenerateLauncher();
+            final CommandLine commandline = launcher.parse(args);
+            launcher.query(commandline);
+            launcher.generate();
+            // launcher.closeHandlers();
+        } catch (final ParseException pEx) {
+            System.err.println("Command-line parse failure: "
+                    + pEx.getMessage());
+            System.exit(1);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+    }    
 
 }

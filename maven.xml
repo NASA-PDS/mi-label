@@ -30,6 +30,9 @@
     <velocity:merge name="${maven.build.dir}/pdf/operate/index.xml"
                     basedir="${basedir}/src/site/xdoc/operate"
                     template="index.xml.vm"/>
+    <velocity:merge name="${maven.build.dir}/pdf/templates/index.xml"
+                    basedir="${basedir}/src/site/xdoc/templates"
+                    template="index.xml.vm"/>
     <velocity:merge name="${maven.build.dir}/pdf/operate/index-unix.xml"
                     basedir="${basedir}/src/site/xdoc/operate"
                     template="index-unix.xml.vm"/>

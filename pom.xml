@@ -105,7 +105,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>gov.nasa.pds.imaging.generation.GenerationLauncher</mainClass>
+              <mainClass>gov.nasa.pds.imaging.generate.GenerateLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>

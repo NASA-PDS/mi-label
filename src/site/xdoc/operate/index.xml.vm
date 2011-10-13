@@ -96,6 +96,7 @@ C:\&gt; PDS4Generate &lt;command-line arguments&gt;
 
         <table>
           <tr><th>Command-Line Option</th><th>Description</th></tr>
+          <tr><td>-c, --conf-home</td><td>Specify the path for the configuration files</td></tr>
           <tr><td>-d, --debug</td><td>Directs output to screen, not file.</td></tr>
           <tr><td>-f, --file-list</td><td>Specify the path for a file containing a list of file paths for PDS3 Labels</td></tr>
           <tr><td>-h, --help</td><td>Display usage.</td></tr>
@@ -124,7 +125,7 @@ C:\&gt; PDS4Generate &lt;command-line arguments&gt;
 % PDS4Generate -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
         </source>
 
-	<p>The output would go into a file &lt;pds3-label-path&gt;_pd4</p>
+	<p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml</p>
         
       </subsection>
     </section>

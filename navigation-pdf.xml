@@ -23,6 +23,7 @@
       <item name="Release Notes" href="release/index.html"/>
       <item name="Installation" href="install/index.html"/>
       <item name="Operation" href="operate/index.html"/>
+      <item name="Template Guide" href="templates/index.html"/>
       <item name="Appendix A - UNIX Setup Options" href="operate/index-unix.html"/>
       <item name="Appendix B - Windows Setup Options" href="operate/index-win.html"/>
     </menu>

@@ -45,11 +45,24 @@
       <fileMode>755</fileMode>
     </fileSet>
     <fileSet>
-      <directory>src/main/resources/examples</directory>
-      <outputDirectory>examples</outputDirectory>
+      <directory>src/main/resources/examples/example1</directory>
+      <outputDirectory>examples/example1</outputDirectory>
       <includes>
-        <include>*.img</include>
-        <include>*.vm</include>
+        <include>*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/resources/examples/example2</directory>
+      <outputDirectory>examples/example2</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/resources/examples/mpf_example</directory>
+      <outputDirectory>examples/mpf_example</outputDirectory>
+      <includes>
+        <include>*</include>
       </includes>
     </fileSet>
     <fileSet>

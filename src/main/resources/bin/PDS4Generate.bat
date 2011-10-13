@@ -25,21 +25,21 @@ set PARENT_DIR=%SCRIPT_DIR%..
 
 set LIB_DIR=%PARENT_DIR%\lib
 
-if exist "%LIB_DIR%\generate-tool-*.jar" (
-set GENERATE_TOOL_JAR=%LIB_DIR%\generate-tool-*.jar
+if exist "%LIB_DIR%\generate-*.jar" (
+set GENERATE_JAR=%LIB_DIR%\generate-*.jar
 ) else (
 echo Cannot find Generate Tool jar file in %LIB_DIR%
 goto END
 )
 
-:: Finds the jar file in LIB_DIR and sets it to GENERATE_TOOL_JAR
+:: Finds the jar file in LIB_DIR and sets it to GENERATE_JAR
 
-for %%i in ("%LIB_DIR%"\generate-tool-*.jar) do set GENERATE_TOOL_JAR=%%i
+for %%i in ("%LIB_DIR%"\generate-*.jar) do set GENERATE_JAR=%%i
 
 :: Executes GENERATE_TOOL via the executable jar file
 :: The special variable '%*' allows the arguments
 :: to be passed into the executable.
 
-java -jar "%GENERATE_TOOL_JAR%" %*
+java -jar "%GENERATE_JAR%" %*
 
 :END

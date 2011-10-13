@@ -25,15 +25,15 @@ PARENT_DIR=`cd ${SCRIPT_DIR}/.. && pwd`
 
 LIB_DIR=${PARENT_DIR}/lib
 
-if [ ! -f ${LIB_DIR}/generate-tool-*.jar ]; then
+if [ ! -f ${LIB_DIR}/generate-*.jar ]; then
     echo "Cannot find Generate Tool jar file in ${LIB_DIR}"
     exit 1
 fi
 
-GENERATE_TOOL_JAR=`ls ${LIB_DIR}/generate-tool-*.jar`
+GENERATE_JAR=`ls ${LIB_DIR}/generate-*.jar`
 
 # Executes PDS4 Generate Tool via the executable jar file
 # Arguments are passed in to the tool via '$@'
 
-java -jar ${GENERATE_TOOL_JAR} "$@"
+java -jar ${GENERATE_JAR} "$@"
 

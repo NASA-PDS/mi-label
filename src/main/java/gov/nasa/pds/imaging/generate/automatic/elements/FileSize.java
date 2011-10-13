@@ -21,7 +21,6 @@ public class FileSize implements Element {
 
     @Override
     public void setParameters(final String filePath) {
-        System.out.println("FileSize-filePath " + filePath);
         this.file = new File(filePath);
     }
 

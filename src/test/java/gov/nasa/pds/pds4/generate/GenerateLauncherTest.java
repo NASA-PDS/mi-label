@@ -23,11 +23,11 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with Demo data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationDemo() {
-        String[] args = {"-d", "-p","src/main/resources/examples/pds3_example.lbl",
-        		"-t","src/main/resources/examples/template_example.vm","-c","src/main/resources/conf"};
+        String[] args = {"-d", "-p","src/main/resources/examples/example1/pds3_example.lbl",
+        		"-t","src/main/resources/examples/example1/template_example.vm","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
     }    
 	
@@ -37,19 +37,19 @@ public class GenerateLauncherTest {
     @Ignore
     @Test
     public void testGenerationMER() {
-        String[] args = {"-d", "-p","src/main/resources/examples/1p216067135edn76pop2102l2m1.img",
-        		"-t","src/main/resources/examples/mer_template.vm","-c","src/main/resources/conf"};
+        String[] args = {"-d", "-p","src/main/resources/examples/example2/1p216067135edn76pop2102l2m1.img",
+        		"-t","src/main/resources/examples/example2/mer_template.vm","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
     }
     
     /**
      * Test Generation Tool with MPF Data
      */
-    @Ignore
+    //@Ignore
     @Test
     public void testGenerationMPF() {
-        String[] args = {"-d", "-p","src/main/resources/examples/i985135l.img",
-        		"-t","src/main/resources/examples/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
+        String[] args = {"-d", "-p","src/main/resources/examples/mpf_example/i985135l.img",
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
     }    
 }

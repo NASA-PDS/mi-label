@@ -12,15 +12,15 @@ import java.util.Properties;
  * 
  */
 public class ToolInfo {
-    public static final String FILE = "transform.properties";
+    public static final String FILE = "generate.properties";
 
-    public static final String NAME = "transform.name";
+    public static final String NAME = "generate.name";
 
-    public static final String VERSION = "transform.version";
+    public static final String VERSION = "generate.version";
 
-    public static final String RELEASE_DATE = "transform.date";
+    public static final String RELEASE_DATE = "generate.date";
 
-    public static final String COPYRIGHT = "transform.copyright";
+    public static final String COPYRIGHT = "generate.copyright";
 
     private static final Properties props = new Properties();
 
