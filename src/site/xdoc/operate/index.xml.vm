@@ -58,7 +58,7 @@
       </subsection>
 
       <subsection name="Execute Generate Tool">
-        <p>This section demonstrates execution of the tool using the command-line options. The examples below execute the tool via the batch/shell script. Alternate methods for executing the tool can be found in the <a href="#Tool_Setup">Tool Setup</a> section.
+        <p>This section demonstrates execution of the tool using the command-line options. The examples below execute the tool via the batch/shell script.
         </p>
 
         <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to standard out:

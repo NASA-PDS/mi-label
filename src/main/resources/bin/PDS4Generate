@@ -20,20 +20,27 @@
 
 # Expects the PDS4 Generate Tool jar file to be in the ../lib directory.
 
+# Set the JAVA_HOME environment variable here in the script if it will 
+# not be defined in the environment.
+if [ -z ${JAVA_HOME} ] ; then
+  export JAVA_HOME=/path/to/java/home
+fi
+
+# Setup environment variables.
 SCRIPT_DIR=`dirname $0`
 PARENT_DIR=`cd ${SCRIPT_DIR}/.. && pwd`
-
 LIB_DIR=${PARENT_DIR}/lib
 
+# Check for dependencies.
 if [ ! -f ${LIB_DIR}/generate-*.jar ]; then
     echo "Cannot find Generate Tool jar file in ${LIB_DIR}"
     exit 1
 fi
 
+# Finds the jar file in LIB_DIR and sets it to GENERATE_JAR.
 GENERATE_JAR=`ls ${LIB_DIR}/generate-*.jar`
 
 # Executes PDS4 Generate Tool via the executable jar file
 # Arguments are passed in to the tool via '$@'
-
-java -jar ${GENERATE_JAR} "$@"
+${JAVA_HOME}/bin/java -jar ${GENERATE_JAR} "$@"
 
