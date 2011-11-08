@@ -20,11 +20,13 @@
   <properties>
     <title>Design</title>
     <author email="Jordan.H.Padams@jpl.nasa.gov">Jordan Padams</author>
-    <author email="Sean.Hardman@jpl.nasa.gov">Sean Hardman</author>
   </properties>
 
   <body>
     <section name="Design">
+      <p>The following diagram details the design of the Generate Tool:
+      </p>
+
       <p><img width="750" src="../images/generate-tool-arch.png" /></p>
     </section>
   </body>

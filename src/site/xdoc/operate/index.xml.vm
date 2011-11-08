@@ -29,61 +29,11 @@
       </p>
 
       <ul>
-        <li><a href="#Tool_Setup">Tool Setup</a></li>
         <li><a href="#Tool_Execution">Tool Execution</a></li>
       </ul>
 
       <p>Note: The command-line examples in this section have been broken into multiple lines for readability. The commands should be reassembled into a single line prior to execution.
       </p>
-    </section>
-
-    <section name="Tool Setup">
-      <p>In order to execute the Generate Tool, the user's environment must first be configured appropriately. This section describes how to setup the user environment on UNIX-based and Windows machines.
-      </p>
-
-      <subsection name="UNIX-Based Setup">
-        <p>This section details the environment setup for UNIX-based machines. The preferred method is to specify the shell script, <i>PDS4Generate</i>, on the command-line. Setting the <i>PATH</i> environment variable to the location of the script, enables the shell script to be executed from any location on the user's machine.
-        </p>
-
-        <p>The following command demonstrates how to set the <i>PATH</i> environment variable, by appending to its current setting:
-        </p>
-
-        <source>
-% setenv PATH ${PATH}:$HOME/${xdoc-artifactId}-${xdoc-version}/bin
-        </source>
-
-        <p>The tool can now be executed via the shell script as demonstrated in the following example:
-        </p>
-
-        <source>
-% PDS4Generate &lt;command-line arguments&gt;
-        </source>
-
-        <p>Additional methods for setting up a UNIX-based environment can be found in the <a href="index-unix.html">UNIX Setup Options</a> section. If viewing this document in PDF form, see the appendix for details.
-        </p>
-      </subsection>
-
-      <subsection name="Windows Setup">
-        <p>This section details the environment setup for Windows machines. The preferred method is to specify the batch file, <i>PDS4Generate.bat</i>, on the command-line. Setting the <i>PATH</i> environment variable to the location of the file, enables the batch file to be executed from any location on the user's machine.
-        </p>
-
-        <p>The following command demonstrates how to set the <i>PATH</i> environment variable, by appending to its current setting:
-        </p>
-
-        <source>
-C:\&gt; set PATH = %PATH%;C:\\${xdoc-artifactId}-${xdoc-version}\bin
-        </source>
-
-        <p>The tool can now be executed via the batch file as demonstrated in the following example:
-        </p>
-
-        <source>
-C:\&gt; PDS4Generate &lt;command-line arguments&gt;
-        </source>
-
-        <p>Additional methods for setting up a Windows environment can be found in the <a href="index-win.html">Windows Setup Options</a> section. If viewing this document in PDF form, see the appendix for details.
-        </p>
-      </subsection>
     </section>
 
     <section name="Tool Execution">
