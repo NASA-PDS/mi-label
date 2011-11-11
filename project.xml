@@ -19,7 +19,7 @@
 <project>
   <id>generate</id>
   <name>Generate Tool</name>
-  <currentVersion>0.2.0</currentVersion>
+  <currentVersion>0.3.0-dev</currentVersion>
 
   <organization>
     <name>NASA Jet Propulsion Laboratory, California Institute of Technology</name>

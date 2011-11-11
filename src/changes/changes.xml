@@ -23,6 +23,9 @@
   </properties>
 
   <body>
+    <release version="0.3.0" date="TBD" description="This release of the Generate Tool is a component of the integrated release 2.1.0 of the PDS 2010 System.">
+    </release>
+
     <release version="0.2.0" date="2011-11-09" description="This release of the Generate Tool is a component of the integrated release 2.0.0 of the PDS 2010 System.">
       <action dev="shardman" type="update">
         Moved environment configuration from the Operation to the Installation document.
