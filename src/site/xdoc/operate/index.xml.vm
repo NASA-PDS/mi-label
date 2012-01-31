@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011, by the California Institute of Technology.
+  Copyright 2011-2012, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology Transfer
   at the California Institute of Technology.
@@ -25,7 +25,7 @@
 
   <body>
     <section name="Operation">
-      <p>The following topics can be found in this section:
+      <p>This document describes how to operate the Generate Tool software. The following topics can be found in this document:
       </p>
 
       <ul>
@@ -65,18 +65,18 @@
         </p>
 
         <source>
-% PDS4Generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
+% generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
         </source>
 
         <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to a file:
         </p>
 
         <source>
-% PDS4Generate -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
+% generate -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
         </source>
 
-	<p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml</p>
-        
+        <p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml
+        </p>
       </subsection>
     </section>
   </body>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011, by the California Institute of Technology.
+  Copyright 2011-2012, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology Transfer
   at the California Institute of Technology.
@@ -23,7 +23,10 @@
   </properties>
 
   <body>
-    <release version="0.3.0" date="TBD" description="This release of the Generate Tool is a component of the integrated release 2.1.0 of the PDS 2010 System.">
+    <release version="0.3.0" date="2012-01-31" description="This release of the Generate Tool is a component of the integrated release 2.1.0 of the PDS 2010 System.">
+      <action dev="shardman" type="update">
+        Cleaned up the documentation and removed the PDF generation feature.
+      </action>
     </release>
 
     <release version="0.2.0" date="2011-11-09" description="This release of the Generate Tool is a component of the integrated release 2.0.0 of the PDS 2010 System.">
