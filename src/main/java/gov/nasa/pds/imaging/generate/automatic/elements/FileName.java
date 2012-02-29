@@ -1,5 +1,7 @@
 package gov.nasa.pds.imaging.generate.automatic.elements;
 
+import gov.nasa.pds.imaging.generate.label.PDSObject;
+
 import java.io.File;
 
 public class FileName implements Element {
@@ -18,8 +20,8 @@ public class FileName implements Element {
     }
 
     @Override
-    public void setParameters(final String filePath) {
-        this.file = new File(filePath);
+    public void setParameters(final PDSObject pdsObject) {
+        this.file = new File(pdsObject.getFilePath());
     }
 
 }

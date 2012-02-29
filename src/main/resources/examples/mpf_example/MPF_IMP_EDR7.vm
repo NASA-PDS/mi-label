@@ -114,7 +114,7 @@
       <local_identifier>HEADER</local_identifier>
       <name>token</name>
       <comment>This is the original PDS3 header for this product.</comment>
-      <bytes>$generate.header_bytes</bytes>
+      <bytes>$generate.label_length</bytes>
       <encoding_type>CHARACTER</encoding_type>
       <external_standard_id>ODL</external_standard_id>
       <offset unit_of_measure_name="byte">0</offset>

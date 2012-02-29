@@ -173,7 +173,7 @@ public class PDS3Label implements PDSObject {
         return ((ItemNode) getNode(key)).getUnits();
     }
 
-    @Override
+    /*@Override
     public final void setConfigPath(final String path) {
         this.configPath = path;
     }
@@ -181,6 +181,12 @@ public class PDS3Label implements PDSObject {
     @Override
     public final void setInputPath(final String filePath) {
         this.filePath = filePath;
+    }*/
+    
+    @Override
+    public final void setParameters(PDSObject pdsObject, String confPath) {
+    	this.configPath = confPath;
+    	this.filePath = pdsObject.getFilePath();
     }
 
     @Override

@@ -30,7 +30,7 @@ public enum Flag {
     VERSION("V", "version", "Display application version."),
 
     /** Flag to display the version. */
-    DEBUG("d", "debug", "Directs output to screen, not file.");
+    DEBUG("d", "debug", "Directs output to screen.  <default>");
 
     /** The short name of the flag. */
     private final String shortName;

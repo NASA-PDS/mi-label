@@ -65,7 +65,7 @@ public class GenerateLauncher {
     public final void displayHelp() {
         final int maxWidth = 80;
         final HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(maxWidth, "PDS4Generate <policy file> <options>",
+        formatter.printHelp(maxWidth, "PDS4Generate <options>",
                 null, Flag.getOptions(), null);
     }
 
@@ -87,13 +87,13 @@ public class GenerateLauncher {
     }
 
     private String getConfigPath() {
-        String home = "";
-        final String[] classpath = System.getProperty("java.class.path").split("/");
+        return new File(System.getProperty("java.class.path")).getParentFile().getParent() + "/conf";
+        /*final String[] classpath = (new File(System.getProperty("java.class.path")).getParent();
         for (int i = 0; i < classpath.length - 2; i++) {
             home += classpath[i] + "/";
-        }
+        }*/
 
-        return home + "conf";
+        //return home + "conf";
     }
 
     /**
@@ -136,10 +136,14 @@ public class GenerateLauncher {
                 this.pdsObject.setMappings();
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
                 this.templateFile = new File(o.getValue().trim());
+                if (!this.templateFile.exists())
+                	throw new InvalidOptionException("Template file does not exist: " + this.templateFile.getAbsolutePath());
             } else if (o.getOpt().equals(Flag.FILE.getShortName())) {
                 this.filePath = o.getValue();
             } else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
                 this.confPath = o.getValue();
+                if (!(new File(o.getValue())).exists())
+                		throw new InvalidOptionException("Config directory does not exist: " + this.confPath);
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
                 this.outputFile = new File(o.getValue());
             } else if (o.getOpt().equals(Flag.DEBUG.getShortName())) {
@@ -149,16 +153,17 @@ public class GenerateLauncher {
 
         if (this.pdsObject == null) { // Throw error if no PDS3 label is
                                       // specified
-            throw new InvalidOptionException("PDS3 label must be specified.");
+            throw new InvalidOptionException("Missing -p flag.  PDS3 label must be specified.");
         }
         if (this.templateFile == null) { // Throw error if no template file
                                          // specified
-            throw new InvalidOptionException("Template file must be specified.");
+            throw new InvalidOptionException("Missing -t flag.  Template file must be specified.");
         }
-        if (this.outputFile == null) { // Need to set output filename based on
-                                       // label filename
-            this.outputFile = new File(generateOutputFileName(this.pdsObject.getFilePath())); // TODO Currently just replaces
-                                                // file suffix with .xml
+        if (this.outputFile == null && !this.debug) {	// If no outputFile given, default to debug 
+        								// Need to set output filename based on
+                                       	// label filename
+            //this.outputFile = new File(generateOutputFileName(this.pdsObject.getFilePath())); // TODO Currently just replaces file suffix with .xml
+        	this.debug = true;
         }
         if (this.confPath == null) { // Need to set output filename based on
                                      // label filename
@@ -199,8 +204,7 @@ public class GenerateLauncher {
                     + pEx.getMessage());
             System.exit(1);
         } catch (final Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             System.exit(1);
         }
     }    

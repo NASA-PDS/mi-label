@@ -68,7 +68,7 @@ public class Generator {
         this.pdsObject = pdsObject;
         this.filePath = filePath;
         this.outputFile = outputFile;
-        this.ctxtMappings = new ContextMappings(pdsObject.getFilePath(),
+        this.ctxtMappings = new ContextMappings(this.pdsObject,
                 confPath);
 
         initTemplate();
@@ -86,25 +86,30 @@ public class Generator {
      * @throws SAXException
      * @throws IOException
      */
-    private String clean(final StringWriter sw) throws TransformerException,
-            ParserConfigurationException, SAXException, IOException {
-        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-                .newInstance();
-        final DocumentBuilder builder = domFactory.newDocumentBuilder();
-        final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
-                .getBytes()));
-
-        final TransformerFactory tFactory = TransformerFactory.newInstance();
-        final Transformer transformer = tFactory.newTransformer(new StreamSource(
-                Generator.class.getResourceAsStream(CLEAN_XSLT)));
-        
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        doc.normalize();
-        final StringWriter out = new StringWriter();
-        transformer.transform(new DOMSource(doc), new StreamResult(out));
-
-        return out.toString();
+    private String clean(final StringWriter sw) {
+    	try {
+	        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
+	                .newInstance();
+	        final DocumentBuilder builder = domFactory.newDocumentBuilder();
+	        final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
+	                .getBytes()));
+	
+	        final TransformerFactory tFactory = TransformerFactory.newInstance();
+	        final Transformer transformer = tFactory.newTransformer(new StreamSource(
+	                Generator.class.getResourceAsStream(CLEAN_XSLT)));
+	        
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+	        doc.normalize();
+	        final StringWriter out = new StringWriter();
+	        transformer.transform(new DOMSource(doc), new StreamResult(out));
+	
+	        return out.toString();
+    	} catch (Exception e) {
+    		System.err.println("Error applying XSLT to output XML.  Verify label and template are correctly formatted.");
+    		System.exit(0);
+    	}
+    	return null;
     }
 
     /**
@@ -197,10 +202,7 @@ public class Generator {
         final Properties props = new Properties();
         props.setProperty("file.resource.loader.path", // Need to add base path
                                                        // for resource loader
-                this.templateFile.getAbsolutePath().replace("/" + filename, "")); // Remove
-                                                                                  // filename
-                                                                                  // from
-                                                                                  // basepath
+                this.templateFile.getParent());
         Velocity.init(props); // Add the properties to the velocity
                               // initialization
 

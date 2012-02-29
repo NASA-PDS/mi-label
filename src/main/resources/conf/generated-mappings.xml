@@ -12,4 +12,8 @@
 		<context>file_name</context>
 		<class>gov.nasa.pds.imaging.generate.automatic.elements.FileName</class>
 	</element>
+	<element>
+		<context>label_length</context>
+		<class>gov.nasa.pds.imaging.generate.automatic.elements.LabelLength</class>
+	</element>
 </generated>
