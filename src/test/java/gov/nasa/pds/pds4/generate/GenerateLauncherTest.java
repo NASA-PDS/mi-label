@@ -47,9 +47,24 @@ public class GenerateLauncherTest {
      */
     //@Ignore
     @Test
-    public void testGenerationMPF() {
-        String[] args = {"-d", "-p","src/main/resources/examples/mpf_example/i985135l.img",
+    public void testGenerationStdOut() {
+    	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");
+        String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
         		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
-    }    
+        System.out.println("-----------------------------------------------------------------");
+    }
+    
+    /**
+     * Test Generation Tool with MPF Data
+     */
+    //@Ignore
+    @Test
+    public void testGenerationOutFile() {
+    	System.out.println("--------- Test: Generate PDS4 Label - Output to File ---------");
+        String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf", "-o", "target/out.pds4"};
+        GenerateLauncher.main(args);
+        System.out.println("--------------------------------------------------------------");
+    }
 }

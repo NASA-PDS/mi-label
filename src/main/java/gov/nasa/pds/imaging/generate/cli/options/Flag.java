@@ -15,8 +15,8 @@ public enum Flag {
             "Specify the file path for the Velocity template for the PDS4 label"),
 
     /** Flag to specify a file containing multiple PDS3 Label paths. */
-    FILE("f", "file-list", "file list", String.class,
-            "Specify the path for a file containing a list of file paths for PDS3 Labels"),
+    /*FILE("f", "file-list", "file list", String.class,
+            "Specify the path for a file containing a list of file paths for PDS3 Labels"),*/
 
     /** Flag to specify path for the context-classes.xml */
     CONFIG("c", "config-home", "config home", String.class,
@@ -24,10 +24,10 @@ public enum Flag {
 
     /** Flag to specify the output file name */
     OUTPUT("o", "output-file", "output file", String.class,
-            "Specify an output filename.  Default is PDS3 label name with _pds4 suffix."),
+            "Specify an output filename."),
 
     /** Flag to display the version. */
-    VERSION("V", "version", "Display application version."),
+    /*VERSION("V", "version", "Display application version."),*/
 
     /** Flag to display the version. */
     DEBUG("d", "debug", "Directs output to screen.  <default>");
@@ -59,10 +59,10 @@ public enum Flag {
         options = new Options();
 
         options.addOption(new ToolsOption(HELP));
-        options.addOption(new ToolsOption(VERSION));
+        //options.addOption(new ToolsOption(VERSION));
         options.addOption(new ToolsOption(PDS3));
         options.addOption(new ToolsOption(TEMPLATE));
-        options.addOption(new ToolsOption(FILE));
+        //options.addOption(new ToolsOption(FILE));
         options.addOption(new ToolsOption(CONFIG));
         options.addOption(new ToolsOption(OUTPUT));
         options.addOption(new ToolsOption(DEBUG));

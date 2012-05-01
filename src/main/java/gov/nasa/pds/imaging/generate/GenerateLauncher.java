@@ -44,7 +44,7 @@ public class GenerateLauncher {
     private String confPath = null;
     private File templateFile;
     private File outputFile;
-    private boolean debug;
+    private boolean stdOut;
 
     private Generator generator;
 
@@ -54,7 +54,7 @@ public class GenerateLauncher {
         this.filePath = null;
         this.confPath = null;
         this.outputFile = null;
-        this.debug = false;
+        this.stdOut = false;
         this.generator = null;
     }
 
@@ -80,20 +80,12 @@ public class GenerateLauncher {
         System.err.println(ToolInfo.getCopyright() + "\n");
     }
 
-    public final void generate() throws TemplateException, IOException,
-            ResourceNotFoundException, ParseErrorException,
-            MethodInvocationException, TransformerException, Exception {
-        this.generator.generate(this.debug);
+    public final void generate() throws Exception {
+        this.generator.generate(this.stdOut);
     }
 
     private String getConfigPath() {
-        return new File(System.getProperty("java.class.path")).getParentFile().getParent() + "/conf";
-        /*final String[] classpath = (new File(System.getProperty("java.class.path")).getParent();
-        for (int i = 0; i < classpath.length - 2; i++) {
-            home += classpath[i] + "/";
-        }*/
-
-        //return home + "conf";
+        return (new File(System.getProperty("java.class.path"))).getParentFile().getParent() + "/conf";
     }
 
     /**
@@ -128,26 +120,29 @@ public class GenerateLauncher {
             if (o.getOpt().equals(Flag.HELP.getShortName())) {
                 displayHelp();
                 System.exit(0);
-            } else if (o.getOpt().equals(Flag.VERSION.getShortName())) {
+            }/* else if (o.getOpt().equals(Flag.VERSION.getShortName())) {
                 displayVersion();
                 System.exit(0);
-            } else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
-                this.pdsObject = new PDS3Label(o.getValue().trim());
-                this.pdsObject.setMappings();
+            }*/ else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
+            	String filePath = o.getValue().trim();                
+            	if (!(new File(filePath)).exists()) {
+            		throw new InvalidOptionException("PDS3 Label does not exist: " + filePath);
+            	} else {
+                    this.pdsObject = new PDS3Label(filePath);
+                    this.pdsObject.setMappings();
+            	}
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
                 this.templateFile = new File(o.getValue().trim());
                 if (!this.templateFile.exists())
-                	throw new InvalidOptionException("Template file does not exist: " + this.templateFile.getAbsolutePath());
-            } else if (o.getOpt().equals(Flag.FILE.getShortName())) {
-                this.filePath = o.getValue();
-            } else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
-                this.confPath = o.getValue();
+                	throw new InvalidOptionException("Template file does not exist: " + o.getValue().trim());
+            }/* else if (o.getOpt().equals(Flag.FILE.getShortName())) {
+                this.filePath = o.getValue().trim();
+            }*/ else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
+                this.confPath = o.getValue().trim();
                 if (!(new File(o.getValue())).exists())
-                		throw new InvalidOptionException("Config directory does not exist: " + this.confPath);
+                	throw new InvalidOptionException("Config directory does not exist: " + this.confPath);
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
-                this.outputFile = new File(o.getValue());
-            } else if (o.getOpt().equals(Flag.DEBUG.getShortName())) {
-                this.debug = true;
+                this.outputFile = new File(o.getValue().trim());
             }
         }
 
@@ -159,30 +154,20 @@ public class GenerateLauncher {
                                          // specified
             throw new InvalidOptionException("Missing -t flag.  Template file must be specified.");
         }
-        if (this.outputFile == null && !this.debug) {	// If no outputFile given, default to debug 
+        if (this.outputFile == null) {	// If no outputFile given, default to debug 
         								// Need to set output filename based on
                                        	// label filename
-            //this.outputFile = new File(generateOutputFileName(this.pdsObject.getFilePath())); // TODO Currently just replaces file suffix with .xml
-        	this.debug = true;
+        	this.stdOut = true;
         }
         if (this.confPath == null) { // Need to set output filename based on
                                      // label filename
             this.confPath = getConfigPath();
         }
 
+        // TODO Architectural issue - Too many arguments
         this.generator = new Generator(this.pdsObject, this.templateFile,
                 this.filePath, this.confPath, this.outputFile);
 
-    }
-    
-    private final String generateOutputFileName(String filePath) {
-    	File file = new File(filePath);
-    	String[] fNameArr = file.getName().split("\\.");
-    	String fileName = "";
-    	for (int i=0; i<fNameArr.length-1; i++)
-    		fileName += fNameArr[i];
-    	
-    	return file.getParent()+"/"+fileName+".xml";
     }
     
     /**

@@ -194,7 +194,7 @@ public class PDS3Label implements PDSObject {
         try {
             final PDS3LabelReader reader = new PDS3LabelReader();
 
-            this.document = reader.parseLabel(filePath);
+            this.document = reader.parseLabel(this.filePath);
 
             // start of traversal of DOM
             final Node root = this.document.getDocumentElement();

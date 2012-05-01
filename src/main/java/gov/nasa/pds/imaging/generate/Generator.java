@@ -70,7 +70,7 @@ public class Generator {
         this.outputFile = outputFile;
         this.ctxtMappings = new ContextMappings(this.pdsObject,
                 confPath);
-
+        
         initTemplate();
         setContext();
     }
@@ -103,11 +103,10 @@ public class Generator {
 	        doc.normalize();
 	        final StringWriter out = new StringWriter();
 	        transformer.transform(new DOMSource(doc), new StreamResult(out));
-	
+
 	        return out.toString();
     	} catch (Exception e) {
     		System.err.println("Error applying XSLT to output XML.  Verify label and template are correctly formatted.");
-    		System.exit(0);
     	}
     	return null;
     }
@@ -115,32 +114,30 @@ public class Generator {
     /**
      * Functionality to generate the PDS4 Label from the Velocity Template
      * 
-     * @param toFile
-     *            - Determines whether the output should be to a file or
-     *            System.out
-     * @throws IOException
-     * @throws ResourceNotFoundException
-     * @throws ParseErrorException
-     * @throws MethodInvocationException
-     * @throws TransformerException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @param toStdOut - Determines whether the output should be to a file or System.out
+     * 
+     * @throws Exception - when output file does not exist, or error close String writer
+     * @throws TemplateException - when output is null - reason needs to be found 
      */
-    public void generate(final boolean toFile) throws IOException,
-            ResourceNotFoundException, ParseErrorException,
-            MethodInvocationException, TransformerException, SAXException,
-            ParserConfigurationException {
+    public void generate(final boolean toStdOut) throws Exception {
         final StringWriter sw = new StringWriter();
         PrintWriter out = null;
         try {
             this.template.merge(this.context, sw);
-
-            if (toFile) {
-                System.out.println(clean(sw));
+            
+            String output = clean(sw);
+            
+            if (output == null) {	// TODO Need to validate products prior to this step to find WHY output == null
+            	throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
-                out = new PrintWriter(this.outputFile);
-                out.write(clean(sw));
-
+	            if (toStdOut) {
+	                System.out.println(output);
+	            } else {
+	            	System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
+	                out = new PrintWriter(this.outputFile);
+	                out.write(output);
+	
+	            }
             }
         } finally {
             sw.close();
