@@ -228,7 +228,7 @@ END_OBJECT				= IMAGE
 <source>
 &lt;Array_Axis&gt;
   &lt;name&gt;SAMPLES&lt;/name&gt;
-  &lt;elements&gt;$label.IMAGE.LINES_SAMPLES&lt;/elements&gt;
+  &lt;elements&gt;$label.IMAGE.LINE_SAMPLES&lt;/elements&gt;
   &lt;sequence_number&gt;1&lt;/sequence_number&gt;
 &lt;/Array_Axis&gt;
 &lt;Array_Axis&gt;
