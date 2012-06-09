@@ -36,8 +36,6 @@
     <menu name="Software Documentation">
       <item name="About Generate Tool" href="index.html"/>
       <item name="Design" href="design/index.html"/>
-      <item name="Release Notes" href="release/index.html"/>
-      <item name="Design" href="design/index.html"/>
       <item name="Installation" href="install/index.html"/>
       <item name="Operation" href="operate/index.html"/>
       <item name="Template Guide" href="templates/index.html"/>
