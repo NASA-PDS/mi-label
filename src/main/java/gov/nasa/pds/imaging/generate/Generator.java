@@ -90,6 +90,7 @@ public class Generator {
     	try {
 	        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
 	                .newInstance();
+	        domFactory.setNamespaceAware(true);
 	        final DocumentBuilder builder = domFactory.newDocumentBuilder();
 	        final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
 	                .getBytes()));
@@ -126,6 +127,7 @@ public class Generator {
             this.template.merge(this.context, sw);
             
             String output = clean(sw);
+            //String output = sw.toString();
             
             if (output == null) {	// TODO Need to validate products prior to this step to find WHY output == null
             	throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
