@@ -113,7 +113,7 @@ public class GenerateLauncher {
      * @throws Exception
      *             If there was an error while querying the options that were
      *             set on the command-line.
-     */
+     */    
     public final void query(final CommandLine line) throws Exception {
         final List<Option> processedOptions = Arrays.asList(line.getOptions());
         for (final Option o : processedOptions) {
@@ -124,23 +124,14 @@ public class GenerateLauncher {
                 displayVersion();
                 System.exit(0);
             }*/ else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
-            	String filePath = o.getValue().trim();                
-            	if (!(new File(filePath)).exists()) {
-            		throw new InvalidOptionException("PDS3 Label does not exist: " + filePath);
-            	} else {
-                    this.pdsObject = new PDS3Label(filePath);
-                    this.pdsObject.setMappings();
-            	}
+                this.pdsObject = new PDS3Label(getAbsolutePath("PDS3 Label", o.getValue().trim()));
+                this.pdsObject.setMappings();
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
-                this.templateFile = new File(o.getValue().trim());
-                if (!this.templateFile.exists())
-                	throw new InvalidOptionException("Template file does not exist: " + o.getValue().trim());
+                this.templateFile = new File(getAbsolutePath("Velocity Template", o.getValue().trim()));
             }/* else if (o.getOpt().equals(Flag.FILE.getShortName())) {
                 this.filePath = o.getValue().trim();
             }*/ else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
-                this.confPath = o.getValue().trim();
-                if (!(new File(o.getValue())).exists())
-                	throw new InvalidOptionException("Config directory does not exist: " + this.confPath);
+                this.confPath = getAbsolutePath("Config directory", o.getValue().trim());
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
                 this.outputFile = new File(o.getValue().trim());
             }
@@ -169,6 +160,22 @@ public class GenerateLauncher {
                 this.filePath, this.confPath, this.outputFile);
 
     }
+
+	private String getAbsolutePath(String fileType, String filePath) throws InvalidOptionException {
+		String finalPath = "";
+		File testFile = new File(filePath);
+		if (!testFile.isAbsolute()) {
+			finalPath = System.getProperty("user.dir") + "/" + filePath;
+		} else {
+			finalPath = filePath;
+		}
+		
+		if (!(new File(finalPath)).exists()) {
+			throw new InvalidOptionException(fileType + " does not exist: " + filePath);
+		}
+		
+		return finalPath;
+	}
     
     /**
      * @param args
