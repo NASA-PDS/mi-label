@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011, by the California Institute of Technology.
+  Copyright 2011-2012, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology Transfer
   at the California Institute of Technology.
@@ -38,7 +38,7 @@
 	<p>The Generate Tool provides the ability to automatically generate values that do not map directly to the input data object (i.e. PDS3 label).  The following procedure provides the steps for adding a <i>Global Generated Value</i>.  This should only be extended for those generated values that will apply to multiple nodes.  See the proceeding procedure for <i>Node-Specific Generated Values</i>.</p>
 	<ol>
 	  <li>Check out the <a href="http://starcell.jpl.nasa.gov/repo/2010/trunk/preparation/generate/">source</a> for the Generate Tool.</li>
-	  <li>Create a new class in the src/main/java/gov/nasa/pds/imaging/generate/automatic/elements direcotry implementing the <a href="http://starcell.jpl.nasa.gov/repo/2010/trunk/preparation/generate/src/main/java/gov/nasa/pds/imaging/generate/automatic/elements/Element.java">Element interface</a> with the functionality necessary in order to fulfill the generated element's requirements.</li>
+	  <li>Create a new class in the src/main/java/gov/nasa/pds/imaging/generate/automatic/elements directory implementing the <a href="http://starcell.jpl.nasa.gov/repo/2010/trunk/preparation/generate/src/main/java/gov/nasa/pds/imaging/generate/automatic/elements/Element.java">Element interface</a> with the functionality necessary in order to fulfill the generated element's requirements.</li>
 	  <li>Open the generated mappings configuration file, <a href="http://starcell.jpl.nasa.gov/repo/2010/trunk/preparation/generate/src/main/resources/conf/generated-mappings.xml">generated-mappings.xml</a>.</li>
 	  <li>Create a new element class with the <i>context</i> and <i>class</i> according the newly created class.</li>
 	</ol>
