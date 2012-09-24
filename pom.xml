@@ -60,21 +60,31 @@
     <contributor>
       <name>Elizabeth Rye</name>
       <email>Elzabeth.D.Rye@jpl.nasa.gov</email>
+	  <organization>NASA Jet Propulsion Laboratory</organization>
       <roles>
-        <role>System Engineer</role>
+        <role>Data Engineer</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Chris Isbell</name>
+      <email>cisbell@usgs.gov</email>
+	  <organization>USGS</organization>      
+      <roles>
+        <role>Data Engineer</role>
       </roles>
     </contributor>
     <contributor>
       <name>Alice Stanboli</name>
       <email>Alice.Stanboli@jpl.nasa.gov</email>
+	  <organization>NASA Jet Propulsion Laboratory</organization>
       <roles>
-        <role>Dev Supervisor</role>
         <role>Atlas Ingest Developer</role>
       </roles>
     </contributor>
     <contributor>
       <name>Adrian Tinio</name>
       <email>Adrian.W.Tinio@jpl.nasa.gov</email>
+	  <organization>NASA Jet Propulsion Laboratory</organization>
       <roles>
         <role>Atlas Ingest Developer</role>
       </roles>
@@ -89,6 +99,14 @@
         <directory>src/main/resources</directory>
         <includes>
           <include>cleanup.xsl</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <targetPath>gov/nasa/pds/imaging/generate</targetPath>
+        <directory>src/main/resources/conf</directory>
+        <includes>
+          <include>velocity-tools.xml</include>
         </includes>
       </resource>
     </resources>
@@ -189,11 +207,16 @@
       <version>1.2</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-    <groupId>org.apache.velocity</groupId>
-    <artifactId>velocity</artifactId>
-    <version>1.7</version>
-  </dependency>
+   	<dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.7</version>
+    </dependency>
+   	<dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-tools</artifactId>
+      <version>2.0</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-io</artifactId>

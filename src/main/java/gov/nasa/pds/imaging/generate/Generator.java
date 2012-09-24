@@ -29,6 +29,7 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.tools.ToolManager;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -231,13 +232,21 @@ public class Generator {
      * @throws Exception
      */
     public void setContext() throws TemplateException, Exception {
-    	// Set context for base initial PDSObject
-        this.context.put(this.pdsObject.getContext(), this.pdsObject);
-        
-        // Set default contexts
+    	addToolManager();
+    	
+    	// Set default contexts
         for (final String str : this.ctxtMappings.contextMap.keySet()) { 
             this.context.put(str, this.ctxtMappings.contextMap.get(str));
         }
+    	
+    	// Set context for base initial PDSObject
+        this.context.put(this.pdsObject.getContext(), this.pdsObject);
+    }
+    
+    private void addToolManager() {
+    	ToolManager velocityToolManager = new ToolManager();
+    	velocityToolManager.configure(Generator.class.getResource("./").getPath() + "/velocity-tools.xml");
+    	this.context = new VelocityContext(velocityToolManager.createContext());
     }
 
     public void setContext(final VelocityContext context) {
