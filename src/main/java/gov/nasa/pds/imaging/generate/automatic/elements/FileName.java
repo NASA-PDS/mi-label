@@ -16,7 +16,7 @@ public class FileName implements Element {
 
     @Override
     public String getValue() {
-        return file.getName();
+        return this.file.getName();
     }
 
     @Override

@@ -45,6 +45,7 @@ public class Generator {
 
     private VelocityContext context;
     private String templatePath;
+    private String confPath;
     private File templateFile;
     private Template template;
     private File outputFile;
@@ -53,6 +54,7 @@ public class Generator {
     public Generator() throws Exception {
         this.context = null;
         this.templatePath = "";
+        this.confPath = "";
         this.templateFile = null;
         this.template = null;
         this.pdsObject = null;
@@ -71,6 +73,7 @@ public class Generator {
         this.outputFile = outputFile;
         this.ctxtMappings = new ContextMappings(this.pdsObject,
                 confPath);
+        this.confPath = confPath;
         
         initTemplate();
         setContext();
@@ -130,7 +133,7 @@ public class Generator {
             String output = clean(sw);
             //String output = sw.toString();
             
-            if (output == null) {	// TODO Need to validate products prior to this step to find WHY output == null
+            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
             	throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
 	            if (toStdOut) {
@@ -245,7 +248,7 @@ public class Generator {
     
     private void addToolManager() {
     	ToolManager velocityToolManager = new ToolManager();
-    	velocityToolManager.configure(Generator.class.getResource("./").getPath() + "/velocity-tools.xml");
+    	velocityToolManager.configure(this.confPath + "/velocity-tools.xml");
     	this.context = new VelocityContext(velocityToolManager.createContext());
     }
 

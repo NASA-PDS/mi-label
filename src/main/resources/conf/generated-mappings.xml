@@ -16,4 +16,8 @@
 		<context>label_length</context>
 		<class>gov.nasa.pds.imaging.generate.automatic.elements.LabelLength</class>
 	</element>
+	<element>
+		<context>current_date_utc</context>
+		<class>gov.nasa.pds.imaging.generate.automatic.elements.CurrentDateUTC</class>
+	</element>
 </generated>

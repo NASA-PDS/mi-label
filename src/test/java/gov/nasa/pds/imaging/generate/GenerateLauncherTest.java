@@ -4,7 +4,7 @@
 //All rights reserved.                                                            */
 //U.S. Government sponsorship is acknowledged.                                    */
 //******************************************************************* *************/
-package gov.nasa.pds.pds4.generate;
+package gov.nasa.pds.imaging.generate;
 
 import gov.nasa.pds.imaging.generate.GenerateLauncher;
 
@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 
 public class GenerateLauncherTest {
     
-    /**
+    /**r
      * Test Generation Tool with Demo data
      */
     @Ignore
@@ -45,12 +45,25 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with MPF Data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationStdOut() {
     	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm_math","-c","src/main/resources/conf"};
+        GenerateLauncher.main(args);
+        System.out.println("-----------------------------------------------------------------");
+    }
+    
+    /**
+     * Test Generation Tool with Elizabeth's Example Data
+     */
+    //@Ignore
+    @Test
+    public void testGenerationElizabeth() {
+    	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");
+        String[] args = {"-p","src/main/resources/examples/rye-example/i646954r.img",
+        		"-t","src/main/resources/examples/rye-example/mpf_imp_raw_template.xml","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
         System.out.println("-----------------------------------------------------------------");
     }
@@ -58,7 +71,7 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with MPF Data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationOutFile() {
     	System.out.println("--------- Test: Generate PDS4 Label - Output to File ---------");

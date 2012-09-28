@@ -101,14 +101,6 @@
           <include>cleanup.xsl</include>
         </includes>
       </resource>
-      <resource>
-        <filtering>true</filtering>
-        <targetPath>gov/nasa/pds/imaging/generate</targetPath>
-        <directory>src/main/resources/conf</directory>
-        <includes>
-          <include>velocity-tools.xml</include>
-        </includes>
-      </resource>
     </resources>
     <plugins>
       <plugin>

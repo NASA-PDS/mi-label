@@ -145,7 +145,7 @@ public class GenerateLauncher {
                                          // specified
             throw new InvalidOptionException("Missing -t flag.  Template file must be specified.");
         }
-        if (this.outputFile == null) {	// If no outputFile given, default to debug 
+        if (this.outputFile == null) {	// If no outputFile given, default to Standard Out 
         								// Need to set output filename based on
                                        	// label filename
         	this.stdOut = true;
@@ -182,7 +182,7 @@ public class GenerateLauncher {
      */
     public static void main(final String[] args) {
         if (args.length == 0) {
-            System.out.println("\nType 'PDS4Generate -h' for usage");
+            System.out.println("\nType 'generate -h' for usage");
             System.exit(0);
         }
         try {

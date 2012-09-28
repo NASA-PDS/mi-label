@@ -9,11 +9,11 @@
   <data_set_id>$label.DATA_SET_ID</data_set_id>
   
 ## Scenario 2 
-  <Encoded_Image>
+  <img:Encoded_Image>
   	<mean>$label.IMAGE.MEAN</mean>
   	<maximum>$label.IMAGE.MAXIMUM</maximum>
   	<minimum>$label.IMAGE.MINIMUM</minimum>
-  </Encoded_Image>  
+  </img:Encoded_Image>  
 
 ## Scenario 3
   <Coordinate_System>
@@ -62,5 +62,11 @@
 ## Scenario 7
   <File_Area>
     <md5_checksum>$generate.md5_checksum</md5_checksum>
+  </File_Area>
+</MER_Product>
+
+## Current Date UTC
+  <File_Area>
+    <current_date>$generate.current_date_utc</current_date>
   </File_Area>
 </MER_Product>

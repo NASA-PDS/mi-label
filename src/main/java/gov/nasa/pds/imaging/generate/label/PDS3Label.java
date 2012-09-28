@@ -28,6 +28,8 @@ import org.w3c.dom.Node;
  */
 public class PDS3Label implements PDSObject {
 
+	private static final boolean debug = true;
+	
     public static final String CONTEXT = "label";
 
     public static void main(final String[] args) {
@@ -69,6 +71,7 @@ public class PDS3Label implements PDSObject {
      * @param filePath
      */
     public PDS3Label(final String filePath) {
+    	debug("New PDS3Label - " + filePath);
         this.filePath = filePath;
         this.flatLabel = new TreeMap<String, Map>();
     }
@@ -190,7 +193,7 @@ public class PDS3Label implements PDSObject {
     }
 
     @Override
-    public final void setMappings() {
+    public void setMappings() {
         try {
             final PDS3LabelReader reader = new PDS3LabelReader();
 
@@ -216,6 +219,12 @@ public class PDS3Label implements PDSObject {
             strBuff.append(key + " = " + this.flatLabel.get(key) + "\n");
         }
         return strBuff.toString();
+    }
+    
+    private final void debug(String msg) {
+    	if (this.debug) {
+    		System.out.println(msg);
+    	}
     }
 
 }

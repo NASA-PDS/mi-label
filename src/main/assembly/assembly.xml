@@ -69,8 +69,7 @@
       <directory>src/main/resources/conf</directory>
       <outputDirectory>conf</outputDirectory>
       <includes>
-        <include>context-classes.xml</include>
-        <include>generated-mappings.xml</include>
+        <include>*.xml</include>
       </includes>
     </fileSet>
     <fileSet>
