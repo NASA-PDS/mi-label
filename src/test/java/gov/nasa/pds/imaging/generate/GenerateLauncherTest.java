@@ -58,7 +58,7 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with Elizabeth's Example Data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationElizabeth() {
     	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");

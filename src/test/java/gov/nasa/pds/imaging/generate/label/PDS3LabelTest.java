@@ -6,9 +6,11 @@ import java.util.Map;
 import gov.nasa.pds.imaging.generate.constants.TestConstants;
 
 import org.junit.Before;
+import org.junit.Ignore;
 
 import junit.framework.TestCase;
 
+@Ignore
 public class PDS3LabelTest extends TestCase {
 
 	private PDS3Label label;
