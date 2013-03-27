@@ -71,7 +71,6 @@ public class PDS3Label implements PDSObject {
      * @param filePath
      */
     public PDS3Label(final String filePath) {
-    	debug("New PDS3Label - " + filePath);
         this.filePath = filePath;
         this.flatLabel = new TreeMap<String, Map>();
     }

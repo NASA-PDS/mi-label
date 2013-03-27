@@ -83,7 +83,7 @@
       <Object_Statistics>
         <local_identifier>IMAGE_OBJECT_STATISTICS</local_identifier>
         <maximum>$label.IMAGE.MAXIMUM</maximum>
-        <md5_checksum>$generate.obj_md5_checksum</md5_checksum>
+        <md5_checksum>$generate.md5_checksum</md5_checksum>
         <mean>$label.IMAGE.MEAN</mean>
         <median>$label.IMAGE.MEDIAN</median>
         <minimum>$label.IMAGE.MINIMUM</minimum>

@@ -65,7 +65,7 @@ public class GenerateLauncher {
     public final void displayHelp() {
         final int maxWidth = 80;
         final HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(maxWidth, "PDS4Generate <options>",
+        formatter.printHelp(maxWidth, "generate <options>",
                 null, Flag.getOptions(), null);
     }
 
@@ -145,10 +145,8 @@ public class GenerateLauncher {
                                          // specified
             throw new InvalidOptionException("Missing -t flag.  Template file must be specified.");
         }
-        if (this.outputFile == null) {	// If no outputFile given, default to Standard Out 
-        								// Need to set output filename based on
-                                       	// label filename
-        	this.stdOut = true;
+        if (this.outputFile == null) {	// If no outputFile given, default input filename with appended .xml
+        	this.outputFile = new File(this.pdsObject.getFilePath() + ".xml");
         }
         if (this.confPath == null) { // Need to set output filename based on
                                      // label filename
