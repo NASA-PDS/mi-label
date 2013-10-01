@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!--
-  Copyright 2011-2012, by the California Institute of Technology.
+  Copyright 2011-2013, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology
   Transfer at the California Institute of Technology.
@@ -24,7 +24,6 @@
 
   <formats>
     <format>tar.gz</format>
-    <format>zip</format>
   </formats>
 
   <fileSets>
@@ -43,6 +42,7 @@
         <include>generate.bat</include>
       </includes>
       <fileMode>755</fileMode>
+      <lineEnding>keep</lineEnding>
     </fileSet>
     <fileSet>
       <directory>src/main/resources/examples/example1</directory>
@@ -50,6 +50,8 @@
       <includes>
         <include>*</include>
       </includes>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>src/main/resources/examples/example2</directory>
@@ -57,6 +59,8 @@
       <includes>
         <include>*</include>
       </includes>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>src/main/resources/examples/mpf_example</directory>
@@ -64,6 +68,8 @@
       <includes>
         <include>*</include>
       </includes>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>src/main/resources/conf</directory>
@@ -71,10 +77,14 @@
       <includes>
         <include>*.xml</include>
       </includes>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
       <directory>target/site</directory>
       <outputDirectory>doc</outputDirectory>
+      <fileMode>644</fileMode>
+      <lineEnding>keep</lineEnding>
     </fileSet>
   </fileSets>
 
@@ -83,12 +93,14 @@
       <source>LICENSE.txt</source>
       <outputDirectory>/</outputDirectory>
       <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
     </file>
     <file>
       <source>README-PACKAGE.txt</source>
       <outputDirectory>/</outputDirectory>
       <destName>README.txt</destName>
       <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
       <filtered>true</filtered>
     </file>
   </files>
