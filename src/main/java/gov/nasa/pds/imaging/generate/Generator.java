@@ -61,7 +61,7 @@ public class Generator {
         this.filePath = null;
         this.outputFile = null;
 
-        this.ctxtMappings = new ContextMappings();
+        this.ctxtMappings = null;
     }
 
     public Generator(final PDSObject pdsObject, final File templateFile, final String filePath,
@@ -74,7 +74,7 @@ public class Generator {
         this.ctxtMappings = new ContextMappings(this.pdsObject,
                 confPath);
         this.confPath = confPath;
-        
+
         initTemplate();
         setContext();
     }
@@ -82,7 +82,7 @@ public class Generator {
     /**
      * Method to use XSLT in order to remove all empty tags and whitespace from
      * the generated XML
-     * 
+     *
      * @param sw
      * @return
      * @throws TransformerException
@@ -98,11 +98,11 @@ public class Generator {
 	        final DocumentBuilder builder = domFactory.newDocumentBuilder();
 	        final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
 	                .getBytes()));
-	
+
 	        final TransformerFactory tFactory = TransformerFactory.newInstance();
 	        final Transformer transformer = tFactory.newTransformer(new StreamSource(
 	                Generator.class.getResourceAsStream(CLEAN_XSLT)));
-	        
+
 	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 	        doc.normalize();
@@ -118,11 +118,11 @@ public class Generator {
 
     /**
      * Functionality to generate the PDS4 Label from the Velocity Template
-     * 
+     *
      * @param toStdOut - Determines whether the output should be to a file or System.out
-     * 
+     *
      * @throws Exception - when output file does not exist, or error close String writer
-     * @throws TemplateException - when output is null - reason needs to be found 
+     * @throws TemplateException - when output is null - reason needs to be found
      */
     public void generate(final boolean toStdOut) throws Exception {
         final StringWriter sw = new StringWriter();
@@ -132,7 +132,7 @@ public class Generator {
             
             String output = clean(sw);
             //String output = sw.toString();
-            
+
             if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
             	throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
@@ -142,7 +142,7 @@ public class Generator {
 	            	System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
 	                out = new PrintWriter(this.outputFile);
 	                out.write(output);
-	
+
 	            }
             }
         } finally {
@@ -195,7 +195,7 @@ public class Generator {
     /**
      * Initializes and reads in the Velocity Template into the Velocity
      * Engine.
-     * 
+     *
      * @throws TemplateException
      * @throws IOException
      */
@@ -230,22 +230,22 @@ public class Generator {
     /**
      * Sets the Velocity Template contexts specified by the PDSObject API and
      * ContextMappings object.
-     * 
+     *
      * @throws TemplateException
      * @throws Exception
      */
     public void setContext() throws TemplateException, Exception {
     	addToolManager();
-    	
+
     	// Set default contexts
-        for (final String str : this.ctxtMappings.contextMap.keySet()) { 
+        for (final String str : this.ctxtMappings.contextMap.keySet()) {
             this.context.put(str, this.ctxtMappings.contextMap.get(str));
         }
-    	
+
     	// Set context for base initial PDSObject
         this.context.put(this.pdsObject.getContext(), this.pdsObject);
     }
-    
+
     private void addToolManager() {
     	ToolManager velocityToolManager = new ToolManager();
     	velocityToolManager.configure(this.confPath + "/velocity-tools.xml");
@@ -282,5 +282,9 @@ public class Generator {
 
     public void setTemplatePath(final String templatePath) {
         this.templatePath = templatePath;
+    }
+
+    public void setConfPath(final String confPath) {
+      this.confPath = confPath;
     }
 }
