@@ -20,16 +20,16 @@ import org.w3c.dom.Node;
 
 /**
  * Represents PDS3 Label object to provide the necessary functionality to
- * 
+ *
  * @author jpadams
  * @author atinio
  * @author astanboli
- * 
+ *
  */
 public class PDS3Label implements PDSObject {
 
 	private static final boolean debug = true;
-	
+
     public static final String CONTEXT = "label";
 
     public static void main(final String[] args) {
@@ -67,7 +67,7 @@ public class PDS3Label implements PDSObject {
 
     /**
      * Constructor
-     * 
+     *
      * @param filePath
      */
     public PDS3Label(final String filePath) {
@@ -77,14 +77,16 @@ public class PDS3Label implements PDSObject {
 
     /**
      * Retrieves the value for the specified key
-     * 
+     *
      * @param key
      * @return value for key
      */
     @Override
     public final Object get(final String key) {
         final Object node = getNode(key.toUpperCase());
-        if (node instanceof LabelObject) {
+        if (node == null) {
+          return null;
+        } else if (node instanceof LabelObject) {
             return node;
         } else {
             return ((ItemNode) node).toString();
@@ -184,7 +186,7 @@ public class PDS3Label implements PDSObject {
     public final void setInputPath(final String filePath) {
         this.filePath = filePath;
     }*/
-    
+
     @Override
     public final void setParameters(PDSObject pdsObject, String confPath) {
     	this.configPath = confPath;
@@ -219,7 +221,7 @@ public class PDS3Label implements PDSObject {
         }
         return strBuff.toString();
     }
-    
+
     private final void debug(String msg) {
     	if (this.debug) {
     		System.out.println(msg);
