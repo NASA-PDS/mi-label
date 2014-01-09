@@ -164,7 +164,7 @@ public class PDS3LabelReader {
     public Map<String, Map> traverseDOM(final Node root) {
         final NodeList labelItems = root.getChildNodes();
         // iterate through each label element and process
-        final Map<String, Map> flatLabel = new TreeMap<String, Map>();
+        final Map flatLabel = new PDSTreeMap();
         for (int i = 0; i < labelItems.getLength(); ++i) {
             final Node labelItem = labelItems.item(i);
             // Handle ELEMENT nodes
@@ -177,14 +177,7 @@ public class PDS3LabelReader {
                 if (this.pdsObjectTypes.contains(labelItem.getNodeName()
                         .toUpperCase())) { // Handles all items nested in groups
                     handlePDSObjectNode(labelItem, flatLabel);
-                } else if (labelItem.getNodeName().equalsIgnoreCase("item")) { // Handles
-                                                                               // all
-                                                                               // items
-                                                                               // at
-                                                                               // base
-                                                                               // level
-                                                                               // of
-                                                                               // label
+                } else if (labelItem.getNodeName().equalsIgnoreCase("item")) { // Handles all items at base level of label
                     handleItemNode(labelItem, flatLabel);
                 } else if (labelItem.getNodeName().equalsIgnoreCase("PDS3")) { // PDS3
                                                                                // -

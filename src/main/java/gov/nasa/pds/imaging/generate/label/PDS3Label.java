@@ -10,6 +10,7 @@ import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,8 +62,7 @@ public class PDS3Label implements PDSObject {
      * Constructor
      */
     public PDS3Label() {
-        this.filePath = null;
-        this.flatLabel = new TreeMap<String, Map>();
+    	this("");
     }
 
     /**
@@ -72,7 +72,7 @@ public class PDS3Label implements PDSObject {
      */
     public PDS3Label(final String filePath) {
         this.filePath = filePath;
-        this.flatLabel = new TreeMap<String, Map>();
+        this.flatLabel = new PDSTreeMap();
     }
 
     /**
@@ -86,10 +86,10 @@ public class PDS3Label implements PDSObject {
         final Object node = getNode(key.toUpperCase());
         if (node == null) {
           return null;
-        } else if (node instanceof LabelObject) {
-            return node;
-        } else {
-            return ((ItemNode) node).toString();
+        } if (node instanceof ItemNode) {
+        	return ((ItemNode) node).toString();
+        } else { // else if (node instanceof LabelObject || node instanceof ArrayList) {
+        	return node;
         }
     }
 
