@@ -29,6 +29,7 @@ public class PDS3LabelReader {
     // private Map<String, Map> flatLabel;
 
     private final List<String> pdsObjectTypes;
+    private final List<String> pdsObjectNames;
 
     public PDS3LabelReader() {
 
@@ -37,6 +38,8 @@ public class PDS3LabelReader {
         this.pdsObjectTypes = new ArrayList<String>();
         this.pdsObjectTypes.add(FlatLabel.GROUP_TYPE);
         this.pdsObjectTypes.add(FlatLabel.OBJECT_TYPE);
+        
+        this.pdsObjectNames = new ArrayList<String>();
     }
 
     private Map<String, String> getAttributes(final Node node) {
@@ -103,6 +106,8 @@ public class PDS3LabelReader {
         final String elementName = (String) attributes.get("name");
         final FlatLabel object = new FlatLabel(elementName, node.getNodeName());
 
+        this.pdsObjectNames.add(elementName);
+        
         final Map labels = new TreeMap();
 
         final NodeList children = node.getChildNodes();
@@ -193,6 +198,10 @@ public class PDS3LabelReader {
             }
         }
         return flatLabel;
+    }
+    
+    public List<String> getPDSObjectNames() {
+    	return this.pdsObjectNames;
     }
 
 }
