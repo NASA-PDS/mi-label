@@ -15,6 +15,7 @@ public class PDSTreeMap extends TreeMap{
 			List<Object> valueList = new ArrayList<Object>();
 			valueList.add(super.get(key));
 			valueList.add(value);
+			System.out.println("ah ah ah you didnt say the magic words");
 			return super.put(key, valueList);
 		} else {
 			return super.put(key, value);

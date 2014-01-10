@@ -92,6 +92,7 @@ public class PDS3Label implements PDSObject {
         } if (node instanceof ItemNode) {
         	return ((ItemNode) node).toString();
         } else { // else if (node instanceof LabelObject || node instanceof ArrayList) {
+        	System.out.println(node.getClass());
         	return node;
         }
     }

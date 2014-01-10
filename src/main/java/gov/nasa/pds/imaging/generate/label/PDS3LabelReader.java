@@ -108,7 +108,7 @@ public class PDS3LabelReader {
 
         this.pdsObjectNames.add(elementName);
         
-        final Map labels = new TreeMap();
+        final Map labels = new PDSTreeMap();
 
         final NodeList children = node.getChildNodes();
         for (int i = 0; i < children.getLength(); ++i) {
