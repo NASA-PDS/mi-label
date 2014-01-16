@@ -84,7 +84,7 @@ public class GenerateLauncherTest {
     /**r
      * Test Generation Tool with Demo data
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testGenerationCayanan() {
         String[] args = {"-d", "-p","src/main/resources/examples/cayanan/N1727539187_1.LBL",
