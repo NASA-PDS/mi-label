@@ -13,7 +13,11 @@ public class PDSTreeMap extends TreeMap{
 	public Object put(Object key, Object value) {
 		if (super.containsKey(key)) {
 			List<Object> valueList = new ArrayList<Object>();
-			valueList.add(super.get(key));
+			if (super.get(key) instanceof List) {
+			  valueList.addAll((List<Object>) super.get(key));
+			} else {
+			  valueList.add(super.get(key));
+			}
 			valueList.add(value);
 			return super.put(key, valueList);
 		} else {
