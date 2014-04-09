@@ -16,7 +16,7 @@ import java.util.Map;
 public interface PDSObject extends PDSContext {
     public String getFilePath();
 
-    public List getList(String key);
+    public List getList(String key) throws TemplateException;
 
     public List<Map<String, String>> getRecords(String... keyword)
             throws TemplateException;
