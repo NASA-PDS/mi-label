@@ -6,24 +6,36 @@
 //******************************************************************* *************/
 package gov.nasa.pds.imaging.generate;
 
-import gov.nasa.pds.imaging.generate.GenerateLauncher;
+import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 
-import javax.xml.parsers.ParserConfigurationException;
+import gov.nasa.pds.imaging.generate.GenerateLauncher;
+import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
+import gov.nasa.pds.imaging.generate.test.GenerateTest;
+import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.util.Utility;
 
-
-import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import org.xml.sax.SAXException;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-public class GenerateLauncherTest {
+@RunWith(JUnit4.class)
+public class GenerateLauncherTest extends GenerateTest {
     
-    /**r
+	@Rule
+	public SingleTestRule test = new SingleTestRule("testGenerationDemo");
+	
+	@BeforeClass
+	public static void oneTimeSetUp() {
+		Debugger.debugFlag = true;
+	}
+	
+    /**
      * Test Generation Tool with Demo data
      */
-    @Ignore
     @Test
     public void testGenerationDemo() {
         String[] args = {"-d", "-p","src/main/resources/examples/example1/pds3_example.lbl",
@@ -32,9 +44,8 @@ public class GenerateLauncherTest {
     }    
 	
     /**
-     * Test Transformer with MER data
+     * Test Transformer with MER data 
      */
-    @Ignore
     @Test
     public void testGenerationMER() {
         String[] args = {"-d", "-p","src/main/resources/examples/example2/1p216067135edn76pop2102l2m1.img",
@@ -45,50 +56,27 @@ public class GenerateLauncherTest {
     /**
      * Test Generation Tool with MPF Data
      */
-    @Ignore
     @Test
-    public void testGenerationStdOut() {
-    	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");
+    public void testGenerationMPFExample() {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm_math","-c","src/main/resources/conf"};
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
         GenerateLauncher.main(args);
-        System.out.println("-----------------------------------------------------------------");
-    }
-    
-    /**
-     * Test Generation Tool with Elizabeth's Example Data
-     */
-    @Ignore
-    @Test
-    public void testGenerationElizabeth() {
-    	System.out.println("--------- Test: Generate PDS4 Label - Output to Std Out ---------");
-        String[] args = {"-p","src/main/resources/examples/rye-example/i646954r.img",
-        		"-t","src/main/resources/examples/rye-example/mpf_imp_raw_template.xml","-c","src/main/resources/conf"};
-        GenerateLauncher.main(args);
-        System.out.println("-----------------------------------------------------------------");
     }
     
     /**
      * Test Generation Tool with MPF Data
+     * @throws InvalidOptionException 
      */
-    @Ignore
     @Test
     public void testGenerationOutFile() {
-    	System.out.println("--------- Test: Generate PDS4 Label - Output to File ---------");
+    	try {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
         		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf", "-o", "target/out.pds4"};
         GenerateLauncher.main(args);
-        System.out.println("--------------------------------------------------------------");
+        assertTrue((new File(Utility.getAbsolutePath("target/out.pds4"))).exists());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		fail("Failed due to exception: " + e.getMessage());
+    	}
     }
-    
-    /**r
-     * Test Generation Tool with Demo data
-     */
-    @Ignore
-    @Test
-    public void testGenerationCayanan() {
-        String[] args = {"-d", "-p","src/main/resources/examples/cayanan/N1727539187_1.LBL",
-        		"-t","src/main/resources/examples/cayanan/template.vm","-c","src/main/resources/conf"};
-        GenerateLauncher.main(args);
-    }    
 }

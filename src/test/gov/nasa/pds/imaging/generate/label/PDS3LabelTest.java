@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import gov.nasa.pds.imaging.generate.constants.TestConstants;
+import gov.nasa.pds.imaging.generate.test.GenerateTest;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import junit.framework.TestCase;
-
-@Ignore
-public class PDS3LabelTest extends TestCase {
+@RunWith(JUnit4.class)
+public class PDS3LabelTest extends GenerateTest {
 
 	private PDS3Label label;
 	
@@ -26,6 +29,16 @@ public class PDS3LabelTest extends TestCase {
 		this.keyValueMap.put("INST_CMPRS_NAME", "JPEG DISCRETE COSINE TRANSFORM (DCT);        HUFFMAN/RATIO");
 	}
 	
+	@Test
+	public void testGet1() {
+		
+	}
+	
+	/**
+	 * FIXME Broken test from Transcoder bug
+	 */
+	@Test
+	@Ignore
 	public void testLabelReader() {
 		String value;
 		for (String key : this.keyValueMap.keySet()) {
@@ -37,6 +50,10 @@ public class PDS3LabelTest extends TestCase {
 		}
 	}
 	
+	/**
+	 * Not really a test, just trying out some functionality
+	 */
+	@Ignore
 	public void testLabelOutput() {
 		System.out.println(this.label.toString());
 	}
