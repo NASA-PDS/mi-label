@@ -23,13 +23,13 @@
   </properties>
 
   <body>
-    <release version="0.8.0" date="TBD" description="TBD">
+    <release version="0.7.1" date="2014-04-11" description="This release of the Generate Tool is a component of the integrated release 4.1.0 of the PDS4 System. This is an operational release of the system components to date.">
+      <action dev="jpadams" type="update" issue="PDS-259">
+        Completed some updates to PDS3Label and test suite to find solution to bug found in testing. Updates also included extensive documentation and debugger code.
+      </action>
     </release>
 
     <release version="0.7.0" date="2014-03-31" description="This release of the Generate Tool is a component of the integrated release 4.1.0 of the PDS4 System. This is an operational release of the system components to date.">
-      <action dev="jpadams" type="update" issue="PDS-259">
-	Completed some updates to PDS3Label and test suite to find solution to bug found in testing. Updates also included extensive documentation and debugger code.
-      </action>
       <action dev="jpadams" type="add" issue="PDS-240">
         Created new PDSTreeMap class that overrides the TreeMap default put functionality so if a key value matches, it will create an arraylist with the object already using that slot. This fixes a bug that doesn't allow duplicate keys.  Created new getPDSObjectNames method to allow for user to return a list of all OBJECT/GROUP names in the label.  Also included updates to PDS3LabelReader and PDS3Label classes.
       </action>
