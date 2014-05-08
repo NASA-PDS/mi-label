@@ -76,6 +76,7 @@
   </contributors>
 
   <build>
+    <testSourceDirectory>src/test</testSourceDirectory>
     <resources>
       <resource>
         <filtering>true</filtering>
@@ -126,6 +127,10 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
       </plugin>
       <!-- This fixes an error in the 2.7 version of the eclipse plugin -->
       <plugin>

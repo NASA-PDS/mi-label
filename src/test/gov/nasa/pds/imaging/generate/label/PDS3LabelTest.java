@@ -1,12 +1,12 @@
 package gov.nasa.pds.imaging.generate.label;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import gov.nasa.pds.imaging.generate.constants.TestConstants;
 import gov.nasa.pds.imaging.generate.test.GenerateTest;
-
+import gov.nasa.pds.imaging.generate.util.Utility;
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,20 +18,17 @@ public class PDS3LabelTest extends GenerateTest {
 
 	private PDS3Label label;
 	
-	private Map<String, String> keyValueMap;
+	private final static String TEST_LABEL_NAME = "gen_ELE_MOM.LBL";
 	
-	@Before public void setUp() {
-		this.label = new PDS3Label(TestConstants.MPF_TEST_LABEL);
+	@Before public void setUp() throws Exception {
+		this.label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1/" + TEST_LABEL_NAME));
 		this.label.setMappings();
-		
-		this.keyValueMap = new HashMap<String, String>();
-		this.keyValueMap.put("PROCESSING_HISTORY_TEXT", "CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA     JPL/MIPL MPFTELEMPROC");
-		this.keyValueMap.put("INST_CMPRS_NAME", "JPEG DISCRETE COSINE TRANSFORM (DCT);        HUFFMAN/RATIO");
 	}
 	
 	@Test
-	public void testGet1() {
-		
+	public void testGetSimple() {
+		String expected = "VG2-J-PLS-5-SUMM-ELE-MOM-96.0SEC-V1.0";
+		assertTrue(expected.equals(this.label.get("DATA_SET_ID")));
 	}
 	
 	/**
@@ -40,12 +37,14 @@ public class PDS3LabelTest extends GenerateTest {
 	@Test
 	@Ignore
 	public void testLabelReader() {
-		String value;
-		for (String key : this.keyValueMap.keySet()) {
+		HashMap<String, String>keyValueMap = new HashMap<String, String>();
+		keyValueMap.put("PROCESSING_HISTORY_TEXT", "CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA     JPL/MIPL MPFTELEMPROC");
+		keyValueMap.put("INST_CMPRS_NAME", "JPEG DISCRETE COSINE TRANSFORM (DCT);        HUFFMAN/RATIO");
+		for (String key : keyValueMap.keySet()) {
 			//System.out.println(this.label.get(key) + "\n");			
-			if (!this.label.get(key).equals(this.keyValueMap.get(key))) {
+			if (!this.label.get(key).equals(keyValueMap.get(key))) {
 				fail("'" + key + "' returned '" + this.label.get(key) + "'\n" +
-						"Expected: '" + this.keyValueMap.get(key) + "'");
+						"Expected: '" + keyValueMap.get(key) + "'");
 			}
 		}
 	}

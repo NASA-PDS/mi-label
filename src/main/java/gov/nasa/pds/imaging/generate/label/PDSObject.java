@@ -17,10 +17,4 @@ public interface PDSObject extends PDSContext {
     public String getFilePath();
 
     public List getList(String key) throws TemplateException;
-
-    public List<Map<String, String>> getRecords(String... keyword)
-            throws TemplateException;
-
-    public List<Map<String, String>> getRecordsWithIndices(List<String> keys,
-            String... keyword) throws TemplateException;
 }

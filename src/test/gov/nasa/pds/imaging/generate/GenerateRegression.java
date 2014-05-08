@@ -4,6 +4,7 @@
 package gov.nasa.pds.imaging.generate;
 
 import static org.junit.Assert.*;
+import gov.nasa.pds.imaging.generate.constants.TestConstants;
 import gov.nasa.pds.imaging.generate.label.PDS3Label;
 import gov.nasa.pds.imaging.generate.test.GenerateTest;
 import gov.nasa.pds.imaging.generate.util.Debugger;
@@ -29,8 +30,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class GenerateRegression extends GenerateTest {
 
-	private static final String TEST_DATA_DIR = "src/test/test-data"; 
-	private static final String TEST_OUT_DIR = "target/test";
 	private Generator generator;
 	
 	@Rule
@@ -42,7 +41,7 @@ public class GenerateRegression extends GenerateTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Debugger.debugFlag = true;
-		FileUtils.forceMkdir(new File(System.getProperty("user.dir") + "/" + TEST_OUT_DIR));
+		FileUtils.forceMkdir(new File(System.getProperty("user.dir") + "/" + TestConstants.TEST_OUT_DIR));
 	}
 
 	/**
@@ -74,8 +73,8 @@ public class GenerateRegression extends GenerateTest {
 	@Test
 	public void testCLI1() {        
     	try {
-    		String testPath = Utility.getAbsolutePath(TEST_DATA_DIR + "/cli1");
-    		String outFilePath = TEST_OUT_DIR + "/cli1.xml";
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1");
+    		String outFilePath = TestConstants.TEST_OUT_DIR + "/cli1.xml";
     		File output = new File(outFilePath);
     		File expected = new File(testPath + "/expected.xml");
 
@@ -108,9 +107,9 @@ public class GenerateRegression extends GenerateTest {
     @Test
     public void testTransformCLI() {
     	try {
-    		String testPath = Utility.getAbsolutePath(TEST_DATA_DIR + "/transform-0.2.2");
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/transform-0.2.2");
     		System.out.println(testPath);
-    		String outFilePath = TEST_OUT_DIR+ "/transformCLI.xml";
+    		String outFilePath = TestConstants.TEST_OUT_DIR+ "/transformCLI.xml";
     		File output = new File(outFilePath);
     		File expected = new File(testPath + "/expected.xml");
 

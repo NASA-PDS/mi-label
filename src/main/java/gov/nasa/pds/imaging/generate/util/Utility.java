@@ -5,7 +5,7 @@ import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
 import java.io.File;
 
 public class Utility {
-	public static String getAbsolutePath(String path) throws InvalidOptionException {
+	public static String getAbsolutePath(String path) throws Exception {
 		String finalPath = "";
 		File testFile = new File(path);
 		if (!testFile.isAbsolute()) {
@@ -15,7 +15,7 @@ public class Utility {
 		}
 		
 		if (!(new File(finalPath)).exists()) {
-			throw new InvalidOptionException("Path does not exist: " + finalPath);
+			throw new Exception("Path does not exist: " + finalPath);
 		}
 		
 		return finalPath;

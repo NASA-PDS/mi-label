@@ -27,7 +27,7 @@ public enum Flag {
             "Specify an output filename."),
 
     /** Flag to display the version. */
-    /*VERSION("V", "version", "Display application version."),*/
+    VERSION("V", "version", "Display application version."),
 
     /** Flag to display the version. */
     DEBUG("d", "debug", "Directs output to screen.  <default>");
@@ -59,7 +59,7 @@ public enum Flag {
         options = new Options();
 
         options.addOption(new ToolsOption(HELP));
-        //options.addOption(new ToolsOption(VERSION));
+        options.addOption(new ToolsOption(VERSION));
         options.addOption(new ToolsOption(PDS3));
         options.addOption(new ToolsOption(TEMPLATE));
         //options.addOption(new ToolsOption(FILE));

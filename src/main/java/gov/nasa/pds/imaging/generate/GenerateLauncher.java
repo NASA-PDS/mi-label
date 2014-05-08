@@ -1,9 +1,17 @@
-//*********************************************************************************/
-//Copyright (C) NASA/JPL  California Institute of Technology.                     */
-//PDS Imaging Node                                                                */
-//All rights reserved.                                                            */
-//U.S. Government sponsorship is acknowledged.                                    */
-//******************************************************************* *************/
+//	Copyright 2013, by the California Institute of Technology.
+//	ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+//	Any commercial use must be negotiated with the Office of Technology 
+//	Transfer at the California Institute of Technology.
+//	
+//	This software is subject to U. S. export control laws and regulations 
+//	(22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software 
+//	is subject to U.S. export control laws and regulations, the recipient has 
+//	the responsibility to obtain export licenses or other export authority as 
+//	may be required before exporting such information to foreign countries or 
+//	providing access to foreign nationals.
+//	
+//	$Id$
+//
 package gov.nasa.pds.imaging.generate;
 
 import gov.nasa.pds.imaging.generate.cli.options.Flag;
@@ -11,6 +19,7 @@ import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
 import gov.nasa.pds.imaging.generate.label.PDS3Label;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.ToolInfo;
+import gov.nasa.pds.imaging.generate.util.Utility;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +48,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 public class GenerateLauncher {
 
     private PDSObject pdsObject = null;
-    private String filePath = null;
 
     private String confPath = null;
     private File templateFile;
@@ -51,7 +59,6 @@ public class GenerateLauncher {
     public GenerateLauncher() {
         this.templateFile = null;
         this.pdsObject = null;
-        this.filePath = null;
         this.confPath = null;
         this.outputFile = null;
         this.stdOut = false;
@@ -120,18 +127,16 @@ public class GenerateLauncher {
             if (o.getOpt().equals(Flag.HELP.getShortName())) {
                 displayHelp();
                 System.exit(0);
-            }/* else if (o.getOpt().equals(Flag.VERSION.getShortName())) {
+            } else if (o.getOpt().equals(Flag.VERSION.getShortName())) {
                 displayVersion();
                 System.exit(0);
-            }*/ else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
-                this.pdsObject = new PDS3Label(getAbsolutePath("PDS3 Label", o.getValue().trim()));
+            } else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
+                this.pdsObject = new PDS3Label(Utility.getAbsolutePath(o.getValue().trim()));
                 this.pdsObject.setMappings();
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
-                this.templateFile = new File(getAbsolutePath("Velocity Template", o.getValue().trim()));
-            }/* else if (o.getOpt().equals(Flag.FILE.getShortName())) {
-                this.filePath = o.getValue().trim();
-            }*/ else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
-                this.confPath = getAbsolutePath("Config directory", o.getValue().trim());
+                this.templateFile = new File(Utility.getAbsolutePath(o.getValue().trim()));
+            } else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
+                this.confPath = Utility.getAbsolutePath(o.getValue().trim());
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
                 this.outputFile = new File(o.getValue().trim());
             }
@@ -153,27 +158,11 @@ public class GenerateLauncher {
             this.confPath = getConfigPath();
         }
 
-        // TODO Architectural issue - Too many arguments
+        // FIXME Architectural issue - Too many arguments
         this.generator = new Generator(this.pdsObject, this.templateFile,
-                this.filePath, this.confPath, this.outputFile);
+                this.confPath, this.outputFile);
 
     }
-
-	private String getAbsolutePath(String fileType, String filePath) throws InvalidOptionException {
-		String finalPath = "";
-		File testFile = new File(filePath);
-		if (!testFile.isAbsolute()) {
-			finalPath = System.getProperty("user.dir") + "/" + filePath;
-		} else {
-			finalPath = filePath;
-		}
-		
-		if (!(new File(finalPath)).exists()) {
-			throw new InvalidOptionException(fileType + " does not exist: " + filePath);
-		}
-		
-		return finalPath;
-	}
     
     /**
      * @param args

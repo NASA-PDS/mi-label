@@ -25,12 +25,30 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class GenerateLauncherTest extends GenerateTest {
     
+	/**
+	 * FIXME Only one method test works at a time. Getting error with ResourceManager
+	 * 		when trying to load a second Velocity template
+	 */
+	
+	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("testGenerationDemo");
+	public SingleTestRule test = new SingleTestRule("testGenerationMPFExample");
 	
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		Debugger.debugFlag = true;
+	}
+	
+	@Test
+	public void testDisplayVersion() {
+		GenerateLauncher launcher = new GenerateLauncher();
+		
+		try {
+			launcher.displayVersion();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Test failed due to exception.");
+		}
 	}
 	
     /**

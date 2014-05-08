@@ -31,7 +31,8 @@ public class ItemNode {
         return this.values.get(0);
     }
 
-    public List getValues() {
+    @SuppressWarnings("rawtypes")
+	public List getValues() {
         return this.values;
     }
 

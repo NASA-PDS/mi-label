@@ -82,20 +82,4 @@ public class XMLUtil {
 
         return map;
     }
-
-    /**
-     * For debugging only
-     * 
-     * @param args
-     */
-    public static void main(final String[] args) {
-        try {
-            XMLUtil.getGeneratedMappings(
-                    "src/main/resources/conf/generated-mappings.xml",
-                    "context", "class");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }

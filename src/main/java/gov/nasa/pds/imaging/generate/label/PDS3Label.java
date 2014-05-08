@@ -1,18 +1,26 @@
-//*************************************************************/
-//Copyright (C) NASA/JPL  California Institute of Technology. */
-//PDS Imaging Node                                            */
-//All rights reserved.                                        */
-//U.S. Government sponsorship is acknowledged.                */
-//*************************************************************/
+//	Copyright 2013, by the California Institute of Technology.
+//	ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+//	Any commercial use must be negotiated with the Office of Technology 
+//	Transfer at the California Institute of Technology.
+//	
+//	This software is subject to U. S. export control laws and regulations 
+//	(22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software 
+//	is subject to U.S. export control laws and regulations, the recipient has 
+//	the responsibility to obtain export licenses or other export authority as 
+//	may be required before exporting such information to foreign countries or 
+//	providing access to foreign nationals.
+//	
+//	$Id$
+//
 package gov.nasa.pds.imaging.generate.label;
 
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
+import gov.nasa.pds.imaging.generate.label.reader.PDS3LabelReader;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -107,6 +115,7 @@ public class PDS3Label implements PDSObject {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public final List getList(final String key) throws TemplateException {
 		return ((ItemNode) getNode(key)).getValues();
     }
@@ -139,39 +148,6 @@ public class PDS3Label implements PDSObject {
     }
 
     @Override
-    public final List<Map<String, String>> getRecords(final String... keyword)
-            throws TemplateException {
-
-        this.ctxtUtil = new ContextUtil();
-        
-        for (int i = 0; i < keyword.length; i++) {
-            this.ctxtUtil.addDictionaryElement(keyword[i].toUpperCase(),
-                    getList(keyword[i].toUpperCase()));
-        }
-        return this.ctxtUtil.getDictionary();
-    }
-
-    @Override
-    public final List<Map<String, String>> getRecordsWithIndices(
-            final List<String> keys, final String... keyword)
-            throws TemplateException {
-
-        this.ctxtUtil = new ContextUtil();
-
-        final int size = keys.size();
-        if (keys.size() != keyword.length) {
-            throw new TemplateException("getRecordsWithIndices method must contain"
-                    + " same number of keys and keywords.");
-        }
-
-        for (int i = 0; i < size; i++) {
-            this.ctxtUtil.addDictionaryElement(keys.get(i).toUpperCase(),
-                    getList(keyword[i].toUpperCase()));
-        }
-        return this.ctxtUtil.getDictionary();
-    }
-
-    @Override
     public final String getUnits(final String key) {
         return ((ItemNode) getNode(key)).getUnits();
     }
@@ -186,7 +162,7 @@ public class PDS3Label implements PDSObject {
     public void setMappings() {
     	Debugger.debug("+++++++++++++++++++++++++++\n"
     		+ "PDS3Label.setMapping()\n"
-    		+ "document " + document
+    		+ "document " + document + "\n"
 			+ "+++++++++++++++++++++++++++");
         try {
             final PDS3LabelReader reader = new PDS3LabelReader();
@@ -211,7 +187,17 @@ public class PDS3Label implements PDSObject {
             fnfe.printStackTrace();
         }
     }
-
+    
+    /**
+     * Added per request from mcayanan in order to be able to loop through the
+     * PDS Objects that can be found in the label
+     * 
+     * @return
+     */
+    public final List<String> getPDSObjectNames() {
+    	return this.pdsObjectNames;
+    }
+    
     @Override
     public final String toString() {
         final StringBuffer strBuff = new StringBuffer();
@@ -221,17 +207,6 @@ public class PDS3Label implements PDSObject {
             strBuff.append(key + " = " + this.flatLabel.get(key) + "\n");
         }
         return strBuff.toString();
-    }
-    
-    public final List<String> getPDSObjectNames() {
-    	return this.pdsObjectNames;
-    }
-
-    @Deprecated
-    private final void debug(String msg) {
-    	if (this.debug) {
-    		System.out.println(msg);
-    	}
     }
 
 }
