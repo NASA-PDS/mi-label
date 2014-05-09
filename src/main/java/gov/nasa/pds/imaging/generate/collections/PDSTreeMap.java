@@ -1,4 +1,4 @@
-package gov.nasa.pds.imaging.generate.label;
+package gov.nasa.pds.imaging.generate.collections;
 
 import java.util.ArrayList;
 import java.util.List;

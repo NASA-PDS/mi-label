@@ -41,18 +41,19 @@ public class Generator {
 	private static final String CLEAN_XSLT = "cleanup.xsl";
 
 	private PDSObject pdsObject = null;
-
+	private Template template;
+	private VelocityContext context;
+	private ContextMappings ctxtMappings;
+	
 	private final Map<String, Map> mapped = null;
 
-	private VelocityContext context;
-	private String templatePath;
+	private File templateFile;
+	private File outputFile;
+
     // (srl) velocity config files also URL enabled? getting messy
 	private String confPath;
     // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
-	private File templateFile;
-	private Template template;
-	private File outputFile;
-	private ContextMappings ctxtMappings;
+	private String templatePath;
 
 	private OutputStream outputStream;
 	// ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
@@ -73,19 +74,18 @@ public class Generator {
 
 	public Generator(final PDSObject pdsObject, final File templateFile,
 			final String confPath, final File outputFile) throws Exception {
-		this.context = null;
-		this.templateFile = templateFile;
-		this.pdsObject = pdsObject;
-		this.outputFile = outputFile;
-		Debugger.debug("Generator constructor confPath "+confPath);
-		System.out.println(confPath);
-
-		this.confPath = confPath;
-		this.ctxtMappings = new ContextMappings(this.pdsObject, confPath);
-
-		initTemplate();
-		setContext();
-	}
+        this.context = null;
+        this.templateFile = templateFile;
+        this.pdsObject = pdsObject;
+        this.outputFile = outputFile;
+        this.ctxtMappings = new ContextMappings(this.pdsObject, confPath);
+        this.confPath = confPath;
+        
+        Debugger.debug("Generator constructor confPath " + confPath);
+        
+        initTemplate();
+        setContext();
+    }
 
 	/**
 	 * Method to use XSLT in order to remove all empty tags and whitespace from

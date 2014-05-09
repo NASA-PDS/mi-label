@@ -1,8 +1,8 @@
-package gov.nasa.pds.imaging.generate.label.reader;
+package gov.nasa.pds.imaging.generate.readers;
 
+import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.label.FlatLabel;
 import gov.nasa.pds.imaging.generate.label.ItemNode;
-import gov.nasa.pds.imaging.generate.label.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.io.BufferedReader;

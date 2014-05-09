@@ -15,8 +15,9 @@
 package gov.nasa.pds.imaging.generate.label;
 
 import gov.nasa.pds.imaging.generate.TemplateException;
+import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
-import gov.nasa.pds.imaging.generate.label.reader.PDS3LabelReader;
+import gov.nasa.pds.imaging.generate.readers.PDS3LabelReader;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.io.FileNotFoundException;
@@ -64,6 +65,20 @@ public class PDS3Label implements PDSObject {
      */
     public PDS3Label() {
         this.filePath = null;
+        this.flatLabel = new PDSTreeMap();
+    }
+    
+    /**
+     * Constructor
+     * 
+     * Construct the PDS3label using a DOM object from somewhere else
+     * 
+     * @param document
+     */
+    public PDS3Label(Document document) {
+    	Debugger.debug("PDS3Label constructor document " + document);
+        this.filePath = "";
+        this.document = document;
         this.flatLabel = new PDSTreeMap();
     }
 
