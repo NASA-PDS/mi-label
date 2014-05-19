@@ -98,7 +98,7 @@ public class PDS3LabelReader {
         // Check is the units is null
         // (jp) This doesn't make sense. We want to grab the units from
         //      the node...
-        if (units != null) {
+        if (units == null) {
         	units = "none"; // ""
         }
         itemNode = new ItemNode(elementName, units);
