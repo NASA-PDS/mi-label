@@ -81,7 +81,6 @@ public class GenerateRegression extends GenerateTest {
 	        String[] args = {"-d", 
 	        		"-p",testPath + "/gen_ELE_MOM.LBL",
 	        		"-t",testPath + "/gen_data.vm",
-	        		"-c","src/main/resources/conf",
 	        		"-o",outFilePath};
 	        GenerateLauncher.main(args);
 	        
@@ -116,7 +115,6 @@ public class GenerateRegression extends GenerateTest {
 	        String[] args = {"-d", 
 	        		"-p", testPath + "/ELE_MOM.LBL",
 	        		"-t", testPath + "/generic-pds3_to_pds4.vm",
-	        		"-c", "src/main/resources/conf",
 	        		"-o", outFilePath};
 	        GenerateLauncher.main(args);
 	        

@@ -49,7 +49,6 @@ public class GenerateLauncher {
 
     private PDSObject pdsObject = null;
 
-    private String confPath = null;
     private File templateFile;
     private File outputFile;
     private boolean stdOut;
@@ -59,7 +58,6 @@ public class GenerateLauncher {
     public GenerateLauncher() {
         this.templateFile = null;
         this.pdsObject = null;
-        this.confPath = null;
         this.outputFile = null;
         this.stdOut = false;
         this.generator = null;
@@ -135,8 +133,6 @@ public class GenerateLauncher {
                 this.pdsObject.setMappings();
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
                 this.templateFile = new File(Utility.getAbsolutePath(o.getValue().trim()));
-            } else if (o.getOpt().equals(Flag.CONFIG.getShortName())) {
-                this.confPath = Utility.getAbsolutePath(o.getValue().trim());
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
                 this.outputFile = new File(o.getValue().trim());
             }
@@ -152,10 +148,6 @@ public class GenerateLauncher {
         }
         if (this.outputFile == null) {	// If no outputFile given, default input filename with appended .xml
         	this.outputFile = new File(this.pdsObject.getFilePath() + ".xml");
-        }
-        if (this.confPath == null) { // Need to set output filename based on
-                                     // label filename
-            this.confPath = getConfigPath();
         }
 
         // FIXME Architectural issue - Too many arguments

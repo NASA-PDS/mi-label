@@ -57,7 +57,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationDemo() {
         String[] args = {"-d", "-p","src/main/resources/examples/example1/pds3_example.lbl",
-        		"-t","src/main/resources/examples/example1/template_example.vm","-c","src/main/resources/conf"};
+        		"-t","src/main/resources/examples/example1/template_example.vm"};
         GenerateLauncher.main(args);
     }    
 	
@@ -67,7 +67,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationMER() {
         String[] args = {"-d", "-p","src/main/resources/examples/example2/1p216067135edn76pop2102l2m1.img",
-        		"-t","src/main/resources/examples/example2/mer_template.vm","-c","src/main/resources/conf"};
+        		"-t","src/main/resources/examples/example2/mer_template.vm"};
         GenerateLauncher.main(args);
     }
     
@@ -77,7 +77,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationMPFExample() {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf"};
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm"};
         GenerateLauncher.main(args);
     }
     
@@ -89,7 +89,7 @@ public class GenerateLauncherTest extends GenerateTest {
     public void testGenerationOutFile() {
     	try {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-c","src/main/resources/conf", "-o", "target/out.pds4"};
+        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-o", "target/out.pds4"};
         GenerateLauncher.main(args);
         assertTrue((new File(Utility.getAbsolutePath("target/out.pds4"))).exists());
     	} catch (Exception e) {

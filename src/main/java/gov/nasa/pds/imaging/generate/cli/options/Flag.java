@@ -18,10 +18,6 @@ public enum Flag {
     /*FILE("f", "file-list", "file list", String.class,
             "Specify the path for a file containing a list of file paths for PDS3 Labels"),*/
 
-    /** Flag to specify path for the context-classes.xml */
-    CONFIG("c", "config-home", "config home", String.class,
-            "Specify the path for the configuration files"),
-
     /** Flag to specify the output file name */
     OUTPUT("o", "output-file", "output file", String.class,
             "Specify an output filename."),
@@ -63,7 +59,6 @@ public enum Flag {
         options.addOption(new ToolsOption(PDS3));
         options.addOption(new ToolsOption(TEMPLATE));
         //options.addOption(new ToolsOption(FILE));
-        options.addOption(new ToolsOption(CONFIG));
         options.addOption(new ToolsOption(OUTPUT));
         options.addOption(new ToolsOption(DEBUG));
     }
