@@ -58,7 +58,6 @@ public class PDS3Label implements PDSObject {
     private List<String> pdsObjectNames;
     
     private String filePath;
-    private String configPath;
 
     /**
      * Empty Constructor, set everything later on
@@ -168,8 +167,7 @@ public class PDS3Label implements PDSObject {
     }
 
     @Override
-    public final void setParameters(PDSObject pdsObject, String confPath) {
-    	this.configPath = confPath;
+    public final void setParameters(PDSObject pdsObject) {
     	this.filePath = pdsObject.getFilePath();
     }
 

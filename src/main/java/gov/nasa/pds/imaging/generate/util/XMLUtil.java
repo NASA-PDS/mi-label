@@ -2,6 +2,7 @@ package gov.nasa.pds.imaging.generate.util;
 
 import gov.nasa.pds.imaging.generate.TemplateException;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -30,8 +32,9 @@ public class XMLUtil {
      * @throws TemplateException
      * @throws Exception
      */
-    public static List<String> getClassList(final String file, final String tag)
+    public static List<String> getClassList(final InputStream inputStream, final String tag)
             throws TemplateException, Exception {
+      try {
         final List<String> classList = new ArrayList<String>();
 
         final DocumentBuilderFactory domFactory = DocumentBuilderFactory
@@ -39,8 +42,7 @@ public class XMLUtil {
         domFactory.setNamespaceAware(true);
 
         final DocumentBuilder builder = domFactory.newDocumentBuilder();
-        final Document doc = builder.parse(file);
-
+        final Document doc = builder.parse(inputStream);
         final NodeList classes = doc.getElementsByTagName(tag);
 
         for (int i = 0; i < classes.getLength(); i++) {
@@ -48,6 +50,9 @@ public class XMLUtil {
         }
 
         return classList;
+      } finally {
+        IOUtils.closeQuietly(inputStream);
+      }
     }
 
     /**
@@ -61,25 +66,28 @@ public class XMLUtil {
      * @throws TemplateException
      * @throws Exception
      */
-    public static Map<String, Class<?>> getGeneratedMappings(final String file,
+    public static Map<String, Class<?>> getGeneratedMappings(final InputStream inputStream,
             final String key, final String value) throws TemplateException, Exception {
         final Map<String, Class<?>> map = new HashMap<String, Class<?>>();
-
-        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-                .newInstance();
-        domFactory.setNamespaceAware(true);
-
-        final DocumentBuilder builder = domFactory.newDocumentBuilder();
-        final Document doc = builder.parse(file);
-
-        final NodeList contexts = doc.getElementsByTagName(key);
-        final NodeList classes = doc.getElementsByTagName(value);
-
-        for (int i = 0; i < contexts.getLength(); i++) {
-            map.put(contexts.item(i).getTextContent(),
-                    Class.forName(classes.item(i).getTextContent()));
+        try {
+          final DocumentBuilderFactory domFactory = DocumentBuilderFactory
+                  .newInstance();
+          domFactory.setNamespaceAware(true);
+  
+          final DocumentBuilder builder = domFactory.newDocumentBuilder();
+          final Document doc = builder.parse(inputStream);
+  
+          final NodeList contexts = doc.getElementsByTagName(key);
+          final NodeList classes = doc.getElementsByTagName(value);
+  
+          for (int i = 0; i < contexts.getLength(); i++) {
+              map.put(contexts.item(i).getTextContent(),
+                      Class.forName(classes.item(i).getTextContent()));
+          }
+  
+          return map;
+        } finally {
+          IOUtils.closeQuietly(inputStream);
         }
-
-        return map;
     }
 }

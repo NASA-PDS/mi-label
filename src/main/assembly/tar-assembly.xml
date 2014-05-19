@@ -71,15 +71,17 @@
       <fileMode>644</fileMode>
       <lineEnding>unix</lineEnding>
     </fileSet>
+    <!-- 
     <fileSet>
       <directory>src/main/resources/conf</directory>
       <outputDirectory>conf</outputDirectory>
       <includes>
-        <include>*.xml</include>
+        <include>velocity-tools.xml</include>
       </includes>
       <fileMode>644</fileMode>
       <lineEnding>unix</lineEnding>
     </fileSet>
+    -->
     <fileSet>
       <directory>target/site</directory>
       <outputDirectory>doc</outputDirectory>

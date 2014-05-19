@@ -71,6 +71,7 @@
       <fileMode>644</fileMode>
       <lineEnding>crlf</lineEnding>
     </fileSet>
+<!-- 
     <fileSet>
       <directory>src/main/resources/conf</directory>
       <outputDirectory>conf</outputDirectory>
@@ -80,6 +81,7 @@
       <fileMode>644</fileMode>
       <lineEnding>crlf</lineEnding>
     </fileSet>
+-->
     <fileSet>
       <directory>target/site</directory>
       <outputDirectory>doc</outputDirectory>

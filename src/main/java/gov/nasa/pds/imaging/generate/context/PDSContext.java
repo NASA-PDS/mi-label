@@ -21,7 +21,7 @@ public interface PDSContext {
 
     //public void setInputPath(String str);
     
-    public void setParameters(PDSObject pdsObject, String confPath);
+    public void setParameters(PDSObject pdsObject);
 
     public void setMappings() throws Exception;
 }

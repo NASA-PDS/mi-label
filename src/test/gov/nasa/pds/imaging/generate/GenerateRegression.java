@@ -145,7 +145,6 @@ public class GenerateRegression extends GenerateTest {
 			this.generator.setPDSObject(label);
 			File template = new File(Utility.getAbsolutePath("src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm"));
 			this.generator.setTemplateFile(template);
-			this.generator.setConfPath(Utility.getAbsolutePath("src/main/resources/conf"));
 			this.generator.generate(true);
 		} catch (Exception e) {
 			e.printStackTrace();

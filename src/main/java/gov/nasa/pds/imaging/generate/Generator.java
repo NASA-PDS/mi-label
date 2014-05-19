@@ -50,8 +50,6 @@ public class Generator {
 	private File templateFile;
 	private File outputFile;
 
-    // (srl) velocity config files also URL enabled? getting messy
-	private String confPath;
     // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
 	private String templatePath;
 
@@ -63,7 +61,6 @@ public class Generator {
 	public Generator() throws Exception {
 		this.context = null;
 		this.templatePath = "";
-		this.confPath = "";
 		this.templateFile = null;
 		this.template = null;
 		this.pdsObject = null;
@@ -73,16 +70,13 @@ public class Generator {
 	}
 
 	public Generator(final PDSObject pdsObject, final File templateFile,
-			final String confPath, final File outputFile) throws Exception {
+			final File outputFile) throws Exception {
         this.context = null;
         this.templateFile = templateFile;
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
-        this.ctxtMappings = new ContextMappings(this.pdsObject, confPath);
-        this.confPath = confPath;
-        
-        Debugger.debug("Generator constructor confPath " + confPath);
-        
+        this.ctxtMappings = new ContextMappings(this.pdsObject);
+               
         initTemplate();
         setContext();
     }
@@ -369,7 +363,7 @@ public class Generator {
 
 	private void addToolManager() {
 		ToolManager velocityToolManager = new ToolManager();
-		velocityToolManager.configure(this.confPath + "/velocity-tools.xml");
+		velocityToolManager.configure("gov/nasa/pds/imaging/generate/velocity-tools.xml");
 		this.context = new VelocityContext(velocityToolManager.createContext());
 	}
 
@@ -436,7 +430,4 @@ public class Generator {
 		this.templatePath = templatePath;
 	}
 
-	public void setConfPath(final String confPath) {
-		this.confPath = confPath;
-	}
 }

@@ -160,7 +160,7 @@ public class GenerateLauncher {
 
         // FIXME Architectural issue - Too many arguments
         this.generator = new Generator(this.pdsObject, this.templateFile,
-                this.confPath, this.outputFile);
+                this.outputFile);
 
     }
     

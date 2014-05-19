@@ -94,6 +94,30 @@
           <include>cleanup.xsl</include>
         </includes>
       </resource>
+      <resource>
+        <filtering>true</filtering>
+        <targetPath>gov/nasa/pds/imaging/generate/context</targetPath>
+        <directory>src/main/resources/conf</directory>
+        <includes>
+          <include>context-classes.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <targetPath>gov/nasa/pds/imaging/generate/automatic</targetPath>
+        <directory>src/main/resources/conf</directory>
+        <includes>
+          <include>generated-mappings.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <targetPath>gov/nasa/pds/imaging/generate</targetPath>
+        <directory>src/main/resources/conf</directory>
+        <includes>
+          <include>velocity-tools.xml</include>
+        </includes>
+      </resource>              
     </resources>
     <plugins>
       <plugin>

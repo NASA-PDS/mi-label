@@ -30,6 +30,9 @@
       <action dev="jpadams" type="update" issue="PDS-271">
 	Incorporated all of the changes with a few minor tweaks for outputting debugging.
       </action>
+      <action dev="mcayanan" type="update">
+        Updated to package the config files within the Generate jar file.
+      </action>
     </release>
 
     <release version="0.7.1" date="2014-04-11" description="This release of the Generate Tool is a component of the integrated release 4.1.0 of the PDS4 System. This is an operational release of the system components to date.">
