@@ -112,9 +112,11 @@ public class Generator {
 			String outputUnclean = doc.toString();
 			Debugger.debug("this.outputFile = "+this.outputFile);
 			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
-			PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
-			cout.write(outputUnclean);
-			cout.close();
+			if (Debugger.debugFlag) {
+			  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
+			  cout.write(outputUnclean);
+			  cout.close();
+			}
 
 			final StringWriter out = new StringWriter();
 			transformer.transform(new DOMSource(doc), new StreamResult(out));
@@ -149,10 +151,12 @@ public class Generator {
 		String pdsObjFlat = this.pdsObject.toString();
 		Debugger.debug("this.pdsObject.toString() " );
 		Debugger.debug(pdsObjFlat );       
-		// this is the flattened PDS3Label used by the velocity template      
-		PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-		cout.write(pdsObjFlat);
-		cout.close();
+		// this is the flattened PDS3Label used by the velocity template
+		if (Debugger.debugFlag) {
+		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
+		  cout.write(pdsObjFlat);
+		  cout.close();
+		}
 		// End debugging code
 
 		try {
@@ -213,9 +217,11 @@ public class Generator {
 		Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
 		// this is the flattened PDS3Label
-		PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-		cout.write(pdsObjFlat);
-		cout.close();
+		if (Debugger.debugFlag) {
+		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
+		  cout.write(pdsObjFlat);
+		  cout.close();
+		}
 		// End debugging code
 
 		try {
@@ -263,11 +269,12 @@ public class Generator {
 		Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
 		// this is the flattened PDS3Label
+		if (Debugger.debugFlag) {
+		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
 
-		PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-
-		cout.write(pdsObjFlat);
-		cout.close();
+		  cout.write(pdsObjFlat);
+		  cout.close();
+		}
 		// End debugging output
 
 		try {
