@@ -33,7 +33,7 @@
   <description>
     The Generate Tool provides a command-line interface for generating PDS4 Labels from either a PDS3 Label or a PDS-specific DOM object.
   </description>
-  <url>http://pds-cm.jpl.nasa.gov/pds4/preparation/generate/</url>
+  <url>https://pds-cm.jpl.nasa.gov/pds4/preparation/generate/</url>
 
   <licenses>
     <license>
@@ -194,7 +194,7 @@
       <id>pds-repo</id>
       <name>PDS Repository</name>
       <layout>default</layout>
-      <url>http://pds-cm.jpl.nasa.gov/maven2</url>
+      <url>https://pds-cm.jpl.nasa.gov/maven2</url>
       <releases>
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
