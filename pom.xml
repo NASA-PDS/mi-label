@@ -26,7 +26,7 @@
 
   <groupId>gov.nasa.pds.2010.preparation</groupId>
   <artifactId>generate</artifactId>
-  <version>0.8.0-dev</version>
+  <version>0.7.2</version>
   <packaging>jar</packaging>
 
   <name>Generate Tool</name>
@@ -247,6 +247,7 @@
       <artifactId>commons-collections</artifactId>
       <version>3.2.1</version>
     </dependency>
+    <!-- Version 3.0 is available. -->
     <dependency>
       <groupId>jpl.mipl.io</groupId>
       <artifactId>vicario</artifactId>

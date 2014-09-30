@@ -23,10 +23,7 @@
   </properties>
 
   <body>
-    <release version="0.8.0" date="TBD" description="TBD">
-    </release>
-
-    <release version="0.7.2" date="2014-06-24" description="This release of the Generate Tool is a component of the integrated release 4.1.1 of the PDS4 System. This is an operational release of the system components to date.">
+    <release version="0.7.2" date="2014-06-24" description="This release of the Generate Tool is a component of the integrated release 4.1.1 and 5.0.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="jpadams" type="update" issue="PDS-61">
         Resolved version bug.
       </action>
@@ -34,7 +31,7 @@
         Incorporated all of the changes with a few minor tweaks for outputting debugging.
       </action>
       <action dev="mcayanan" type="update">
-        Updated to package the config files within the Generate jar file.
+        Updated to package the configuration files within the Generate jar file.
       </action>
     </release>
 
