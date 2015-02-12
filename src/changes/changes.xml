@@ -24,6 +24,12 @@
 
   <body>
     <release version="0.8.0" date="TBD" description="TBD">
+      <action dev="jpadams" type="update" issue="PDS-224">
+	move test to proper location. build out test suite to better look at some of the new functionality per PDS-318 and some old functions.
+      </action>
+      <action dev="jpadams" type="update" issue="PDS-318">
+	Update ItemNode to extend ArrayList because it should have been that from the start. now ths object is iterable and has all of the methods that come with an ArrayList. Updated Generator to build the output directory path if it doesn't exist. Update example template to no longer use getRecords and instead iterate through a counter and use some of hte ArrayList methods from ItemNote.
+      </action>
     </release>
 
     <release version="0.7.2" date="2014-06-24" description="This release of the Generate Tool is a component of the integrated release 4.1.1 and 5.0.0 of the PDS4 System. This is an operational release of the system components to date.">
