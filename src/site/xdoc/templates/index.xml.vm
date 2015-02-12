@@ -186,14 +186,17 @@ END_GROUP			= BAND_BIN
     	
 				<b><u>Velocity</u></b>
 <source>
+&lt;!-- Scenario 4 - Multiple Instances  --&gt;
 &lt;Band_Bin_Set&gt;
-\#set( $bandBinList = $label.getRecords('BAND_BIN.CENTER','BAND_BIN.WIDTH') )
-\#foreach ( $bandBin in $bandBinList )
+&lt;!-- Get size of one of the arrays from the PDS3 Label --&gt;
+&#35;set($length = $label.BAND_BIN.CENTER.size())
+&lt;!-- Loop through the length of the array --&gt;
+&#35;foreach ( $i in [1..$length] )
   &lt;Band_Bin&gt;
-    &lt;center&gt;$bandBin.CENTER&lt;/center&gt;
-    &lt;width&gt;$bandBin.WIDTH&lt;/width&gt;
+     &lt;center&gt;$label.BAND_BIN.CENTER.get($foreach.index)&lt;/center&gt;
+     &lt;width&gt;$label.BAND_BIN.WIDTH.get($foreach.index)&lt;/width&gt;
   &lt;/Band_Bin&gt;
-\#end
+&#35;end
 &lt;/Band_Bin_Set&gt;
 </source>
     	</subsection>
