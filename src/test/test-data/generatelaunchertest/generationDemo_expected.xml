@@ -1,0 +1,56 @@
+<Product_Array_2D_Image xmlns="http://pds.nasa.gov/schema/pds4/pds/v03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/schema/pds4/pds/v03 Product_Array_2D_Image_0311B_MPF_IMP_EDR.xsd ">
+  <!-- Scenario 1 - Hard-coded values  -->
+  <Data_Standards>
+    <dd_version_id>0311B_20110709</dd_version_id>
+  </Data_Standards>
+  <!-- Scenario 2 - Base element  -->
+  <Subject_Area>
+    <target_name>DEIMOS</target_name>
+  </Subject_Area>
+  <!-- Scenario 3 - Sub-elements  -->
+  <Object_Statistics>
+    <mean>8.6319</mean>
+    <median>8</median>
+    <minimum>8</minimum>
+  </Object_Statistics>
+  <!-- Scenario 4 - Multiple Instances  -->
+  <Band_Bin_Set>
+    <Band_Bin>
+      <center>0.374</center>
+      <width>0.0155</width>
+    </Band_Bin>
+    <Band_Bin>
+      <center>0.384</center>
+      <width>0.0115</width>
+    </Band_Bin>
+    <Band_Bin>
+      <center>0.394</center>
+      <width>0.0114</width>
+    </Band_Bin>
+    <Band_Bin>
+      <center>0.404</center>
+      <width>0.0112</width>
+    </Band_Bin>
+  </Band_Bin_Set>
+  <!-- Scenario 5 - Same class, different values  -->
+  <Array_2D_Image>
+    <Array_Axis>
+      <name>SAMPLES</name>
+      <elements>320</elements>
+      <sequence_number>1</sequence_number>
+    </Array_Axis>
+    <Array_Axis>
+      <name>LINES</name>
+      <elements>192</elements>
+      <sequence_number>2</sequence_number>
+    </Array_Axis>
+  </Array_2D_Image>
+  <!-- Scenario 6 - Units  -->
+  <Geometry_Parameters>
+    <azimuth units="deg">114.0210</azimuth>
+  </Geometry_Parameters>
+  <!-- Scenario 7 - Generated Values  -->
+  <File_Area>
+    <md5_checksum>2a6f0be7f63d0aa032457f1f29d3e51d</md5_checksum>
+  </File_Area>
+</Product_Array_2D_Image>

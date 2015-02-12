@@ -127,7 +127,7 @@ public class GenerateRegression extends GenerateTest {
 	        		output.exists());
 	        
 	        // Check the files match
-	        assertTrue(FileUtils.contentEquals(expected, output));
+	        assertTrue(expected + " and " + output + " do not match.",FileUtils.contentEquals(expected, output));
     	} catch (Exception e) {
     		e.printStackTrace();
     		fail("Test Failed Due To Exception: " + e.getMessage());

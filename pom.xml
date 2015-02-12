@@ -76,7 +76,7 @@
   </contributors>
 
   <build>
-    <testSourceDirectory>src/test</testSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <resources>
       <resource>
         <filtering>true</filtering>

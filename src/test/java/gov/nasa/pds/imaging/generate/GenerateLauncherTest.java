@@ -12,10 +12,12 @@ import java.io.File;
 
 import gov.nasa.pds.imaging.generate.GenerateLauncher;
 import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
+import gov.nasa.pds.imaging.generate.constants.TestConstants;
 import gov.nasa.pds.imaging.generate.test.GenerateTest;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.Utility;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,13 +32,15 @@ public class GenerateLauncherTest extends GenerateTest {
 	 * 		when trying to load a second Velocity template
 	 */
 	
+    private static String testPath;
 	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("testGenerationMPFExample");
+	public SingleTestRule test = new SingleTestRule("testGenerationDemo");
 	
 	@BeforeClass
-	public static void oneTimeSetUp() {
+	public static void oneTimeSetUp() throws Exception {
 		Debugger.debugFlag = true;
+		testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest");
 	}
 	
 	@Test
@@ -56,9 +60,32 @@ public class GenerateLauncherTest extends GenerateTest {
      */
     @Test
     public void testGenerationDemo() {
-        String[] args = {"-d", "-p","src/main/resources/examples/example1/pds3_example.lbl",
-        		"-t","src/main/resources/examples/example1/template_example.vm"};
-        GenerateLauncher.main(args);
+        try {
+            String exPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/example1");
+            String outFilePath = TestConstants.TEST_OUT_DIR + "/generationDemo.xml";
+            File output = new File(outFilePath);
+            File expected = new File(testPath + "/generationDemo_expected.xml");
+            
+            String[] args = {"-d", 
+                    "-p",exPath + "/pds3_example.lbl",
+                    "-t",exPath + "/template_example.vm",
+                    "-o",outFilePath};
+            GenerateLauncher.main(args);
+        
+            // Check expected file exists
+            assertTrue(expected.getAbsolutePath() + " does not exist.", 
+                    expected.exists());
+            
+            // Check output was generated
+            assertTrue(output.getAbsolutePath() + " does not exist.",
+                    output.exists());
+            
+            // Check the files match
+            assertTrue(FileUtils.contentEquals(expected, output));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception thrown.");
+        }
     }    
 	
     /**
