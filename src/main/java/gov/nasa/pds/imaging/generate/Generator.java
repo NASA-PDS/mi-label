@@ -24,6 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -111,6 +112,13 @@ public class Generator {
 
 			String outputUnclean = doc.toString();
 			Debugger.debug("this.outputFile = "+this.outputFile);
+			
+			// Make sure the file path exists, otherwise make dirs
+			File outDir = this.outputFile.getParentFile();
+			if (!outDir.exists()) {
+			    FileUtils.forceMkdir(outDir);
+			}
+			
 			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
 			if (Debugger.debugFlag) {
 			  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");

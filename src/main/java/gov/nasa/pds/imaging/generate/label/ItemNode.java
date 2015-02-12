@@ -1,22 +1,24 @@
 package gov.nasa.pds.imaging.generate.label;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class ItemNode {
+public class ItemNode extends ArrayList<String>{
 
     private String name;
-    private final List<String> values;
+    //private final List<String> values;
     public String units;
 
     public ItemNode(final String name, final String units) {
+        super();
         this.name = name;
-        this.values = new ArrayList<String>();
+        //this.values = new ArrayList<String>();
         this.units = units;
     }
 
     public void addValue(final String value) {
-        this.values.add(value);
+        this.add(value.trim());
     }
 
     public String getName() {
@@ -27,13 +29,17 @@ public class ItemNode {
         return units;
     }
 
-    public String getValue() {
-        return this.values.get(0);
+    public Object getValue() {
+        if (this.size() == 1) {
+            return this.get(0);
+        } else {
+            return this;
+        }
     }
 
     @SuppressWarnings("rawtypes")
 	public List getValues() {
-        return this.values;
+        return this;
     }
 
     public void setName(final String name) {
@@ -45,12 +51,22 @@ public class ItemNode {
     }
 
     public void setValues(final List<String> values) {
-        this.values.addAll(values);
+        this.addAll(values);
     }
-
+    
     @Override
     public String toString() {
-        return this.values.get(0);
+        String out = "";
+        if (this.size() == 1) {
+            out = this.get(0);
+        } else {
+            out = "(";
+            for (String value : this) {
+                out += value + ",";
+            }
+            out = out.substring(0, out.length()-1) + ")";
+        }
+        return out;
     }
 
 }
