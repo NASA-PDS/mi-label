@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- 
+<!--
   Copyright 2011-2014, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
-  Any commercial use must be negotiated with the Office of Technology 
+  Any commercial use must be negotiated with the Office of Technology
   Transfer at the California Institute of Technology.
 
-  This software is subject to U. S. export control laws and regulations 
-  (22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software 
-  is subject to U.S. export control laws and regulations, the recipient has 
-  the responsibility to obtain export licenses or other export authority as 
-  may be required before exporting such information to foreign countries or 
+  This software is subject to U. S. export control laws and regulations
+  (22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software
+  is subject to U.S. export control laws and regulations, the recipient has
+  the responsibility to obtain export licenses or other export authority as
+  may be required before exporting such information to foreign countries or
   providing access to foreign nationals.
 
   $Id$
@@ -42,7 +42,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <developers>
     <developer>
       <name>Jordan Padams</name>
@@ -68,7 +68,7 @@
     <contributor>
       <name>Chris Isbell</name>
       <email>cisbell@usgs.gov</email>
-	  <organization>USGS</organization>      
+	  <organization>USGS</organization>
       <roles>
         <role>Data Engineer</role>
       </roles>
@@ -117,7 +117,7 @@
         <includes>
           <include>velocity-tools.xml</include>
         </includes>
-      </resource>              
+      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -247,11 +247,10 @@
       <artifactId>commons-collections</artifactId>
       <version>3.2.1</version>
     </dependency>
-    <!-- Version 3.0 is available. -->
     <dependency>
       <groupId>jpl.mipl.io</groupId>
       <artifactId>vicario</artifactId>
-      <version>1.0</version>
+      <version>${vicario-version}</version>
     </dependency>
   </dependencies>
 
