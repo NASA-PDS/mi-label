@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Product_Array_2D_Image xmlns="http://pds.nasa.gov/schema/pds4/pds/v03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/schema/pds4/pds/v03 Product_Array_2D_Image_0311B_MPF_IMP_EDR.xsd ">
   <!-- Scenario 1 - Hard-coded values	-->
   <Data_Standards>
