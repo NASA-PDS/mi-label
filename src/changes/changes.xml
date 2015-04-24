@@ -23,6 +23,9 @@
   </properties>
 
   <body>
+    <release version="0.9.0" date="TBD" description="TBD">
+    </release>
+
     <release version="0.8.0" date="2015-03-31" description="This release of the Generate Tool is a component of the integrated release 5.1.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="jpadams" type="update" issue="PDS-224">
         Move test to proper location. Build out the test suite to better look at some of the new functionality per PDS-318 and some old functions.
