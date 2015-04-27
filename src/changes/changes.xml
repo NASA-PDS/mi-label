@@ -34,7 +34,7 @@
         Update ItemNode to extend ArrayList because it should have been that from the start. Now this object is iterable and has all of the methods that come with an ArrayList. Updated Generator to build the output directory path if it doesn't exist. Update example template to no longer use getRecords and instead iterate through a counter and use some of the ArrayList methods from ItemNote.
       </action>
       <action dev="jpadams" type="update" issue="PDS-356">
-        Updated cleanup.xsl to no longer remove xml declaration. updated test data accordingly.
+        Updated cleanup.xsl to no longer remove the XML declaration. Updated test data accordingly.
       </action>
     </release>
 
