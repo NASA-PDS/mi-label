@@ -218,7 +218,7 @@
     </Observation_Area>
     <Reference_List>
         <Internal_Reference>
-            <lid_reference>urn:nasa:pds:mars_mpf_imp_raw:browse:$label.PRODUCT_ID</lid_reference>
+            <lid_reference>urn:nasa:pds:mars_mpf_imp_raw:browse:$label.PRODUCT_ID.toLowerCase()</lid_reference>
             <reference_type>data_to_browse</reference_type>
             <comment>This reference points to the browse version of this image.</comment>
         </Internal_Reference>

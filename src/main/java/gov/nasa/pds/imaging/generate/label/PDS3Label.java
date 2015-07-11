@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -107,7 +108,7 @@ public class PDS3Label implements PDSObject {
           return null;
         } else if (node instanceof ItemNode) {
         	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node).toString());
-            return ((ItemNode) node).toString();
+            return StringEscapeUtils.escapeXml(((ItemNode) node).toString());
         } else {
         	Debugger.debug("++ node(1) ------>\n" + node);
             return node;

@@ -107,7 +107,7 @@ public class Generator {
 					Generator.class.getResourceAsStream(CLEAN_XSLT)));
 
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 			doc.normalize();
 
 			String outputUnclean = doc.toString();
