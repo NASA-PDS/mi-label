@@ -35,7 +35,7 @@ public class GenerateLauncherTest extends GenerateTest {
     private static String testPath;
 	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("testGenerationDemo");
+	public SingleTestRule test = new SingleTestRule("testGenerationMPFExample");
 	
 	@BeforeClass
 	public static void oneTimeSetUp() throws Exception {
@@ -104,7 +104,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationMPFExample() {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm"};
+        		"-t","src/main/resources/examples/mpf_example/mpf_imp_raw_template.vm"};
         GenerateLauncher.main(args);
     }
     
