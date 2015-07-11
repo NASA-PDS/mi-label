@@ -104,7 +104,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationMPFExample() {
         String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/mpf_imp_raw_template.vm"};
+        		"-t","src/main/resources/examples/mpf_example/mpf_imp_raw_template_1400.xml"};
         GenerateLauncher.main(args);
     }
     
