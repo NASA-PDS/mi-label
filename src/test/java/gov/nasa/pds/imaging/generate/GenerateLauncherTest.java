@@ -9,6 +9,8 @@ package gov.nasa.pds.imaging.generate;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import gov.nasa.pds.imaging.generate.GenerateLauncher;
 import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
@@ -41,6 +43,7 @@ public class GenerateLauncherTest extends GenerateTest {
 	public static void oneTimeSetUp() throws Exception {
 		Debugger.debugFlag = true;
 		testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest");
+		FileUtils.forceMkdir(new File(System.getProperty("user.dir") + "/" + TestConstants.TEST_OUT_DIR));
 	}
 	
 	@Test
@@ -95,6 +98,7 @@ public class GenerateLauncherTest extends GenerateTest {
     public void testGenerationMER() {
         String[] args = {"-d", "-p","src/main/resources/examples/example2/1p216067135edn76pop2102l2m1.img",
         		"-t","src/main/resources/examples/example2/mer_template.vm"};
+        
         GenerateLauncher.main(args);
     }
     
@@ -103,9 +107,35 @@ public class GenerateLauncherTest extends GenerateTest {
      */
     @Test
     public void testGenerationMPFExample() {
-        String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img", "src/main/resources/examples/mpf_example/i646954r.img",
-        		"-t","src/main/resources/examples/mpf_example/mpf_imp_raw_template_1400.xml"};
-        GenerateLauncher.main(args);
+    	try {
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/mpf/");
+    		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
+    		String dataPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/mpf_example/");
+    		
+	        List<String> filebases = new ArrayList<String>();
+	        filebases.add("i646954r");
+	        filebases.add("i985135l");
+    		
+	        String[] args = {"-p", dataPath + "/" + filebases.get(0) + ".img", 
+	        		dataPath + "/" + filebases.get(1) + ".img",
+	        		"-t", dataPath + "/mpf_imp_raw_template_1400.xml",
+	        		"-o", testOut , "-b", dataPath };
+	        GenerateLauncher.main(args);
+	        
+	        for (String filebase : filebases) {
+	        	System.out.println("output file: " + testOut + "/" + filebase + ".xml");
+				String outFilePath = testOut + "/" + filebase + ".xml";
+				File output = new File(outFilePath);
+				System.out.println("expected output file: " + testPath + "/" + filebase + "_expected.xml");
+				File expected = new File(testPath + "/" + filebase + "_expected.xml");
+				
+		        // Check the files match
+		        assertTrue(FileUtils.contentEquals(expected, output));
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Test Failed Due To Exception: " + e.getMessage());
+		}
     }
     
     /**

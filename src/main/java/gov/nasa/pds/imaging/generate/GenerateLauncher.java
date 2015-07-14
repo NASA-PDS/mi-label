@@ -192,7 +192,8 @@ public class GenerateLauncher {
 	        		filepath = filepath + "/" + 
 	        				outputFile.getName().split("\\.")[0] + ".xml";
 	        		if (this.outputPath != null) {
-	        			filepath = this.outputPath.getAbsolutePath() + filepath.replace(this.basePath, "");
+	        			filepath = this.outputPath.getAbsolutePath() + "/" + 
+	        						filepath.replace(this.basePath, "");
 	        		}
 	        		outputFile = new File(filepath);
 	        		
