@@ -18,7 +18,7 @@
 ## accordance with the number of BITS for the data_type (i.e. SAMPLE_BITS).
 ## The values in PDS4 are based on PDS SCH 1.4.0.0
 
-## The following mappings are TBD
+## TODO - Update with the remaining PDS4 data types
 ##	"ComplexLSB16",
 ##	"ComplexLSB8",
 ##	"ComplexMSB16",
@@ -71,6 +71,7 @@ $bit_mask.substring(2,$convert.toInteger($bits_str))##
 ## These may need to be applied at a mission-specific level, but for now
 ## will just leave in here.
 ##
+## TODO - Update with all PDS4 Targets vs. Target Types
 ##
 #set ($TARGET_MAP = {
 	"ALTAIR" : "Star",
