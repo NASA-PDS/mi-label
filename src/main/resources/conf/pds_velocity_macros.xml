@@ -74,19 +74,19 @@ $bit_mask.substring(2,$convert.toInteger($bits_str))##
 ##
 #set ($TARGET_MAP = {
 	"ALTAIR" : "Star",
-	"APXSSITE" : "null",
+	"APXSSITE" : "Unknown",
 	"ARCTURUS" : "Star",
 	"CALIMG" : "Calibration",
 	"DEIMOS" : "Satellite",
-	"LANDER" : "null",
-	"MAG" : "null",
+	"LANDER" : "Unknown",
+	"MAG" : "Unknown",
 	"MARS" : "Planet",
 	"PHOBOS" : "Satellite",
-	"ROVER" : "null",
-	"SKY" : "null",
+	"ROVER" : "Unknown",
+	"SKY" : "Unknown",
 	"SUN" : "Sun",
 	"VEGA" : "Star",
-	"WINDSOCK" : "null"
+	"WINDSOCK" : "Unknown"
 })
 #macro(getTargetType $target)
 $TARGET_MAP.get($target)##
