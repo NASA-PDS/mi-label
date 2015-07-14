@@ -4,10 +4,13 @@
 <?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1400.sch" 
     schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
+<?xml-model href="PDS4_IMG_LDD_1400.sch" 
+    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
 <?xml-model href="MPF_IMP_raw_1400.sch" 
     schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<?xml-model href="PDS4_mpf_IngestLDD_v1400_20150702_mpf_1400.sch" 
+<?xml-model href="PDS4_MPF_LDD_1400.sch" 
     schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- All schema locations shown in this label assume access to the schemas stored at
@@ -21,8 +24,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd    
     http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd
-    http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_IngestLDD_v1400_20150702_img_1400.xsd      
-    http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_mpf_IngestLDD_v1400_20150702_mpf_1400.xsd
+    http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_LDD_1400.xsd      
+    http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPG_LDD_1400.xsd
     http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1000.xsd">
 
 

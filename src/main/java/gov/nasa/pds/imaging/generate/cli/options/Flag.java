@@ -1,5 +1,7 @@
 package gov.nasa.pds.imaging.generate.cli.options;
 
+import java.util.List;
+
 import org.apache.commons.cli.Options;
 
 public enum Flag {
@@ -7,26 +9,27 @@ public enum Flag {
     HELP("h", "help", "Display usage."),
 
     /** Flag to output the logging to a file. */
-    PDS3("p", "pds3-label", "pds3 label", String.class,
-            "Specify the file path for the PDS3 Label to be converted to PDS4"),
+    BASEPATH("b", "base-path", "base file path", String.class,
+            "Specify the base file path to be stripped from the PDS3 label paths " +
+            " to allow output in a relative directory structure."),
+    
+    /** Flag to display the version. */
+    DEBUG("d", "debug", "Directs output to screen.  <default>"),
+            
+    /** Flag to specify the input PDS3 label */
+    PDS3("p", "pds3-labels", "pds3 labels", String.class, true,
+            "Specify one or more file paths for PDS3 Labels to be converted to PDS4"),
 
     /** Flag to specify the path of a velocity template. */
     TEMPLATE("t", "template", "velocity template", String.class,
             "Specify the file path for the Velocity template for the PDS4 label"),
 
-    /** Flag to specify a file containing multiple PDS3 Label paths. */
-    /*FILE("f", "file-list", "file list", String.class,
-            "Specify the path for a file containing a list of file paths for PDS3 Labels"),*/
-
     /** Flag to specify the output file name */
-    OUTPUT("o", "output-file", "output file", String.class,
-            "Specify an output filename."),
+    OUTPUT("o", "output-path", "output path", String.class,
+            "Specify an output path to output the new PDS4 labels. (default = '.')"),
 
     /** Flag to display the version. */
-    VERSION("V", "version", "Display application version."),
-
-    /** Flag to display the version. */
-    DEBUG("d", "debug", "Directs output to screen.  <default>");
+    VERSION("V", "version", "Display application version.");
 
     /** The short name of the flag. */
     private final String shortName;
@@ -58,7 +61,7 @@ public enum Flag {
         options.addOption(new ToolsOption(VERSION));
         options.addOption(new ToolsOption(PDS3));
         options.addOption(new ToolsOption(TEMPLATE));
-        //options.addOption(new ToolsOption(FILE));
+        options.addOption(new ToolsOption(BASEPATH));
         options.addOption(new ToolsOption(OUTPUT));
         options.addOption(new ToolsOption(DEBUG));
     }
@@ -98,6 +101,8 @@ public enum Flag {
      *            The argument name.
      * @param argType
      *            The argument type.
+     * @param allowsMultipleArgs
+     *            Allow multiple arguments?
      * @param description
      *            A description of the flag.
      */

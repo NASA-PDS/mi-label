@@ -18,13 +18,16 @@ import gov.nasa.pds.imaging.generate.cli.options.Flag;
 import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
 import gov.nasa.pds.imaging.generate.label.PDS3Label;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.ToolInfo;
 import gov.nasa.pds.imaging.generate.util.Utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.xml.transform.TransformerException;
 
@@ -47,20 +50,24 @@ import org.apache.velocity.exception.ResourceNotFoundException;
  */
 public class GenerateLauncher {
 
-    private PDSObject pdsObject = null;
+	/** Logger. **/
+	private static Logger log = Logger.getLogger(GenerateLauncher.class.getName());
 
+    private String basePath;
+    private List<String> lblList;
     private File templateFile;
-    private File outputFile;
+    private File outputPath;
     private boolean stdOut;
 
-    private Generator generator;
+    private List<Generator> generatorList;
 
     public GenerateLauncher() {
-        this.templateFile = null;
-        this.pdsObject = null;
-        this.outputFile = null;
+        this.basePath = "";
+        this.generatorList = new ArrayList<Generator>();
+        this.lblList = new ArrayList<String>();
+        this.outputPath = null;
         this.stdOut = false;
-        this.generator = null;
+        this.templateFile = null;
     }
 
     /**
@@ -86,7 +93,9 @@ public class GenerateLauncher {
     }
 
     public final void generate() throws Exception {
-        this.generator.generate(this.stdOut);
+    	for (Generator generator : this.generatorList) {
+    		generator.generate(this.stdOut);
+    	}
     }
 
     private String getConfigPath() {
@@ -129,30 +138,72 @@ public class GenerateLauncher {
                 displayVersion();
                 System.exit(0);
             } else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
-                this.pdsObject = new PDS3Label(Utility.getAbsolutePath(o.getValue().trim()));
-                this.pdsObject.setMappings();
+            	this.lblList = new ArrayList<String>();
+            	for (String path : (List<String>) o.getValuesList()) {
+            		Debugger.debug(Utility.getAbsolutePath(path));
+            		this.lblList.add(Utility.getAbsolutePath(path));
+            	}
             } else if (o.getOpt().equals(Flag.TEMPLATE.getShortName())) {
                 this.templateFile = new File(Utility.getAbsolutePath(o.getValue().trim()));
             } else if (o.getOpt().equals(Flag.OUTPUT.getShortName())) {
-                this.outputFile = new File(o.getValue().trim());
+                this.outputPath = new File(Utility.getAbsolutePath(o.getValue().trim()));
+            } else if (o.getOpt().equals(Flag.BASEPATH.getShortName())) {
+                this.basePath = o.getValue().trim();
             }
         }
-
-        if (this.pdsObject == null) { // Throw error if no PDS3 label is
-                                      // specified
-            throw new InvalidOptionException("Missing -p flag.  PDS3 label must be specified.");
-        }
+        
+        // First check we have a Template File
         if (this.templateFile == null) { // Throw error if no template file
                                          // specified
             throw new InvalidOptionException("Missing -t flag.  Template file must be specified.");
         }
-        if (this.outputFile == null) {	// If no outputFile given, default input filename with appended .xml
-        	this.outputFile = new File(this.pdsObject.getFilePath() + ".xml");
+        
+        // Now let's check where the output is going
+        if (this.outputPath != null && !this.outputPath.isDirectory()) {
+        	if (this.outputPath.isFile()) {
+	        	throw new InvalidOptionException("Output path is invalid. " + 
+	        			"Must be existing directory or new path.");
+        	} else {
+        		this.outputPath.mkdirs();
+        	}
         }
 
-        // FIXME Architectural issue - Too many arguments
-        this.generator = new Generator(this.pdsObject, this.templateFile,
-                this.outputFile);
+        // Let's default to the one label if -p flag was specified,
+        // otherwise loop through the lbl list
+        if (this.lblList == null) {
+        	Debugger.debug("in here");
+    		throw new InvalidOptionException("Missing -p or -l flags.  " + 
+                    "One or many PDS3 label must be specified.");
+        } else {
+        	String filepath;
+        	PDSObject pdsObj;
+        	File outputFile;
+        	for (String lbl : this.lblList) {
+        		// Make sure the lbl exists
+        		if ((new File(lbl)).isFile()) {
+        			// Set the pds3 lable object
+        			pdsObj = new PDS3Label(lbl);
+	        		pdsObj.setMappings();
+	        		
+	        		// Let's get the output file ready
+	        		// Build up the output filepath
+	        		outputFile = new File(lbl);
+	        		filepath = outputFile.getParent();
+	        		filepath = filepath + "/" + 
+	        				outputFile.getName().split("\\.")[0] + ".xml";
+	        		if (this.outputPath != null) {
+	        			filepath = this.outputPath.getAbsolutePath() + filepath.replace(this.basePath, "");
+	        		}
+	        		outputFile = new File(filepath);
+	        		
+	        		Debugger.debug(outputFile.getAbsolutePath());
+			        this.generatorList.add(new Generator(pdsObj, this.templateFile,
+			                outputFile));
+        		} else {
+        			log.warning(lbl + " does not exist.");
+        		}
+        	}
+        }
 
     }
     

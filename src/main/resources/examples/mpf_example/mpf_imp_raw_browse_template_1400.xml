@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model 
+    href="http://pds.nasa.gov/pds4/pds/v03/PDS4_PDS_1400.sch"
+    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Browse xmlns="http://pds.nasa.gov/pds4/pds/v1" xmlns:pds="http://pds.nasa.gov/pds4/pds/v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd">
+
+    <Identification_Area>
+        <logical_identifier>urn:nasa:pds:mars_mpf_imp_raw:browse:$label.PRODUCT_ID.toLowerCase()</logical_identifier>
+        <version_id>1.0</version_id>
+        <title>$label.OBSERVATION_NAME Browse Image</title>
+        <information_model_version>1.4.0.0</information_model_version>
+        <product_class>Product_Browse</product_class>
+        <Modification_History>
+            <Modification_Detail>
+                <modification_date>$generate.current_date_utc</modification_date>
+                <version_id>1.0</version_id>
+                <description>Migrated from PDS3 data.</description>
+            </Modification_Detail>
+        </Modification_History>
+    </Identification_Area>
+    <Reference_List>
+        <Internal_Reference>
+            <lid_reference>urn:nasa:pds:mars_mpf_imp_raw:data:$label.PRODUCT_ID.toLowerCase()</lid_reference>
+            <reference_type>browse_to_data</reference_type>
+            <comment>This is a reference to the full resolution data file corresponding to this
+                browse image.</comment>
+        </Internal_Reference>
+    </Reference_List>
+    <File_Area_Browse>
+        <File>
+            <file_name>$generate.file_name</file_name>
+            <local_identifier>BROWSE_FILE</local_identifier>
+            <creation_date_time>$generate.current_date_utc</creation_date_time>
+            <file_size unit="byte">$generate.file_size</file_size>
+            <md5_checksum>$generate.md5_checksum</md5_checksum>
+        </File>
+        <Encoded_Image>
+            <local_identifier>BROWSE_IMAGE</local_identifier>
+            <offset unit="byte">0</offset>
+            <encoding_standard_id>GIF</encoding_standard_id>
+        </Encoded_Image>
+    </File_Area_Browse>
+</Product_Browse>
