@@ -118,7 +118,7 @@ public class GenerateLauncherTest extends GenerateTest {
     		
 	        String[] args = {"-p", dataPath + "/" + filebases.get(0) + ".img", 
 	        		dataPath + "/" + filebases.get(1) + ".img",
-	        		"-t", dataPath + "/mpf_imp_raw_template_1400.xml",
+	        		"-t", testPath + "/mpf_imp_raw_template_1400.xml",
 	        		"-o", testOut , "-b", dataPath };
 	        GenerateLauncher.main(args);
 	        
