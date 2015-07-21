@@ -270,7 +270,7 @@
                 <standard_deviation>$label.IMAGE.STANDARD_DEVIATION</standard_deviation>
                 <bit_mask>#trimBitMask("$label.IMAGE.SAMPLE_BIT_MASK" "$label.IMAGE.SAMPLE_BITS")</bit_mask>
                 <median>$label.IMAGE.MEDIAN</median>
-                <md5_checksum>$generate.md5_checksum</md5_checksum>
+                <md5_checksum>$generate.object_md5_checksum</md5_checksum>
             </Object_Statistics>
             <!--      
       <Display_2D_Image>

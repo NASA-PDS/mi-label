@@ -11,16 +11,23 @@ import java.security.MessageDigest;
 
 public class Md5Checksum implements Element {
 
-    private File file;
+    public File file;
+    private PDSObject pdsObj;
+    private long offset = 0;
 
     public Md5Checksum() { }
 
-    private byte[] createChecksum() {
+    public Md5Checksum(PDSObject pdsObject, long offset) { 
+    	setParameters(pdsObject);
+    	this.offset = offset;
+    }
+    
+    public byte[] createChecksum() {
         InputStream fis = null;
         MessageDigest complete = null;
         try {
             fis = new FileInputStream(this.file);
-
+            fis.skip(this.offset);
             final byte[] buffer = new byte[1024];
             complete = MessageDigest.getInstance("MD5");
             int numRead;
@@ -65,6 +72,7 @@ public class Md5Checksum implements Element {
 
     @Override
     public void setParameters(final PDSObject pdsObject) {
+    	this.pdsObj = pdsObject;
         this.file = new File(pdsObject.getFilePath());
     }
 }

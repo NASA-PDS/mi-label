@@ -20,4 +20,8 @@
         <context>current_date_utc</context>
         <class>gov.nasa.pds.imaging.generate.automatic.elements.CurrentDateUTC</class>
     </element>
+    <element>
+        <context>object_md5_checksum</context>
+        <class>gov.nasa.pds.imaging.generate.automatic.elements.ObjectMd5Checksum</class>
+    </element>
 </generated>
