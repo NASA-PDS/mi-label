@@ -5,7 +5,7 @@
 ## To include this file in your template and use the macros, add the following
 ## at the top of your Velocity template:
 ##
-##		#parse ( "pds_macros.vm" )
+##		#parse ( "pds_velocity_macros.vm" )
 ##
 
 
@@ -73,20 +73,20 @@ $bit_mask.substring(2,$convert.toInteger($bits_str))##
 ##
 ##
 #set ($TARGET_MAP = {
-	"ALTAIR" : "Star",
-	"APXSSITE" : "Equipment",
-	"ARCTURUS" : "Star",
-	"CALIMG" : "Calibration",
-	"DEIMOS" : "Satellite",
-	"LANDER" : "Equipment",
-	"MAG" : "Equipment",
-	"MARS" : "Planet",
-	"PHOBOS" : "Satellite",
-	"ROVER" : "Equipment",
-	"SKY" : "Calibration",
-	"SUN" : "Sun",
-	"VEGA" : "Star",
-	"WINDSOCK" : "Equipment"
+  "ALTAIR" : "Star",
+  "APXSSITE" : "Equipment",
+  "ARCTURUS" : "Star",
+  "CALIMG" : "Calibration",
+  "DEIMOS" : "Satellite",
+  "LANDER" : "Equipment",
+  "MAG" : "Equipment",
+  "MARS" : "Planet",
+  "PHOBOS" : "Satellite",
+  "ROVER" : "Equipment",
+  "SKY" : "Calibration",
+  "SUN" : "Sun",
+  "VEGA" : "Star",
+  "WINDSOCK" : "Equipment"
 })
 #macro(getTargetType $target)
 $TARGET_MAP.get($target)##

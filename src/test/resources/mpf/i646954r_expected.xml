@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<?xml-model href="PDS4_IMG_LDD_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="PDS4_IMG_1400.sch" 
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<?xml-model href="PDS4_MPF_1400.sch" 
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <?xml-model href="MPF_IMP_raw_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<?xml-model href="PDS4_MPF_LDD_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- All schema locations shown in this label assume access to the schemas stored at
-    http://pds.nasa.gov/.  If you wish to access local copies of these schemas, you will
-    need to configure an XML catalog file.  A sample catalog file is available in the
-    "xml_schema" directory of the archive volume containing this file. -->
-<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" xmlns:disp="http://pds.nasa.gov/pds4/disp/v1" xmlns:geom="http://pds.nasa.gov/pds4/geom/v1" xmlns:img="http://pds.nasa.gov/pds4/img/v1" xmlns:mpf="http://pds.nasa.gov/pds4/mission/mpf/v1" xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd         http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd     http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_LDD_1400.xsd           http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPG_LDD_1400.xsd     http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1000.xsd">
+  http://pds.nasa.gov/.  If you wish to access local copies of these schemas, you will
+  need to configure an XML catalog file.  A sample catalog file is available in the
+  "xml_schema" directory of the archive volume containing this file. -->
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" xmlns:disp="http://pds.nasa.gov/pds4/disp/v1" xmlns:geom="http://pds.nasa.gov/pds4/geom/v1" xmlns:img="http://pds.nasa.gov/pds4/img/v1" xmlns:mpf="http://pds.nasa.gov/pds4/mission/mpf/v1" xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd       http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd   http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_1400.xsd         http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPF_1400.xsd   http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1100.xsd">
     <Identification_Area>
         <logical_identifier>urn:nasa:pds:mars_mpf_imp_raw:data:imp_edr-1247646954-regular-0167010011</logical_identifier>
         <version_id>0.1</version_id>
@@ -35,10 +35,10 @@
         </Alias_List>
         <Modification_History>
             <Modification_Detail>
-                <modification_date>2015-07-14</modification_date>
+                <modification_date>2015-07-23</modification_date>
                 <version_id>0.1</version_id>
                 <description>This product has been migrated to PDS4 from an original PDS3 
-                    product.</description>
+          product.</description>
             </Modification_Detail>
         </Modification_History>
     </Identification_Area>
@@ -57,7 +57,7 @@
             <name>MARS PATHFINDER</name>
             <type>Mission</type>
             <Internal_Reference>
-                <lid_reference>urn:nasa:pds:investigation.MARS_PATHFINDER</lid_reference>
+                <lid_reference>urn:nasa:pds:context:investigation:mission.mars_pathfinder</lid_reference>
                 <reference_type>data_to_investigation</reference_type>
             </Internal_Reference>
         </Investigation_Area>
@@ -67,7 +67,7 @@
                 <name>MARS PATHFINDER LANDER</name>
                 <type>Spacecraft</type>
                 <Internal_Reference>
-                    <lid_reference>urn:nasa:pds:instrument_host.MPFL</lid_reference>
+                    <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.mpfl</lid_reference>
                     <reference_type>is_instrument_host</reference_type>
                 </Internal_Reference>
             </Observing_System_Component>
@@ -75,7 +75,7 @@
                 <name>IMAGER FOR MARS PATHFINDER</name>
                 <type>Instrument</type>
                 <Internal_Reference>
-                    <lid_reference>urn:nasa:pds:instrument.IMP__MPFL</lid_reference>
+                    <lid_reference>urn:nasa:pds:context:instrument:instrument.imp__mpfl</lid_reference>
                     <reference_type>is_instrument</reference_type>
                 </Internal_Reference>
             </Observing_System_Component>
@@ -85,28 +85,31 @@
             <name>MARS</name>
             <type>Planet</type>
             <Internal_Reference>
-                <lid_reference>urn:nasa:pds:target.mars</lid_reference>
+                <lid_reference>urn:nasa:pds:context:target:planet.mars</lid_reference>
                 <reference_type>data_to_target</reference_type>
             </Internal_Reference>
         </Target_Identification>
         <Mission_Area>
-            <mpf:Mission_Metadata>
-                <mpf:image_observation_type>REGULAR</mpf:image_observation_type>
-                <mpf:planet_day_number>11</mpf:planet_day_number>
+            <mpf:MPF_Mission_Metadata>
+                <mpf:sol_number>11</mpf:sol_number>
                 <mpf:spacecraft_clock_start_count>1247646954</mpf:spacecraft_clock_start_count>
-            </mpf:Mission_Metadata>
+            </mpf:MPF_Mission_Metadata>
         </Mission_Area>
         <Discipline_Area>
             <img:Imaging_Instrument_Parameters>
                 <img:exposure_count>3</img:exposure_count>
                 <img:exposure_duration unit="ms">41.0000</img:exposure_duration>
                 <img:exposure_type>AUTO</img:exposure_type>
+                <img:auto_exposure_data_cut>3000</img:auto_exposure_data_cut>
+                <img:auto_exposure_pixel_fraction>1.0000</img:auto_exposure_pixel_fraction>
+                <img:instrument_mode_id>RIGHT</img:instrument_mode_id>
                 <img:Filter>
                     <img:filter_name>L930_R530</img:filter_name>
                     <img:filter_id>9</img:filter_id>
                 </img:Filter>
                 <img:first_line>3</img:first_line>
                 <img:first_sample>1</img:first_sample>
+                <img:image_observation_type>REGULAR</img:image_observation_type>
                 <img:Device_Temperature>
                     <img:name>CCD array</img:name>
                     <img:raw_count>151</img:raw_count>
@@ -118,6 +121,12 @@
                     <img:temperature_calibrated unit="degC">-18.2601</img:temperature_calibrated>
                 </img:Device_Temperature>
             </img:Imaging_Instrument_Parameters>
+            <img:Data_Correction_Parameters>
+                <img:bad_pixel_replacement_flag>true</img:bad_pixel_replacement_flag>
+                <img:dark_current_correction_flag>false</img:dark_current_correction_flag>
+                <img:flat_field_correction_flag>false</img:flat_field_correction_flag>
+                <img:shutter_effect_correction_flag>false</img:shutter_effect_correction_flag>
+            </img:Data_Correction_Parameters>
             <img:Command_Parameters>
                 <img:command_sequence_number>167</img:command_sequence_number>
             </img:Command_Parameters>
@@ -130,23 +139,18 @@
                 </img:Packet_Parameters>
             </img:Telemetry_Parameters>
             <img:Instrument_Compression_Parameters>
-                <img:instrument_compression_name>JPEG DISCRETE COSINE TRANSFORM DCT;</img:instrument_compression_name>
+                <img:instrument_compression_name>JPEG DISCRETE COSINE TRANSFORM (DCT); ARITHMETIC/RATIO/LCT</img:instrument_compression_name>
                 <img:instrument_compression_mode>8</img:instrument_compression_mode>
-                <!--img:instrument_compression_quantization_type>TABULAR</img:instrument_compression_quantization_type-->
                 <img:instrument_compression_rate>2.0410</img:instrument_compression_rate>
                 <img:instrument_compression_ratio>5.8796</img:instrument_compression_ratio>
                 <img:instrument_compression_quality>312</img:instrument_compression_quality>
+                <img:instrument_compression_quantization_type>TABULAR</img:instrument_compression_quantization_type>
                 <img:quantization_table_id>INTERNAL_0</img:quantization_table_id>
                 <img:error_pixels>0</img:error_pixels>
-                <!--img:instrument_compression_blocks>992</img:instrument_compression_blocks-->
-                <!--img:instrument_compression_segments>992</img:instrument_compression_segments-->
-                <!-- <img:instrument_compression_block_size>(8,8)</img:instrument_compression_block_size>-->
-                <!-- <img:instrument_compression_param>-1</img:instrument_compression_param> -->
-                <!-- <img:instrument_compression_synchronization_blocks>1024</img:instrument_compression_synchronization_blocks>-->
-                <!-- <img:rice_start_option>-1</img:rice_start_option>-->
-                <!-- <img:rice_option_value>-1</img:rice_option_value>-->
-                <!-- <img:sqrt_minimum_pixel>0</img:sqrt_minimum_pixel> -->
-                <!-- <img:sqrt_maximum_pixel>0</img:sqrt_maximum_pixel> -->
+                <img:instrument_compression_block_size_x>8</img:instrument_compression_block_size_x>
+                <img:instrument_compression_block_size_y>8</img:instrument_compression_block_size_y>
+                <img:instrument_compression_blocks>992</img:instrument_compression_blocks>
+                <img:instrument_compression_parameter>312</img:instrument_compression_parameter>
             </img:Instrument_Compression_Parameters>
             <img:Downsample_Parameters>
                 <img:pixel_averaging_height>1</img:pixel_averaging_height>
@@ -157,40 +161,68 @@
                     <img:Process_Owner>
                         <img:producer_id>MIPL OF JPL</img:producer_id>
                         <img:producer_full_name>ALLAN J. RUNKLE</img:producer_full_name>
-                        <img:producer_institution_name>MULTIMISSION IMAGE PROCESSING LABORATORY,    JET PROPULSION LAB</img:producer_institution_name>
+                        <img:producer_institution_name>MULTIMISSION IMAGE PROCESSING LABORATORY, JET PROPULSION LAB</img:producer_institution_name>
                     </img:Process_Owner>
                     <img:Software>
                         <img:name>MPFTELEMPROC_IMP</img:name>
                         <img:version_id>V1.24.46</img:version_id>
-                        <img:description>CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA     JPL/MIPL MPFTELEMPROC</img:description>
+                        <img:description>CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA JPL/MIPL MPFTELEMPROC</img:description>
                     </img:Software>
                 </img:Process>
             </img:Processing_History>
-            <mpf:Discipline_Metadata>
-                <mpf:auto_exposure_data_cut>3000</mpf:auto_exposure_data_cut>
-                <mpf:auto_exposure_pixel_fraction>1.0000</mpf:auto_exposure_pixel_fraction>
+            <geom:Geometry>
+                <geom:SPICE_Kernel_Files>
+                    <geom:SPICE_Kernel_Identification>
+                        <geom:spice_kernel_file_name>SEQ_S0167A_IMPEK</geom:spice_kernel_file_name>
+                    </geom:SPICE_Kernel_Identification>
+                </geom:SPICE_Kernel_Files>
+            </geom:Geometry>
+            <mpf:MPF_Discipline_Metadata>
                 <mpf:detector_pixel_height>23.0000</mpf:detector_pixel_height>
                 <mpf:detector_pixel_width>23.0000</mpf:detector_pixel_width>
-                <mpf:frame_id>RIGHT</mpf:frame_id>
                 <mpf:instrument_deployment_state>DEPLOYED</mpf:instrument_deployment_state>
-            </mpf:Discipline_Metadata>
+            </mpf:MPF_Discipline_Metadata>
             <mpf:MPF_Command_Parameters>
                 <mpf:command_name>IMP_IMAGE_AZ_EL</mpf:command_name>
-                <mpf:command_description>This is the image taken by the IMP using     absolute azimuth &amp; elevation as the          coordinate system</mpf:command_description>
+                <mpf:command_description>This is the image taken by the IMP using absolute azimuth &amp; elevation as the coordinate system</mpf:command_description>
+                <mpf:tlm_cmd_discrepancy_flag>false</mpf:tlm_cmd_discrepancy_flag>
                 <mpf:download_type>IM</mpf:download_type>
-                <!-- if dark_current_download_flag == NULL in PDS3, we are going to return FALSE in PDS4 -->
                 <mpf:dark_current_download_flag>false</mpf:dark_current_download_flag>
-                <mpf:dark_current_correction_flag>false</mpf:dark_current_correction_flag>
-                <mpf:flat_field_correction_flag>false</mpf:flat_field_correction_flag>
-                <mpf:bad_pixel_replacement_flag>true</mpf:bad_pixel_replacement_flag>
-                <mpf:shutter_effect_correction_flag>false</mpf:shutter_effect_correction_flag>
                 <mpf:sqrt_compression_flag>false</mpf:sqrt_compression_flag>
             </mpf:MPF_Command_Parameters>
             <mpf:MPF_Telemetry_Parameters>
                 <mpf:application_packet_name>SCI_IMG_1</mpf:application_packet_name>
                 <mpf:application_packet_id>15</mpf:application_packet_id>
-                <mpf:tlm_cmd_discrepancy_flag>false</mpf:tlm_cmd_discrepancy_flag>
             </mpf:MPF_Telemetry_Parameters>
+            <mpf:MPF_Compression_Parameters>
+                <mpf:instrument_compression_synchronization_blocks>1024</mpf:instrument_compression_synchronization_blocks>
+                <mpf:rice_start_option>-1</mpf:rice_start_option>
+                <mpf:rice_option_value>-1</mpf:rice_option_value>
+                <mpf:sqrt_minimum_pixel>0</mpf:sqrt_minimum_pixel>
+                <mpf:sqrt_maximum_pixel>0</mpf:sqrt_maximum_pixel>
+            </mpf:MPF_Compression_Parameters>
+            <mpf:MPF_Geometry_Parameters>
+                <mpf:instrument_azimuth>110.7000</mpf:instrument_azimuth>
+                <mpf:azimuth_fov>14.0032</mpf:azimuth_fov>
+                <mpf:azimuth_motor_clicks>180</mpf:azimuth_motor_clicks>
+                <mpf:instrument_azimuth_method>TELEMETRY</mpf:instrument_azimuth_method>
+                <mpf:instrument_elevation>-43.0955</mpf:instrument_elevation>
+                <mpf:elevation_fov>13.5656</mpf:elevation_fov>
+                <mpf:elevation_motor_clicks>96</mpf:elevation_motor_clicks>
+                <mpf:instrument_elevation_method>TELEMETRY</mpf:instrument_elevation_method>
+                <mpf:fixed_instrument_azimuth>264.5750</mpf:fixed_instrument_azimuth>
+                <mpf:fixed_instrument_elevation>-38.6894</mpf:fixed_instrument_elevation>
+                <mpf:surface_based_inst_method>L_FRAME_QUATERNION</mpf:surface_based_inst_method>
+                <mpf:positive_elevation_direction>UP</mpf:positive_elevation_direction>
+                <mpf:solar_azimuth>156.0560</mpf:solar_azimuth>
+                <mpf:solar_elevation>83.3510</mpf:solar_elevation>
+                <mpf:Lander_Surface_Quaternion>
+                    <mpf:qcos>0.2102</mpf:qcos>
+                    <mpf:qsin1>-0.0148</mpf:qsin1>
+                    <mpf:qsin2>-0.0317</mpf:qsin2>
+                    <mpf:qsin3>0.977</mpf:qsin3>
+                </mpf:Lander_Surface_Quaternion>
+            </mpf:MPF_Geometry_Parameters>
         </Discipline_Area>
     </Observation_Area>
     <Reference_List>
@@ -246,10 +278,10 @@
                 <md5_checksum>9123f7a7a64b6d09e54eec7d1bb60f00</md5_checksum>
             </Object_Statistics>
             <!--      
-      <Display_2D_Image>
-        <line_display_direction>Down</line_display_direction>
-        <sample_display_direction>Right</sample_display_direction>
-      </Display_2D_Image>
+    <Display_2D_Image>
+    <line_display_direction>Down</line_display_direction>
+    <sample_display_direction>Right</sample_display_direction>
+    </Display_2D_Image>
 -->
         </Array_2D_Image>
     </File_Area_Observational>

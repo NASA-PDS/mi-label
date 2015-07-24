@@ -206,9 +206,21 @@ public class PDS3LabelReader {
         // contains a valid PDS label.
 
         // TODO Use VTool to determine if it is a valid PDS Label
+        try {
+        	// Handle some dependency collisions with Transcoder
+	        System.getProperties().setProperty(
+	                "javax.xml.parsers.DocumentBuilderFactory",
+	                "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
+            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
+                "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+            
+        	final PDSLabelToDOM pdsToDOM = new PDSLabelToDOM(input, output);
+        	return pdsToDOM.getDocument();
+        } catch (Exception e) {
 
-        final PDSLabelToDOM pdsToDOM = new PDSLabelToDOM(input, output);
-        return pdsToDOM.getDocument();
+        }
+        return null;
+        
     }
 
     /**

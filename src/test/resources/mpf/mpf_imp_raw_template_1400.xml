@@ -2,282 +2,321 @@
 #parse( "pds_velocity_macros.xml" )##
 ##
 <?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<?xml-model href="PDS4_IMG_LDD_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="PDS4_IMG_1400.sch" 
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<?xml-model href="PDS4_MPF_1400.sch" 
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <?xml-model href="MPF_IMP_raw_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<?xml-model href="PDS4_MPF_LDD_1400.sch" 
-    schematypens="http://purl.oclc.org/dsdl/schematron"?>
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- All schema locations shown in this label assume access to the schemas stored at
-    http://pds.nasa.gov/.  If you wish to access local copies of these schemas, you will
-    need to configure an XML catalog file.  A sample catalog file is available in the
-    "xml_schema" directory of the archive volume containing this file. -->
+  http://pds.nasa.gov/.  If you wish to access local copies of these schemas, you will
+  need to configure an XML catalog file.  A sample catalog file is available in the
+  "xml_schema" directory of the archive volume containing this file. -->
 <Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1"
-    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" xmlns:disp="http://pds.nasa.gov/pds4/disp/v1"
-    xmlns:img="http://pds.nasa.gov/pds4/img/v1" xmlns:mpf="http://pds.nasa.gov/pds4/mission/mpf/v1"
-    xmlns:geom="http://pds.nasa.gov/pds4/geom/v1"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd    
-    http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd
-    http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_LDD_1400.xsd      
-    http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPG_LDD_1400.xsd
-    http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1000.xsd">
+  xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" xmlns:disp="http://pds.nasa.gov/pds4/disp/v1"
+  xmlns:img="http://pds.nasa.gov/pds4/img/v1" xmlns:mpf="http://pds.nasa.gov/pds4/mission/mpf/v1"
+  xmlns:geom="http://pds.nasa.gov/pds4/geom/v1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd    
+  http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd
+  http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_1400.xsd      
+  http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPF_1400.xsd
+  http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1100.xsd">
 
 
-    <Identification_Area>
-        <logical_identifier>urn:nasa:pds:mars_mpf_imp_raw:data:$label.PRODUCT_ID.toLowerCase()</logical_identifier>
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:mars_mpf_imp_raw:data:$label.PRODUCT_ID.toLowerCase()</logical_identifier>
+    <version_id>0.1</version_id>
+    <title>$label.OBSERVATION_NAME</title>
+    <information_model_version>1.4.0.0</information_model_version>
+    <!-- new Generate function to get current model version -->
+    <product_class>Product_Observational</product_class>
+    <Alias_List>
+      <Alias>
+        <alternate_id>$label.PRODUCT_ID.toLowerCase()</alternate_id>
+        <comment>PDS3 product_id</comment>
+      </Alias>
+      <Alias>
+        <alternate_id>$label.IMAGE_ID</alternate_id>
+        <comment>PDS3 image_id</comment>
+      </Alias>
+    </Alias_List>
+    <Modification_History>
+      <Modification_Detail>
+        <modification_date>$date.get("yyyy-MM-dd")</modification_date>
         <version_id>0.1</version_id>
-        <title>$label.OBSERVATION_NAME</title>
-        <information_model_version>1.4.0.0</information_model_version>
-        <!-- new Generate function to get current model version -->
-        <product_class>Product_Observational</product_class>
-        <Alias_List>
-            <Alias>
-                <alternate_id>$label.PRODUCT_ID.toLowerCase()</alternate_id>
-                <comment>PDS3 product_id</comment>
-            </Alias>
-            <Alias>
-                <alternate_id>$label.IMAGE_ID</alternate_id>
-                <comment>PDS3 image_id</comment>
-            </Alias>
-        </Alias_List>
-        <Modification_History>
-            <Modification_Detail>
-                <modification_date>2015-07-14</modification_date>
-                <version_id>0.1</version_id>
-                <description>This product has been migrated to PDS4 from an original PDS3 
-                    product.</description>
-            </Modification_Detail>
-        </Modification_History>
-    </Identification_Area>
-    <Observation_Area>
-        <Time_Coordinates>
-            <start_date_time>$label.IMAGE_TIME</start_date_time>
-            <stop_date_time xsi:nil="true"/>
-            <local_true_solar_time>$label.MPF_LOCAL_TIME</local_true_solar_time>
-        </Time_Coordinates>
-        <Primary_Result_Summary>
-            <purpose>Science</purpose>
-            <processing_level>Raw</processing_level>
-        </Primary_Result_Summary>
-        <!-- Add in information describing the Mission here. -->
-        <Investigation_Area>
-            <name>MARS PATHFINDER</name>
-            <type>Mission</type>
-            <Internal_Reference>
-                <lid_reference>urn:nasa:pds:investigation.MARS_PATHFINDER</lid_reference>
-                <reference_type>data_to_investigation</reference_type>
-            </Internal_Reference>
-        </Investigation_Area>
-        <!-- Add in information describing the instrument and spacecraft here. -->
-        <Observing_System>
-            <Observing_System_Component>
-                <name>MARS PATHFINDER LANDER</name>
-                <type>Spacecraft</type>
-                <Internal_Reference>
-                    <lid_reference>urn:nasa:pds:instrument_host.MPFL</lid_reference>
-                    <reference_type>is_instrument_host</reference_type>
-                </Internal_Reference>
-            </Observing_System_Component>
-            <Observing_System_Component>
-                <name>IMAGER FOR MARS PATHFINDER</name>
-                <type>Instrument</type>
-                <Internal_Reference>
-                    <lid_reference>urn:nasa:pds:instrument.IMP__MPFL</lid_reference>
-                    <reference_type>is_instrument</reference_type>
-                </Internal_Reference>
-            </Observing_System_Component>
-        </Observing_System>
-        <!-- Add in information describing the target here. -->
-        <Target_Identification>
-            <name>$label.TARGET_NAME</name>
-            <type>#getTargetType("$label.TARGET_NAME")</type>
-            <Internal_Reference>
-                <lid_reference>urn:nasa:pds:target.$label.TARGET_NAME.toLowerCase()</lid_reference>
-                <reference_type>data_to_target</reference_type>
-            </Internal_Reference>
-        </Target_Identification>
-        <Mission_Area>
-            <mpf:Mission_Metadata>
-                <mpf:image_observation_type>$label.IMAGE_OBSERVATION_TYPE</mpf:image_observation_type>
-                <mpf:planet_day_number>$label.PLANET_DAY_NUMBER</mpf:planet_day_number>
-                <mpf:spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</mpf:spacecraft_clock_start_count>
-            </mpf:Mission_Metadata>
-        </Mission_Area>
-
-        <Discipline_Area>
-            <img:Imaging_Instrument_Parameters>
-                <img:exposure_count>$label.EXPOSURE_COUNT</img:exposure_count>
-                <img:exposure_duration unit="ms">$label.EXPOSURE_DURATION</img:exposure_duration>
-                <img:exposure_type>$label.EXPOSURE_TYPE</img:exposure_type>
-                <img:Filter>
-                    <img:filter_name>$label.FILTER_NAME</img:filter_name>
-                    <img:filter_id>$label.FILTER_NUMBER</img:filter_id>
-                </img:Filter>
-                <img:first_line>$label.IMAGE.FIRST_LINE</img:first_line>
-                <img:first_sample>$label.IMAGE.FIRST_LINE_SAMPLE</img:first_sample>
-                
-                #set ( $instTempCnts = $label.getList("INSTRUMENT_TEMPERATURE_COUNT") )
-                #set ( $instTemps = $label.getList("INSTRUMENT_TEMPERATURE") )
-                <img:Device_Temperature>
-                    <img:name>CCD array</img:name>
-                    <img:raw_count>$instTempCnts.get(0)</img:raw_count>
-                    <img:temperature_calibrated unit="degC">$instTemps.get(0)</img:temperature_calibrated>
-                </img:Device_Temperature>
-                <img:Device_Temperature>
-                    <img:name>camera head</img:name>
-                    <img:raw_count>$instTempCnts.get(1)</img:raw_count>
-                    <img:temperature_calibrated unit="degC">$instTemps.get(1)</img:temperature_calibrated>
-                </img:Device_Temperature>
-            </img:Imaging_Instrument_Parameters>
-
-            <img:Command_Parameters>
-                <img:command_sequence_number>$label.COMMAND_SEQUENCE_NUMBER</img:command_sequence_number>
-            </img:Command_Parameters>
-            <img:Telemetry_Parameters>
-                <img:earth_received_start_date_time>$label.EARTH_RECEIVED_START_TIME</img:earth_received_start_date_time>
-                <img:earth_received_stop_date_time>$label.EARTH_RECEIVED_STOP_TIME</img:earth_received_stop_date_time>
-                <img:Packet_Parameters>
-                    <img:expected_packets>$label.EXPECTED_PACKETS</img:expected_packets>
-                    <img:received_packets>$label.RECEIVED_PACKETS</img:received_packets>
-                </img:Packet_Parameters>
-            </img:Telemetry_Parameters>
-            <img:Instrument_Compression_Parameters>
-                <img:instrument_compression_name>$label.INST_CMPRS_NAME</img:instrument_compression_name>
-                <img:instrument_compression_mode>$label.INST_CMPRS_MODE</img:instrument_compression_mode>
-                <!--img:instrument_compression_quantization_type>$label.INST_CMPRS_QUANTZ_TYPE</img:instrument_compression_quantization_type-->
-                <img:instrument_compression_rate>$label.INST_CMPRS_RATE</img:instrument_compression_rate>
-                <img:instrument_compression_ratio>$label.INST_CMPRS_RATIO</img:instrument_compression_ratio>
-                <img:instrument_compression_quality>$label.INST_CMPRS_QUALITY</img:instrument_compression_quality>
-                <img:quantization_table_id>$label.INST_CMPRS_QUANTZ_TBL_ID</img:quantization_table_id>
-                <img:error_pixels>$label.ERROR_PIXELS</img:error_pixels>
-                <!--img:instrument_compression_blocks>$label.INST_CMPRS_BLOCKS</img:instrument_compression_blocks-->
-                <!--img:instrument_compression_segments>$label.INST_CMPRS_BLOCKS</img:instrument_compression_segments-->
-
-                <!-- <img:instrument_compression_block_size>$label.INST_CMPRS_BLK_SIZE</img:instrument_compression_block_size>-->
-                <!-- <img:instrument_compression_param>-1</img:instrument_compression_param> -->
-                <!-- <img:instrument_compression_synchronization_blocks>1024</img:instrument_compression_synchronization_blocks>-->
-
-                <!-- <img:rice_start_option>$label.RICE_START_OPTION</img:rice_start_option>-->
-                <!-- <img:rice_option_value>$label.RICE_OPTION_VALUE</img:rice_option_value>-->
-                <!-- <img:sqrt_minimum_pixel>$label.SQRT_MINIMUM_PIXEL</img:sqrt_minimum_pixel> -->
-                <!-- <img:sqrt_maximum_pixel>$label.SQRT_MAXIMUM_PIXEL</img:sqrt_maximum_pixel> -->
-            </img:Instrument_Compression_Parameters>
-
-            <img:Downsample_Parameters>
-                <img:pixel_averaging_height>$label.PIXEL_AVERAGING_HEIGHT</img:pixel_averaging_height>
-                <img:pixel_averaging_width>$label.PIXEL_AVERAGING_WIDTH</img:pixel_averaging_width>
-            </img:Downsample_Parameters>
-
-            <img:Processing_History>
-                <img:Process>
-                    <img:Process_Owner>
-                        <img:producer_id>$label.PRODUCER_ID</img:producer_id>
-                        <img:producer_full_name>$label.PRODUCER_FULL_NAME</img:producer_full_name>
-                        <img:producer_institution_name>$label.PRODUCER_INSTITUTION_NAME</img:producer_institution_name>
-                    </img:Process_Owner>
-                    <img:Software>
-                        <img:name>$label.SOFTWARE_NAME</img:name>
-                        <img:version_id>$label.SOFTWARE_VERSION_ID</img:version_id>
-                        <img:description>$label.PROCESSING_HISTORY_TEXT</img:description>
-                    </img:Software>
-                </img:Process>
-            </img:Processing_History>
-
-            <mpf:Discipline_Metadata>
-                <mpf:auto_exposure_data_cut>$label.AUTO_EXPOSURE_DATA_CUT</mpf:auto_exposure_data_cut>
-                <mpf:auto_exposure_pixel_fraction>$label.AUTO_EXPOSURE_PIXEL_FRACTION</mpf:auto_exposure_pixel_fraction>
-                <mpf:detector_pixel_height>$label.DETECTOR_PIXEL_HEIGHT</mpf:detector_pixel_height>
-                <mpf:detector_pixel_width>$label.DETECTOR_PIXEL_WIDTH</mpf:detector_pixel_width>
-                <mpf:frame_id>$label.FRAME_ID</mpf:frame_id>
-                <mpf:instrument_deployment_state>$label.INSTRUMENT_DEPLOYMENT_STATE</mpf:instrument_deployment_state>
-            </mpf:Discipline_Metadata>
-
-            <mpf:MPF_Command_Parameters>
-                <mpf:command_name>$label.COMMAND_NAME</mpf:command_name>
-                <mpf:command_description>$label.COMMAND_DESC</mpf:command_description>
-                <mpf:download_type>$label.DOWNLOAD_TYPE</mpf:download_type>
-                <!-- if dark_current_download_flag == NULL in PDS3, we are going to return FALSE in PDS4 -->
-                <mpf:dark_current_download_flag>#checkNull("$label.DARK_CURRENT_DOWNLOAD_FLAG.toLowerCase()" "false")</mpf:dark_current_download_flag>
-                <mpf:dark_current_correction_flag>$label.DARK_CURRENT_CORRECTION_FLAG.toLowerCase()</mpf:dark_current_correction_flag>
-                <mpf:flat_field_correction_flag>$label.FLAT_FIELD_CORRECTION_FLAG.toLowerCase()</mpf:flat_field_correction_flag>
-                <mpf:bad_pixel_replacement_flag>$label.BAD_PIXEL_REPLACEMENT_FLAG.toLowerCase()</mpf:bad_pixel_replacement_flag>
-                <mpf:shutter_effect_correction_flag>$label.SHUTTER_EFFECT_CORRECTION_FLAG.toLowerCase()</mpf:shutter_effect_correction_flag>
-                <mpf:sqrt_compression_flag>$label.SQRT_COMPRESSION_FLAG.toLowerCase()</mpf:sqrt_compression_flag>
-            </mpf:MPF_Command_Parameters>
-
-            <mpf:MPF_Telemetry_Parameters>
-                <mpf:application_packet_name>$label.APPLICATION_PACKET_NAME</mpf:application_packet_name>
-                <mpf:application_packet_id>$label.APPLICATION_PACKET_ID</mpf:application_packet_id>
-                <mpf:tlm_cmd_discrepancy_flag>$label.TLM_CMD_DISCREPANCY_FLAG.toLowerCase()</mpf:tlm_cmd_discrepancy_flag>
-            </mpf:MPF_Telemetry_Parameters>
-
-        </Discipline_Area>
-    </Observation_Area>
-    <Reference_List>
+        <description>This product has been migrated to PDS4 from an original PDS3 
+          product.</description>
+      </Modification_Detail>
+    </Modification_History>
+  </Identification_Area>
+  <Observation_Area>
+    <Time_Coordinates>
+      <start_date_time>$label.IMAGE_TIME</start_date_time>
+      <stop_date_time xsi:nil="true"/>
+      <local_true_solar_time>$label.MPF_LOCAL_TIME</local_true_solar_time>
+    </Time_Coordinates>
+    <Primary_Result_Summary>
+      <purpose>Science</purpose>
+      <processing_level>Raw</processing_level>
+    </Primary_Result_Summary>
+    <!-- Add in information describing the Mission here. -->
+    <Investigation_Area>
+      <name>MARS PATHFINDER</name>
+      <type>Mission</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:context:investigation:mission.mars_pathfinder</lid_reference>
+        <reference_type>data_to_investigation</reference_type>
+      </Internal_Reference>
+    </Investigation_Area>
+    <!-- Add in information describing the instrument and spacecraft here. -->
+    <Observing_System>
+      <Observing_System_Component>
+        <name>MARS PATHFINDER LANDER</name>
+        <type>Spacecraft</type>
         <Internal_Reference>
-            <lid_reference>urn:nasa:pds:mars_mpf_imp_raw:browse:$label.PRODUCT_ID.toLowerCase()</lid_reference>
-            <reference_type>data_to_browse</reference_type>
-            <comment>This reference points to the browse version of this image.</comment>
+          <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.mpfl</lid_reference>
+          <reference_type>is_instrument_host</reference_type>
         </Internal_Reference>
-    </Reference_List>
-    <File_Area_Observational>
-        <File>
-            <file_name>$generate.file_name</file_name>
-            <local_identifier>FILE</local_identifier>
-            <creation_date_time>$label.PRODUCT_CREATION_TIME</creation_date_time>
-            <file_size unit="byte">$generate.file_size</file_size>
-            <records>$label.FILE_RECORDS</records>
-            <md5_checksum>$generate.md5_checksum</md5_checksum>
-        </File>
-        <Header>
-            <local_identifier>HEADER</local_identifier>
-            <offset unit="byte">0</offset>
-            <object_length unit="byte">$math.mul($label.RECORD_BYTES, $label.LABEL_RECORDS)</object_length>
-            <parsing_standard_id>PDS3</parsing_standard_id>
-            <description>This is the original attached PDS3 label delivered with the product by the MPF mission.</description>
-        </Header>
-        <Array_2D_Image>
-            <local_identifier>IMAGE</local_identifier>
-            <offset unit="byte">$math.mul($label.RECORD_BYTES, $label.LABEL_RECORDS)</offset>
-            <axes>2</axes>
-            <axis_index_order>Last Index Fastest</axis_index_order>
-            <Element_Array>
-                #set ($sampleType = $label.IMAGE.SAMPLE_TYPE)
-                <data_type>#getPds4DataType( "$label.IMAGE.SAMPLE_TYPE" "$label.IMAGE.SAMPLE_BITS" )</data_type>
-                <unit>DN</unit>
-            </Element_Array>
-            <Axis_Array>
-                <axis_name>Line</axis_name>
-                <elements>$label.IMAGE.LINES</elements>
-                <sequence_number>1</sequence_number>
-            </Axis_Array>
-            <Axis_Array>
-                <axis_name>Sample</axis_name>
-                <elements>$label.IMAGE.LINE_SAMPLES</elements>
-                <sequence_number>2</sequence_number>
-            </Axis_Array>
-            <Object_Statistics>
-                <local_identifier>IMAGE_STATISTICS</local_identifier>
-                <maximum>$label.IMAGE.MAXIMUM</maximum>
-                <minimum>$label.IMAGE.MINIMUM</minimum>
-                <mean>$label.IMAGE.MEAN</mean>
-                <standard_deviation>$label.IMAGE.STANDARD_DEVIATION</standard_deviation>
-                <bit_mask>#trimBitMask("$label.IMAGE.SAMPLE_BIT_MASK" "$label.IMAGE.SAMPLE_BITS")</bit_mask>
-                <median>$label.IMAGE.MEDIAN</median>
-                <md5_checksum>$generate.object_md5_checksum</md5_checksum>
-            </Object_Statistics>
-            <!--      
-      <Display_2D_Image>
-        <line_display_direction>Down</line_display_direction>
-        <sample_display_direction>Right</sample_display_direction>
-      </Display_2D_Image>
+      </Observing_System_Component>
+      <Observing_System_Component>
+        <name>IMAGER FOR MARS PATHFINDER</name>
+        <type>Instrument</type>
+        <Internal_Reference>
+          <lid_reference>urn:nasa:pds:context:instrument:instrument.imp__mpfl</lid_reference>
+          <reference_type>is_instrument</reference_type>
+        </Internal_Reference>
+      </Observing_System_Component>
+    </Observing_System>
+    <!-- Add in information describing the target here. -->
+    <Target_Identification>
+      <name>$label.TARGET_NAME</name>
+      #set ($targetName = "$label.TARGET_NAME")
+      #set ($targetType = "#getTargetType($targetName)")
+      <type>$targetType</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:context:target:$targetType.toLowerCase().$label.TARGET_NAME.toLowerCase()</lid_reference>
+        <reference_type>data_to_target</reference_type>
+      </Internal_Reference>
+    </Target_Identification>
+    <Mission_Area>
+      <mpf:MPF_Mission_Metadata>
+        <mpf:sol_number>$label.PLANET_DAY_NUMBER</mpf:sol_number>
+        <mpf:spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</mpf:spacecraft_clock_start_count>
+      </mpf:MPF_Mission_Metadata>
+    </Mission_Area>
+
+    <Discipline_Area>
+      <img:Imaging_Instrument_Parameters>
+        <img:exposure_count>$label.EXPOSURE_COUNT</img:exposure_count>
+        <img:exposure_duration unit="ms">$label.EXPOSURE_DURATION</img:exposure_duration>
+        <img:exposure_type>$label.EXPOSURE_TYPE</img:exposure_type>
+        <img:auto_exposure_data_cut>$label.AUTO_EXPOSURE_DATA_CUT</img:auto_exposure_data_cut>
+        <img:auto_exposure_pixel_fraction>$label.AUTO_EXPOSURE_PIXEL_FRACTION</img:auto_exposure_pixel_fraction>
+        <img:instrument_mode_id>$label.FRAME_ID</img:instrument_mode_id>
+        <img:Filter>
+          <img:filter_name>$label.FILTER_NAME</img:filter_name>
+          <img:filter_id>$label.FILTER_NUMBER</img:filter_id>
+        </img:Filter>
+        <img:first_line>$label.IMAGE.FIRST_LINE</img:first_line>
+        <img:first_sample>$label.IMAGE.FIRST_LINE_SAMPLE</img:first_sample>
+        <img:image_observation_type>$label.IMAGE_OBSERVATION_TYPE</img:image_observation_type>
+
+        #set ( $instTempCnts = $label.getList("INSTRUMENT_TEMPERATURE_COUNT") )
+        #set ( $instTemps = $label.getList("INSTRUMENT_TEMPERATURE") )
+        <img:Device_Temperature>
+          <img:name>CCD array</img:name>
+          <img:raw_count>$instTempCnts.get(0)</img:raw_count>
+          <img:temperature_calibrated unit="degC">$instTemps.get(0)</img:temperature_calibrated>
+        </img:Device_Temperature>
+        <img:Device_Temperature>
+          <img:name>camera head</img:name>
+          <img:raw_count>$instTempCnts.get(1)</img:raw_count>
+          <img:temperature_calibrated unit="degC">$instTemps.get(1)</img:temperature_calibrated>
+        </img:Device_Temperature>
+      </img:Imaging_Instrument_Parameters>
+      <img:Data_Correction_Parameters>
+        <img:bad_pixel_replacement_flag>$label.BAD_PIXEL_REPLACEMENT_FLAG.toLowerCase()</img:bad_pixel_replacement_flag>
+        <img:dark_current_correction_flag>$label.DARK_CURRENT_CORRECTION_FLAG.toLowerCase()</img:dark_current_correction_flag>
+        <img:flat_field_correction_flag>$label.FLAT_FIELD_CORRECTION_FLAG.toLowerCase()</img:flat_field_correction_flag>
+        <img:shutter_effect_correction_flag>$label.SHUTTER_EFFECT_CORRECTION_FLAG.toLowerCase()</img:shutter_effect_correction_flag>
+      </img:Data_Correction_Parameters>
+      <img:Command_Parameters>
+        <img:command_sequence_number>$label.COMMAND_SEQUENCE_NUMBER</img:command_sequence_number>
+      </img:Command_Parameters>
+      <img:Telemetry_Parameters>
+        <img:earth_received_start_date_time>$label.EARTH_RECEIVED_START_TIME</img:earth_received_start_date_time>
+        <img:earth_received_stop_date_time>$label.EARTH_RECEIVED_STOP_TIME</img:earth_received_stop_date_time>
+        <img:Packet_Parameters>
+          <img:expected_packets>$label.EXPECTED_PACKETS</img:expected_packets>
+          <img:received_packets>$label.RECEIVED_PACKETS</img:received_packets>
+        </img:Packet_Parameters>
+      </img:Telemetry_Parameters>
+      <img:Instrument_Compression_Parameters>
+        <img:instrument_compression_name>$label.INST_CMPRS_NAME</img:instrument_compression_name>
+        <img:instrument_compression_mode>$label.INST_CMPRS_MODE</img:instrument_compression_mode>
+        <img:instrument_compression_rate>$label.INST_CMPRS_RATE</img:instrument_compression_rate>
+        <img:instrument_compression_ratio>$label.INST_CMPRS_RATIO</img:instrument_compression_ratio>
+        <img:instrument_compression_quality>$label.INST_CMPRS_QUALITY</img:instrument_compression_quality>
+        <img:instrument_compression_quantization_type>$label.INST_CMPRS_QUANTZ_TYPE</img:instrument_compression_quantization_type>
+        <img:quantization_table_id>$label.INST_CMPRS_QUANTZ_TBL_ID</img:quantization_table_id>
+        <img:error_pixels>$label.ERROR_PIXELS</img:error_pixels>
+        
+        #set ( $blockSizes = $label.getList("INST_CMPRS_BLK_SIZE") )
+        <img:instrument_compression_block_size_x>$blockSizes.get(0)</img:instrument_compression_block_size_x>
+        <img:instrument_compression_block_size_y>$blockSizes.get(1)</img:instrument_compression_block_size_y>
+        <img:instrument_compression_blocks>$label.INST_CMPRS_BLOCKS</img:instrument_compression_blocks>
+        <img:instrument_compression_parameter>$label.INST_CMPRS_PARAM</img:instrument_compression_parameter>
+      </img:Instrument_Compression_Parameters>
+
+      <img:Downsample_Parameters>
+        <img:pixel_averaging_height>$label.PIXEL_AVERAGING_HEIGHT</img:pixel_averaging_height>
+        <img:pixel_averaging_width>$label.PIXEL_AVERAGING_WIDTH</img:pixel_averaging_width>
+      </img:Downsample_Parameters>
+
+      <img:Processing_History>
+        <img:Process>
+          <img:Process_Owner>
+            <img:producer_id>$label.PRODUCER_ID</img:producer_id>
+            <img:producer_full_name>$label.PRODUCER_FULL_NAME</img:producer_full_name>
+            <img:producer_institution_name>$label.PRODUCER_INSTITUTION_NAME</img:producer_institution_name>
+          </img:Process_Owner>
+          <img:Software>
+            <img:name>$label.SOFTWARE_NAME</img:name>
+            <img:version_id>$label.SOFTWARE_VERSION_ID</img:version_id>
+            <img:description>$label.PROCESSING_HISTORY_TEXT</img:description>
+          </img:Software>
+        </img:Process>
+      </img:Processing_History>
+
+      <geom:Geometry>
+        <geom:SPICE_Kernel_Files>
+          #foreach( $file in $label.getList("SOURCE_PRODUCT_ID") )
+          <geom:SPICE_Kernel_Identification>
+            <geom:spice_kernel_file_name>$file</geom:spice_kernel_file_name>
+          </geom:SPICE_Kernel_Identification>
+          #end
+        </geom:SPICE_Kernel_Files>
+      </geom:Geometry>
+      
+      <mpf:MPF_Discipline_Metadata>
+        <mpf:detector_pixel_height>$label.DETECTOR_PIXEL_HEIGHT</mpf:detector_pixel_height>
+        <mpf:detector_pixel_width>$label.DETECTOR_PIXEL_WIDTH</mpf:detector_pixel_width>
+        <mpf:instrument_deployment_state>$label.INSTRUMENT_DEPLOYMENT_STATE</mpf:instrument_deployment_state>
+      </mpf:MPF_Discipline_Metadata>
+
+      <mpf:MPF_Command_Parameters>
+        <mpf:command_name>$label.COMMAND_NAME</mpf:command_name>
+        <mpf:command_description>$label.COMMAND_DESC</mpf:command_description>
+        <mpf:tlm_cmd_discrepancy_flag>$label.TLM_CMD_DISCREPANCY_FLAG.toLowerCase()</mpf:tlm_cmd_discrepancy_flag>
+        <mpf:download_type>$label.DOWNLOAD_TYPE</mpf:download_type>
+        <mpf:dark_current_download_flag>#checkNull($label.DARK_CURRENT_DOWNLOAD_FLAG.toLowerCase(), "false")</mpf:dark_current_download_flag>
+        <mpf:sqrt_compression_flag>$label.SQRT_COMPRESSION_FLAG.toLowerCase()</mpf:sqrt_compression_flag>
+      </mpf:MPF_Command_Parameters>
+
+      <mpf:MPF_Telemetry_Parameters>
+        <mpf:application_packet_name>$label.APPLICATION_PACKET_NAME</mpf:application_packet_name>
+        <mpf:application_packet_id>$label.APPLICATION_PACKET_ID</mpf:application_packet_id>
+      </mpf:MPF_Telemetry_Parameters>
+      
+      <mpf:MPF_Compression_Parameters>
+        <mpf:instrument_compression_synchronization_blocks>$label.INST_CMPRS_SYNC_BLKS</mpf:instrument_compression_synchronization_blocks>
+        <mpf:rice_start_option>$label.RICE_START_OPTION</mpf:rice_start_option>
+        <mpf:rice_option_value>$label.RICE_OPTION_VALUE</mpf:rice_option_value>
+        <mpf:sqrt_minimum_pixel>$label.SQRT_MINIMUM_PIXEL</mpf:sqrt_minimum_pixel>
+        <mpf:sqrt_maximum_pixel>$label.SQRT_MAXIMUM_PIXEL</mpf:sqrt_maximum_pixel>
+      </mpf:MPF_Compression_Parameters>
+
+      <mpf:MPF_Geometry_Parameters>
+        <mpf:instrument_azimuth>$label.INSTRUMENT_AZIMUTH</mpf:instrument_azimuth>
+        <mpf:azimuth_fov>$label.AZIMUTH_FOV</mpf:azimuth_fov>
+        <mpf:azimuth_motor_clicks>$label.AZIMUTH_MOTOR_CLICKS</mpf:azimuth_motor_clicks>
+        <mpf:instrument_azimuth_method>$label.INSTRUMENT_AZIMUTH_METHOD</mpf:instrument_azimuth_method>
+        <mpf:instrument_elevation>$label.INSTRUMENT_ELEVATION</mpf:instrument_elevation>
+        <mpf:elevation_fov>$label.ELEVATION_FOV</mpf:elevation_fov>
+        <mpf:elevation_motor_clicks>$label.ELEVATION_MOTOR_CLICKS</mpf:elevation_motor_clicks>
+        <mpf:instrument_elevation_method>$label.INSTRUMENT_ELEVATION_METHOD</mpf:instrument_elevation_method>
+        <mpf:fixed_instrument_azimuth>$label.SURFACE_BASED_INST_AZIMUTH</mpf:fixed_instrument_azimuth>
+        <mpf:fixed_instrument_elevation>$label.SURFACE_BASED_INST_ELEVATION</mpf:fixed_instrument_elevation>
+        <mpf:surface_based_inst_method>$label.SURFACE_BASED_INST_METHOD.replace('-','_')</mpf:surface_based_inst_method>
+        <mpf:positive_elevation_direction>$label.POSITIVE_ELEVATION_DIRECTION</mpf:positive_elevation_direction>
+        <mpf:solar_azimuth>$label.SOLAR_AZIMUTH</mpf:solar_azimuth>
+        <mpf:solar_elevation>$label.SOLAR_ELEVATION</mpf:solar_elevation>
+        
+        #set ( $landerq = $label.getList("LANDER_SURFACE_QUATERNION") ) 
+        <mpf:Lander_Surface_Quaternion>
+          <mpf:qcos>$landerq.get(0)</mpf:qcos>
+          <mpf:qsin1>$landerq.get(1)</mpf:qsin1>
+          <mpf:qsin2>$landerq.get(2)</mpf:qsin2>
+          <mpf:qsin3>$landerq.get(3)</mpf:qsin3>
+        </mpf:Lander_Surface_Quaternion>
+      </mpf:MPF_Geometry_Parameters>
+    </Discipline_Area>
+  </Observation_Area>
+  <Reference_List>
+    <Internal_Reference>
+      <lid_reference>urn:nasa:pds:mars_mpf_imp_raw:browse:$label.PRODUCT_ID.toLowerCase()</lid_reference>
+      <reference_type>data_to_browse</reference_type>
+      <comment>This reference points to the browse version of this image.</comment>
+    </Internal_Reference>
+  </Reference_List>
+  <File_Area_Observational>
+    <File>
+      <file_name>$generate.file_name</file_name>
+      <local_identifier>FILE</local_identifier>
+      <creation_date_time>$label.PRODUCT_CREATION_TIME</creation_date_time>
+      <file_size unit="byte">$generate.file_size</file_size>
+      <records>$label.FILE_RECORDS</records>
+      <md5_checksum>$generate.md5_checksum</md5_checksum>
+    </File>
+    <Header>
+      <local_identifier>HEADER</local_identifier>
+      <offset unit="byte">0</offset>
+      <object_length unit="byte">$math.mul($label.RECORD_BYTES, $label.LABEL_RECORDS)</object_length>
+      <parsing_standard_id>PDS3</parsing_standard_id>
+      <description>This is the original attached PDS3 label delivered with the product by the MPF mission.</description>
+    </Header>
+    <Array_2D_Image>
+      <local_identifier>IMAGE</local_identifier>
+      <offset unit="byte">$math.mul($label.RECORD_BYTES, $label.LABEL_RECORDS)</offset>
+      <axes>2</axes>
+      <axis_index_order>Last Index Fastest</axis_index_order>
+      <Element_Array>
+        #set ($sampleType = $label.IMAGE.SAMPLE_TYPE)
+        <data_type>#getPds4DataType( "$label.IMAGE.SAMPLE_TYPE" "$label.IMAGE.SAMPLE_BITS" )</data_type>
+        <unit>DN</unit>
+      </Element_Array>
+      <Axis_Array>
+        <axis_name>Line</axis_name>
+        <elements>$label.IMAGE.LINES</elements>
+        <sequence_number>1</sequence_number>
+      </Axis_Array>
+      <Axis_Array>
+        <axis_name>Sample</axis_name>
+        <elements>$label.IMAGE.LINE_SAMPLES</elements>
+        <sequence_number>2</sequence_number>
+      </Axis_Array>
+      <Object_Statistics>
+        <local_identifier>IMAGE_STATISTICS</local_identifier>
+        <maximum>$label.IMAGE.MAXIMUM</maximum>
+        <minimum>$label.IMAGE.MINIMUM</minimum>
+        <mean>$label.IMAGE.MEAN</mean>
+        <standard_deviation>$label.IMAGE.STANDARD_DEVIATION</standard_deviation>
+        <bit_mask>#trimBitMask("$label.IMAGE.SAMPLE_BIT_MASK" "$label.IMAGE.SAMPLE_BITS")</bit_mask>
+        <median>$label.IMAGE.MEDIAN</median>
+        <md5_checksum>$generate.object_md5_checksum</md5_checksum>
+      </Object_Statistics>
+      <!--      
+    <Display_2D_Image>
+    <line_display_direction>Down</line_display_direction>
+    <sample_display_direction>Right</sample_display_direction>
+    </Display_2D_Image>
 -->
-        </Array_2D_Image>
-    </File_Area_Observational>
+    </Array_2D_Image>
+  </File_Area_Observational>
 </Product_Observational>

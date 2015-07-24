@@ -31,7 +31,7 @@ public class ObjectMd5Checksum implements Element {
 	    	String recbytes = (String)this.pdsObj.get("RECORD_BYTES");
 	    	String recs = (String)this.pdsObj.get("LABEL_RECORDS");
 	    	this.offset = Long.valueOf(recbytes) * Long.valueOf(recs);
-	    	System.out.println(this.offset);
+	    	//System.out.println(this.offset);
 	    	
 	    	checksum = new Md5Checksum(this.pdsObj, this.offset);
 	        return checksum.getValue();

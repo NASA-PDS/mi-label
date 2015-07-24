@@ -115,9 +115,11 @@ public class GenerateLauncherTest extends GenerateTest {
 	        List<String> filebases = new ArrayList<String>();
 	        filebases.add("i646954r");
 	        filebases.add("i985135l");
+	        filebases.add("i455934l");
     		
 	        String[] args = {"-p", dataPath + "/" + filebases.get(0) + ".img", 
 	        		dataPath + "/" + filebases.get(1) + ".img",
+	        		dataPath + "/" + filebases.get(2) + ".drk",
 	        		"-t", testPath + "/mpf_imp_raw_template_1400.xml",
 	        		"-o", testOut , "-b", dataPath };
 	        GenerateLauncher.main(args);
