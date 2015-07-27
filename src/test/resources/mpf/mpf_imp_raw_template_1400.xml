@@ -48,7 +48,7 @@
     </Alias_List>
     <Modification_History>
       <Modification_Detail>
-        <modification_date>$date.get("yyyy-MM-dd")</modification_date>
+        <modification_date>2015-07-23</modification_date>
         <version_id>0.1</version_id>
         <description>This product has been migrated to PDS4 from an original PDS3 
           product.</description>
