@@ -18,7 +18,7 @@
 ## accordance with the number of BITS for the data_type (i.e. SAMPLE_BITS).
 ## The values in PDS4 are based on PDS SCH 1.4.0.0
 
-## TODO - Update with the remaining PDS4 data types
+## The following mappings are TBD
 ##	"ComplexLSB16",
 ##	"ComplexLSB8",
 ##	"ComplexMSB16",
@@ -71,23 +71,22 @@ $bit_mask.substring(2,$convert.toInteger($bits_str))##
 ## These may need to be applied at a mission-specific level, but for now
 ## will just leave in here.
 ##
-## TODO - Update with all PDS4 Targets vs. Target Types
 ##
 #set ($TARGET_MAP = {
-	"ALTAIR" : "Star",
-	"APXSSITE" : "Unknown",
-	"ARCTURUS" : "Star",
-	"CALIMG" : "Calibration",
-	"DEIMOS" : "Satellite",
-	"LANDER" : "Unknown",
-	"MAG" : "Unknown",
-	"MARS" : "Planet",
-	"PHOBOS" : "Satellite",
-	"ROVER" : "Unknown",
-	"SKY" : "Unknown",
-	"SUN" : "Sun",
-	"VEGA" : "Star",
-	"WINDSOCK" : "Unknown"
+  "ALTAIR" : "Star",
+  "APXSSITE" : "Equipment",
+  "ARCTURUS" : "Star",
+  "CALIMG" : "Calibration",
+  "DEIMOS" : "Satellite",
+  "LANDER" : "Equipment",
+  "MAG" : "Equipment",
+  "MARS" : "Planet",
+  "PHOBOS" : "Satellite",
+  "ROVER" : "Equipment",
+  "SKY" : "Calibration",
+  "SUN" : "Sun",
+  "VEGA" : "Star",
+  "WINDSOCK" : "Equipment"
 })
 #macro(getTargetType $target)
 $TARGET_MAP.get($target)##
