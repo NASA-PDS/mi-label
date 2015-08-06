@@ -37,6 +37,7 @@ public class Md5Checksum implements Element {
                     complete.update(buffer, 0, numRead);
                 }
             } while (numRead != -1);
+            return complete.digest();
         } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -51,7 +52,7 @@ public class Md5Checksum implements Element {
                 e.printStackTrace();
             }
         }
-        return complete.digest();
+		return null;
     }
 
     @Override
