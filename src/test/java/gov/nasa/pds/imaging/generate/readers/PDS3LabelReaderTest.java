@@ -29,12 +29,6 @@ public class PDS3LabelReaderTest extends GenerateTest {
 	@Test
 	public void testGetSimple() {
 	    try {
-	        System.getProperties().setProperty(
-	                "javax.xml.parsers.DocumentBuilderFactory",
-	                "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
-	            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
-	                "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-	            
 	        Debugger.debugFlag = true;
 	        String filePath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1/gen_ELE_MOM.LBL");
 	        final BufferedReader input = new BufferedReader(new FileReader(filePath));

@@ -37,7 +37,7 @@ public class GenerateLauncherTest extends GenerateTest {
     private static String testPath;
 	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("testGenerationMPFExample");
+	public SingleTestRule test = new SingleTestRule("");
 	
 	@BeforeClass
 	public static void oneTimeSetUp() throws Exception {
@@ -65,14 +65,14 @@ public class GenerateLauncherTest extends GenerateTest {
     public void testGenerationDemo() {
         try {
             String exPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/example1");
-            String outFilePath = TestConstants.TEST_OUT_DIR + "/generationDemo.xml";
-            File output = new File(outFilePath);
+            String outFilePath = TestConstants.TEST_OUT_DIR;
+            File output = new File(outFilePath + "/pds3_example.xml" );
             File expected = new File(testPath + "/generationDemo_expected.xml");
             
             String[] args = {"-d", 
                     "-p",exPath + "/pds3_example.lbl",
                     "-t",exPath + "/template_example.vm",
-                    "-o",outFilePath};
+                    "-o",outFilePath, "-b", exPath};
             GenerateLauncher.main(args);
         
             // Check expected file exists
@@ -83,8 +83,9 @@ public class GenerateLauncherTest extends GenerateTest {
             assertTrue(output.getAbsolutePath() + " does not exist.",
                     output.exists());
             
-            // Check the files match
-            assertTrue(FileUtils.contentEquals(expected, output));
+	        // Check the files match
+	        assertTrue(expected.getAbsolutePath() + " not equals " + output.getAbsolutePath(),
+	        		FileUtils.contentEquals(expected, output));
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception thrown.");
@@ -96,10 +97,31 @@ public class GenerateLauncherTest extends GenerateTest {
      */
     @Test
     public void testGenerationMER() {
-        String[] args = {"-d", "-p","src/main/resources/examples/example2/1p216067135edn76pop2102l2m1.img",
-        		"-t","src/main/resources/examples/example2/mer_template.vm"};
-        
-        GenerateLauncher.main(args);
+    	try {
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest/");
+    		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
+    		String dataPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/example2/");
+    		
+	        String filebase = "1p216067135edn76pop2102l2m1";
+    		
+	        String[] args = {"-p", dataPath + "/" + filebase + ".img",
+	        		"-t", dataPath + "/mer_template.vm",
+	        		"-o", testOut , "-b", dataPath };
+	        GenerateLauncher.main(args);
+	        
+        	System.out.println("output file: " + testOut + "/" + filebase + ".xml");
+			String outFilePath = testOut + "/" + filebase + ".xml";
+			File output = new File(outFilePath);
+			System.out.println("expected output file: " + testPath + "/" + filebase + "_expected.xml");
+			File expected = new File(testPath + "/" + filebase + "_expected.xml");
+			
+	        // Check the files match
+	        assertTrue(expected.getAbsolutePath() + " not equals " + output.getAbsolutePath(),
+	        		FileUtils.contentEquals(expected, output));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Test Failed Due To Exception: " + e.getMessage());
+		}
     }
     
     /**
@@ -132,7 +154,8 @@ public class GenerateLauncherTest extends GenerateTest {
 				File expected = new File(testPath + "/" + filebase + "_expected.xml");
 				
 		        // Check the files match
-		        assertTrue(FileUtils.contentEquals(expected, output));
+		        assertTrue(expected.getAbsolutePath() + " not equals " + output.getAbsolutePath(),
+		        		FileUtils.contentEquals(expected, output));
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,20 +163,32 @@ public class GenerateLauncherTest extends GenerateTest {
 		}
     }
     
-    /**
-     * Test Generation Tool with MPF Data
-     * @throws InvalidOptionException 
-     */
     @Test
-    public void testGenerationOutFile() {
+    public void testCleanup() {
     	try {
-        String[] args = {"-p","src/main/resources/examples/mpf_example/i985135l.img",
-        		"-t","src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm","-o", "target/out.pds4"};
-        GenerateLauncher.main(args);
-        assertTrue((new File(Utility.getAbsolutePath("target/out.pds4"))).exists());
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		fail("Failed due to exception: " + e.getMessage());
-    	}
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatortest/");
+    		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
+    		String dataPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatortest/");
+    		
+	        String filebase = "mpf";
+    		
+	        String[] args = {"-p", dataPath + "/" + filebase + ".img",
+	        		"-t", testPath + "/mpf_template.xml",
+	        		"-o", testOut , "-b", dataPath };
+	        GenerateLauncher.main(args);
+	        
+        	System.out.println("output file: " + testOut + "/" + filebase + ".xml");
+			String outFilePath = testOut + "/" + filebase + ".xml";
+			File output = new File(outFilePath);
+			System.out.println("expected output file: " + testPath + "/" + filebase + "_expected.xml");
+			File expected = new File(testPath + "/" + filebase + "_expected.xml");
+			
+	        // Check the files match
+	        assertTrue(expected.getAbsolutePath() + " not equals " + output.getAbsolutePath(),
+	        		FileUtils.contentEquals(expected, output));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Test Failed Due To Exception: " + e.getMessage());
+		}
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MER_Product xmlns:pds="http://pds.nasa.gov/schema/pds4/pds" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/schema/pds4/pds">
+    <data_set_id>MER1-M-PANCAM-2-EDR-OPS-V1.0</data_set_id>
+    <Encoded_Image>
+        <mean>136.233</mean>
+        <maximum>234.0</maximum>
+        <minimum>48.0</minimum>
+    </Encoded_Image>
+    <Array_2D_Image>
+        <axis_order>FIRST_INDEX_FASTEST</axis_order>
+    </Array_2D_Image>
+    <Array_2D_Image>
+        <Array_Axis>
+            <elements>320</elements>
+            <name>SAMPLES</name>
+        </Array_Axis>
+        <Array_Axis>
+            <elements>192</elements>
+            <name>LINES</name>
+        </Array_Axis>
+    </Array_2D_Image>
+    <Geometry_Parameters>
+        <instrument_azimuth units="deg">-70.2133</instrument_azimuth>
+    </Geometry_Parameters>
+    <File_Area>
+        <md5_checksum>497becc9b6719ba0cdf141efeb09aaca</md5_checksum>
+    </File_Area>
+    <File_Area>
+        <current_date>2015-08-10</current_date>
+    </File_Area>
+</MER_Product>

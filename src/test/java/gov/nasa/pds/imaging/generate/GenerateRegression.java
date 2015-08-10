@@ -33,7 +33,7 @@ public class GenerateRegression extends GenerateTest {
 	private Generator generator;
 	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("testCLI1");
+	public SingleTestRule test = new SingleTestRule("");
 	
 	/**
 	 * @throws java.lang.Exception
@@ -47,9 +47,9 @@ public class GenerateRegression extends GenerateTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+//	@AfterClass
+//	public static void tearDownAfterClass() throws Exception {
+//	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -63,9 +63,9 @@ public class GenerateRegression extends GenerateTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@After
-	public void tearDown() throws Exception {
-	}
+//	@After
+//	public void tearDown() throws Exception {
+//	}
 	
 	/**
 	 * Test CLI end-to-end with rchen test data per PDS-259 bug
@@ -74,14 +74,15 @@ public class GenerateRegression extends GenerateTest {
 	public void testCLI1() {        
     	try {
     		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1");
-    		String outFilePath = TestConstants.TEST_OUT_DIR + "/cli1.xml";
-    		File output = new File(outFilePath);
-    		File expected = new File(testPath + "/expected.xml");
+    		String outFilePath = TestConstants.TEST_OUT_DIR;
+    		File output = new File(outFilePath + "/gen_ELE_MOM.xml");
+    		File expected = new File(testPath + "/gen_ELE_MOM_expected.xml");
 
 	        String[] args = {"-d", 
-	        		"-p",testPath + "/gen_ELE_MOM.LBL",
-	        		"-t",testPath + "/gen_data.vm",
-	        		"-o",outFilePath};
+	        		"-p", testPath + "/gen_ELE_MOM.LBL",
+	        		"-t", testPath + "/gen_data.vm",
+	        		"-o", outFilePath,
+	        		"-b", testPath};
 	        GenerateLauncher.main(args);
 	        
 	        // Check expected file exists
@@ -108,14 +109,15 @@ public class GenerateRegression extends GenerateTest {
     	try {
     		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/transform-0.2.2");
     		System.out.println(testPath);
-    		String outFilePath = TestConstants.TEST_OUT_DIR+ "/transformCLI.xml";
-    		File output = new File(outFilePath);
-    		File expected = new File(testPath + "/expected.xml");
+    		String outFilePath = TestConstants.TEST_OUT_DIR;
+    		File output = new File(outFilePath + "/ELE_MOM.xml");
+    		File expected = new File(testPath + "/ELE_MOM_expected.xml");
 
 	        String[] args = {"-d", 
 	        		"-p", testPath + "/ELE_MOM.LBL",
 	        		"-t", testPath + "/generic-pds3_to_pds4.vm",
-	        		"-o", outFilePath};
+	        		"-o", outFilePath,
+	        		"-b", testPath};
 	        GenerateLauncher.main(args);
 	        
 	        // Check expected file exists
@@ -127,7 +129,8 @@ public class GenerateRegression extends GenerateTest {
 	        		output.exists());
 	        
 	        // Check the files match
-	        assertTrue(expected + " and " + output + " do not match.",FileUtils.contentEquals(expected, output));
+	        assertTrue(expected + " and " + output + " do not match.",
+	        		FileUtils.contentEquals(expected, output));
     	} catch (Exception e) {
     		e.printStackTrace();
     		fail("Test Failed Due To Exception: " + e.getMessage());

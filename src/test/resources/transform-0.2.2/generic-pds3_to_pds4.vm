@@ -25,7 +25,7 @@
      <product_class>Product_Observational</product_class>
      <Modification_History>
        <Modification_Detail>
-         <modification_date>$generate.current_date_utc</modification_date>
+         <modification_date>2015-08-10</modification_date>
          <version_id>1.0</version_id>
          <description>Auto generated PDS4 product label created by the Transform Tool.</description>
        </Modification_Detail>

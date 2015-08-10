@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.apache.commons.lang.StringEscapeUtils;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -132,7 +132,12 @@ public class PDS3Label implements PDSObject {
     @Override
     @SuppressWarnings("rawtypes")
     public final List getList(final String key) throws TemplateException {
-		return ((ItemNode) getNode(key)).getValues();
+    	if (getNode(key) == null) {
+    		//return new GenerateEmptyList();
+    		return new ItemNode(key,null);
+    	} else {
+    		return ((ItemNode) getNode(key)).getValues();
+    	}
     }
 
     private final Object getNode(final String key) {
@@ -176,7 +181,7 @@ public class PDS3Label implements PDSObject {
     public void setMappings() {
     	Debugger.debug("+++++++++++++++++++++++++++\n"
     		+ "PDS3Label.setMapping()\n"
-    		+ "document " + document + "\n"
+    		+ "document " + this.document + "\n"
 			+ "+++++++++++++++++++++++++++");
         try {
             final PDS3LabelReader reader = new PDS3LabelReader();

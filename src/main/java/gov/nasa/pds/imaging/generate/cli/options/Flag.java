@@ -11,7 +11,8 @@ public enum Flag {
     /** Flag to output the logging to a file. */
     BASEPATH("b", "base-path", "base file path", String.class,
             "Specify the base file path to be stripped from the PDS3 label paths " +
-            " to allow output in a relative directory structure."),
+            "to allow output in a relative directory structure. Requires -o flag to " +
+            "also be specified."),
     
     /** Flag to display the version. */
     DEBUG("d", "debug", "Directs output to screen.  <default>"),
@@ -26,7 +27,8 @@ public enum Flag {
 
     /** Flag to specify the output file name */
     OUTPUT("o", "output-path", "output path", String.class,
-            "Specify an output path to output the new PDS4 labels. (default = '.')"),
+            "Specify an output path to output the new PDS4 labels. By default, the file will"
+            + " output in same location as the input file."),
 
     /** Flag to display the version. */
     VERSION("V", "version", "Display application version.");

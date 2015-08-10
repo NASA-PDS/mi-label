@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -67,6 +68,12 @@ public class Generator {
 		this.pdsObject = null;
 		this.outputFile = null;
 
+        System.getProperties().setProperty(
+                "javax.xml.parsers.DocumentBuilderFactory",
+                "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
+            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
+                "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+
 		this.ctxtMappings = new ContextMappings();
 	}
 
@@ -76,6 +83,13 @@ public class Generator {
         this.templateFile = templateFile;
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
+        
+        System.getProperties().setProperty(
+                "javax.xml.parsers.DocumentBuilderFactory",
+                "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
+            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
+                "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+
         this.ctxtMappings = new ContextMappings(this.pdsObject);
                
         initTemplate();
@@ -102,8 +116,25 @@ public class Generator {
 			final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
 					.getBytes()));
 
-			final TransformerFactory tFactory = TransformerFactory.newInstance();
-			final Transformer transformer = tFactory.newTransformer(new StreamSource(
+			// First, lets make a transformer that will output the raw
+			// XML before we clean out the empty tags
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			Transformer transformer = tFactory.newTransformer();
+
+			StringWriter out = new StringWriter();
+			transformer.transform(new DOMSource(doc), new StreamResult(out));
+			
+			Debugger.debug("outputUnclean ="+out.toString()+"<END>");
+			if (Debugger.debugFlag) {
+			  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
+			  cout.write(out.toString());
+			  cout.close();
+			}
+			
+			// Next, let's create the transformer with the XSLT to clean out
+			// extra whitespace and remove empty tags
+			tFactory = TransformerFactory.newInstance();
+			transformer = tFactory.newTransformer(new StreamSource(
 					Generator.class.getResourceAsStream(CLEAN_XSLT)));
 
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -114,10 +145,10 @@ public class Generator {
 			Debugger.debug("this.outputFile = "+this.outputFile);
 			
 			// Make sure the file path exists, otherwise make dirs
-			File outDir = this.outputFile.getParentFile();
-			if (!outDir.exists()) {
-			    FileUtils.forceMkdir(outDir);
-			}
+//			File outDir = this.outputFile.getParentFile();
+//			if (!outDir.exists()) {
+//			    FileUtils.forceMkdir(outDir);
+//			}
 			
 			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
 			if (Debugger.debugFlag) {
@@ -126,7 +157,7 @@ public class Generator {
 			  cout.close();
 			}
 
-			final StringWriter out = new StringWriter();
+			out = new StringWriter();
 			transformer.transform(new DOMSource(doc), new StreamResult(out));
 
 			Debugger.debug("out.toString() =" + out.toString());
@@ -332,17 +363,21 @@ public class Generator {
 	public void initTemplate() throws TemplateException {
 		final String filename = this.templateFile.getName();
 
-		final Properties props = new Properties();
-		props.setProperty("file.resource.loader.path", // Need to add base path
+		VelocityEngine ve = new VelocityEngine();
+		//final Properties props = new Properties();
+		ve.setProperty("file.resource.loader.path", // Need to add base path
 				// for resource loader
 				this.templateFile.getParent());
-		Velocity.init(props); // Add the properties to the velocity
+		ve.setProperty("file.resource.loader.cache",
+				"false");
+		//Velocity.init(props); // Add the properties to the velocity
 		// initialization
+		ve.init();
 
 		this.context = new VelocityContext();
 
 		try {
-			this.template = Velocity.getTemplate(filename);
+			this.template = ve.getTemplate(filename);
 		} catch (final ResourceNotFoundException e) {
 			throw new TemplateException("Template not found - "
 					+ this.templatePath);

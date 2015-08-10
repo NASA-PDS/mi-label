@@ -7,13 +7,11 @@ import java.util.List;
 public class ItemNode extends ArrayList<String>{
 
     private String name;
-    //private final List<String> values;
     public String units;
 
     public ItemNode(final String name, final String units) {
         super();
         this.name = name;
-        //this.values = new ArrayList<String>();
         this.units = units;
     }
 
@@ -31,7 +29,7 @@ public class ItemNode extends ArrayList<String>{
 
     public Object getValue() {
         if (this.size() == 1) {
-            return this.get(0);
+            return super.get(0);
         } else {
             return this;
         }
@@ -52,6 +50,15 @@ public class ItemNode extends ArrayList<String>{
 
     public void setValues(final List<String> values) {
         this.addAll(values);
+    }
+    
+    @Override
+    public String get(int index) {
+    	if (this.size() == 0) {
+    		return "";
+    	}
+    	
+    	return super.get(index);
     }
     
     @Override
