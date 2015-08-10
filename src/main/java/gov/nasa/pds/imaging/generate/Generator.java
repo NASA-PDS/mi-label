@@ -364,14 +364,11 @@ public class Generator {
 		final String filename = this.templateFile.getName();
 
 		VelocityEngine ve = new VelocityEngine();
-		//final Properties props = new Properties();
 		ve.setProperty("file.resource.loader.path", // Need to add base path
 				// for resource loader
 				this.templateFile.getParent());
 		ve.setProperty("file.resource.loader.cache",
 				"false");
-		//Velocity.init(props); // Add the properties to the velocity
-		// initialization
 		ve.init();
 
 		this.context = new VelocityContext();
