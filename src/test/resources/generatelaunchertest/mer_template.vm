@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+## Handles specifying XML attributes 
+<MER_Product xmlns:pds="http://pds.nasa.gov/schema/pds4/pds" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://pds.nasa.gov/schema/pds4/pds">
+  
+## Scenario 1
+  <data_set_id>$label.DATA_SET_ID</data_set_id>
+  
+## Scenario 2 
+  <Encoded_Image>
+  	<mean>$label.IMAGE.MEAN</mean>
+  	<maximum>$label.IMAGE.MAXIMUM</maximum>
+  	<minimum>$label.IMAGE.MINIMUM</minimum>
+  </Encoded_Image>  
+
+## Scenario 3
+  <Coordinate_System>
+  #set ($coordSysList = $label.getRecordsWithIndices(['COORDINATE_SYSTEM_INDEX', 'COORDINATE_SYSTEM_INDEX_NAME'],'ROVER_COORDINATE_SYSTEM.COORDINATE_SYSTEM_INDEX', 'ROVER_COORDINATE_SYSTEM.COORDINATE_SYSTEM_INDEX_NAME') )
+  #foreach ( $coordSys in $coordSysList )
+  	<Index_Description>
+ 	  <coordinate_system_index>$coordSys.COORDINATE_SYSTEM_INDEX</coordinate_system_index>
+ 	  <coordinate_system_index_name>$coordSys.COORDINATE_SYSTEM_INDEX_NAME</coordinate_system_index_name>
+  	</Index_Description>
+  #end
+  </Coordinate_System>
+  
+  <Coordinate_System>
+  #set ($coordSysList = $label.getRecords('ROVER_COORDINATE_SYSTEM.COORDINATE_SYSTEM_INDEX', 'ROVER_COORDINATE_SYSTEM.COORDINATE_SYSTEM_INDEX_NAME') )
+  #foreach ( $coordSys in $coordSysList )
+  	<Index_Description>
+ 	  <coordinate_system_index>$coordSys.COORDINATE_SYSTEM_INDEX</coordinate_system_index>
+ 	  <coordinate_system_index_name>$coordSys.COORDINATE_SYSTEM_INDEX_NAME</coordinate_system_index_name>
+  	</Index_Description>
+  #end
+  </Coordinate_System>
+  
+## Scenario 4
+  <Array_2D_Image>
+    <axis_order>FIRST_INDEX_FASTEST</axis_order>
+  </Array_2D_Image>
+  	
+## Scenario 5
+  <Array_2D_Image>
+    <Array_Axis>
+      <elements>$label.IMAGE.LINE_SAMPLES</elements>
+      <name>SAMPLES</name>
+    </Array_Axis>
+    <Array_Axis>
+      <elements>$label.IMAGE.LINES</elements>
+      <name>LINES</name>
+    </Array_Axis>
+  </Array_2D_Image>
+
+  
+## Scenario 6
+  <Geometry_Parameters>
+    <instrument_azimuth units="$label.getUnits('SITE_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH')">$label.SITE_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH</instrument_azimuth>
+  </Geometry_Parameters>
+  
+## Scenario 7
+  <File_Area>
+    <md5_checksum>$generate.md5_checksum</md5_checksum>
+  </File_Area>
+
+## Current Date UTC
+  <File_Area>
+    <current_date>2015-08-10</current_date>
+  </File_Area>
+</MER_Product>

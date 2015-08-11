@@ -100,13 +100,12 @@ public class GenerateLauncherTest extends GenerateTest {
     	try {
     		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest/");
     		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
-    		String dataPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/example2/");
     		
 	        String filebase = "1p216067135edn76pop2102l2m1";
     		
-	        String[] args = {"-p", dataPath + "/" + filebase + ".img",
-	        		"-t", dataPath + "/mer_template.vm",
-	        		"-o", testOut , "-b", dataPath };
+	        String[] args = {"-p", testPath + "/" + filebase + ".img",
+	        		"-t", testPath + "/mer_template.vm",
+	        		"-o", testOut , "-b", testPath };
 	        GenerateLauncher.main(args);
 	        
         	System.out.println("output file: " + testOut + "/" + filebase + ".xml");
