@@ -26,6 +26,11 @@ public class Md5Checksum implements Element {
         InputStream fis = null;
         MessageDigest complete = null;
         try {
+        	// First make sure a file object exists, otherwise return null
+            if (this.file == null || this.file.toString().equals("")) {
+                return null;
+            }
+
             fis = new FileInputStream(this.file);
             fis.skip(this.offset);
             final byte[] buffer = new byte[1024];
