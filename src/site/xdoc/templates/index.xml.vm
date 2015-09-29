@@ -61,13 +61,22 @@
     	inclusive.  These solutions are NOT PDS4-compliant, they are simply proof-of-concept examples to prove the functionality of the tool and how they can
     	be applied to PDS4-compliant labels.</p>
     	<ul>
-    		<li><a href="#Hard-Coded Value">Hard-Coded Value</a></li>
-    		<li><a href="#Base_Element">Base Element</a></li>
+    		<li><a href="#Hard-Coded_Value">Hard-Coded Value</a></li>
+    		<li><a href="#Base-Level_Keyword">Base-Level Keyword</a></li>
+    		<li><a href="#Nested_Keyword">Nested Keyword</a></li>
+    		<li><a href="#Arrays">Arrays</a></li>
+    		<li><a href="#Multiple_Associated_Arrays">Multiple Associated Arrays</a></li>
+    		<li><a href="#Units">Units</a></li>
+    		<li><a href="#Generated_Values">Generated Values</a></li>
+    		<li><a href="#PDS3_to_PDS4_Conversions">PDS3 to PDS4 Conversions</a></li>
+    		<ul>
+    		  <li><a href="#Target_Types">Target Types</a></li>
+    		
     		<li><a href="#Sub-Element">Sub-Element</a></li>
-				<li><a href="#Multiple_Instance">Multiple Instance</a></li>
-				<li><a href="#Same_Class-Different_Value">Same Class-Different Value</a></li>
-				<li><a href="#Units">Units</a></li>
-				<li><a href="#Generated_Value">Generated Value</a></li>
+		    <li><a href="#Multiple_Instance">Multiple Instance</a></li>
+			<li><a href="#Same_Class-Different_Value">Same Class-Different Value</a></li>
+			<li><a href="#Units">Units</a></li>
+			<li><a href="#Generated_Value">Generated Value</a></li>
     	</ul>
     	    
     	<subsection name="Hard-Coded Value">

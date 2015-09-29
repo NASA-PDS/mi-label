@@ -65,7 +65,7 @@ $bit_mask.substring(2,$convert.toInteger($bits_str))##
 #################################
 
 ##################################
-## Target vs. Target Type Mapping
+## PDS4 Target vs. Target Type Mapping
 ##
 ## These are explicit mappings between target names and target types
 ## These may need to be applied at a mission-specific level, but for now

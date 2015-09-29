@@ -44,28 +44,29 @@
         <p>The following table describes the command-line options available:
         </p>
 
-        <table>
-          <tr><th>Command-Line Option</th><th>Description</th></tr>
-          <tr><td>-d, --debug</td><td>Directs output to screen, not file.</td></tr>
-          <tr><td>-f, --file-list</td><td>Specify the path for a file containing a list of file paths for PDS3 Labels</td></tr>
-          <tr><td>-h, --help</td><td>Display usage.</td></tr>
-          <tr><td>-o, --output-file</td><td>Specify an output filename.  Default is PDS3 label name with _pds4 suffix.</td></tr>
-          <tr><td>-p, --pds3-label</td><td>Specify the file path for the PDS3 Label to be converted to PDS4</td></tr>
-          <tr><td>-t, --template</td><td>Specify the file path for the Velocity template for PDS3 -> PDS4 conversion</td></tr>
-          <tr><td>-V, --version</td><td>Display application version.</td></tr>
-        </table>
+        <source>
+ -b,--base-path &lt;base path mask&gt;     Specify the base file path mask to be
+                                     stripped from the input file path to allow
+                                     output in a relative directory structure.
+                                     Requires -o flag to also be specified.
+ -d,--debug                          Verbose debugging output. Shows each step
+                                     of parsing and label generation.
+ -h,--help                           Display usage.
+ -o,--output-path &lt;output path&gt;      Specify an output path to output the new
+                                     PDS4 labels. By default, the file will
+                                     output in same location as the input file.
+ -p,--pds3-label &lt;pds3 label&gt;        Parse the file or list of files as PDS3
+                                     Standard labels (also applicable for VICAR
+                                     labels).
+ -t,--template &lt;velocity template&gt;   Specify the file path for the Velocity
+                                     template used to convert of the
+ -V,--version                        Display application version.
+        </source>
       </subsection>
 
       <subsection name="Execute Generate Tool">
         <p>This section demonstrates execution of the tool using the command-line options. The examples below execute the tool via the batch/shell script.
         </p>
-
-        <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to standard out:
-        </p>
-
-        <source>
-% generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
-        </source>
 
         <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to a file:
         </p>
@@ -76,6 +77,14 @@
 
         <p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml
         </p>
+
+        <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output all debug information to standard out:
+        </p>
+
+        <source>
+% generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
+        </source>
+
       </subsection>
     </section>
   </body>

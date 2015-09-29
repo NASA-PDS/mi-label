@@ -84,6 +84,9 @@ public class Generator {
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
         
+        // Make the output directory if needed
+        FileUtils.forceMkdir(this.outputFile.getParentFile());
+        
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
                 "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");

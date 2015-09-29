@@ -1,7 +1,5 @@
 package gov.nasa.pds.imaging.generate.cli.options;
 
-import java.util.List;
-
 import org.apache.commons.cli.Options;
 
 public enum Flag {
@@ -9,21 +7,21 @@ public enum Flag {
     HELP("h", "help", "Display usage."),
 
     /** Flag to output the logging to a file. */
-    BASEPATH("b", "base-path", "base file path", String.class,
-            "Specify the base file path to be stripped from the PDS3 label paths " +
+    BASEPATH("b", "base-path", "base path mask", String.class,
+            "Specify the base file path mask to be stripped from the input file path " +
             "to allow output in a relative directory structure. Requires -o flag to " +
             "also be specified."),
     
-    /** Flag to display the version. */
-    DEBUG("d", "debug", "Directs output to screen.  <default>"),
+    /** Flag to display all debug output. */
+    DEBUG("d", "debug", "Verbose debugging output. Shows each step of parsing and label generation."),
             
     /** Flag to specify the input PDS3 label */
-    PDS3("p", "pds3-labels", "pds3 labels", String.class, true,
-            "Specify one or more file paths for PDS3 Labels to be converted to PDS4"),
+    PDS3("p", "pds3-label", "pds3 label", String.class, true,
+            "Parse the file or list of files as PDS3 Standard labels (also applicable for VICAR labels)."),
 
     /** Flag to specify the path of a velocity template. */
     TEMPLATE("t", "template", "velocity template", String.class,
-            "Specify the file path for the Velocity template for the PDS4 label"),
+            "Specify the file path for the Velocity template used to translate the data into a PDS4 label."),
 
     /** Flag to specify the output file name */
     OUTPUT("o", "output-path", "output path", String.class,
