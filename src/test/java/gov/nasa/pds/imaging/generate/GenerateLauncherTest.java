@@ -37,7 +37,7 @@ public class GenerateLauncherTest extends GenerateTest {
     private static String testPath;
 	
 	@Rule
-	public SingleTestRule test = new SingleTestRule("");
+	public SingleTestRule test = new SingleTestRule("testGenerationMPFExample");
 	
 	@BeforeClass
 	public static void oneTimeSetUp() throws Exception {
