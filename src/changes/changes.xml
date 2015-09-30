@@ -23,15 +23,15 @@
   </properties>
 
   <body>
-    <release version="0.9.0" date="TBD" description="TBD">
-      <action dev="jpadams" type="update" issue="PDS-384">
-	upgrade to vicario 4.0. add test to make sure any future upgrades can read the labels. add new label as a test because it contains special characters. update expected test output to reflect the cleaner output that comes from the transcoder.
+    <release version="0.9.0" date="2015-09-30" description="This release of the Generate Tool is a component of the integrated release 6.0.0 of the PDS4 System. This is an operational release of the system components to date.">
+      <action dev="jpadams" type="update" issue="PDS-379">
+        Add new updated MPF template to go along with model version 1400. Create new pds_velocity_macros.xml that contains several Velocity Macros that can perform some functions common to label conversion from PDS3. update test accordingly so I could try out the new template.
       </action>
       <action dev="jpadams" type="update" issue="PDS-380">
-	update PDS3 label flag to allow multiple input files. create new base-path flag to allow user to provide a basepath to remove from the input files path. allows for relative path to be added to a specified output-path. update test to include multiple label generation.
+        Update PDS3 label flag to allow multiple input files. Create new base-path flag to allow user to provide a basepath to remove from the input files path. Allows for relative path to be added to a specified output-path. Update test to include multiple label generation.
       </action>
-      <action dev="jpadams" type="update" issue="PDS-379">
-	add new updated MPF template to go along with model version 1400. create new pds_velocity_macros.xml that contains several Velocity Macros that can perform some functions common to label conversion from PDS3. update test accordingly so I could try out the new template.
+      <action dev="jpadams" type="update" issue="PDS-384">
+        Upgrade to vicario 4.0. add test to make sure any future upgrades can read the labels. Add new label as a test because it contains special characters. Update expected test output to reflect the cleaner output that comes from the transcoder.
       </action>
     </release>
 
