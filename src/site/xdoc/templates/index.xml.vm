@@ -69,9 +69,6 @@
     		<li><a href="#Units">Units</a></li>
     		<li><a href="#Generated_Values">Generated Values</a></li>
     		<li><a href="#PDS3_to_PDS4_Conversions">PDS3 to PDS4 Conversions</a></li>
-    		<ul>
-    		  <li><a href="#Target_Types">Target Types</a></li>
-    		
     		<li><a href="#Sub-Element">Sub-Element</a></li>
 		    <li><a href="#Multiple_Instance">Multiple Instance</a></li>
 			<li><a href="#Same_Class-Different_Value">Same Class-Different Value</a></li>
