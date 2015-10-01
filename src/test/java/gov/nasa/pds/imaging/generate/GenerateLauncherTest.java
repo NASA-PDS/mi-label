@@ -21,6 +21,7 @@ import gov.nasa.pds.imaging.generate.util.Utility;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -127,6 +128,7 @@ public class GenerateLauncherTest extends GenerateTest {
      * Test Generation Tool with MPF Data
      */
     @Test
+    @Ignore
     public void testGenerationMPFExample() {
     	try {
     		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/mpf/");
