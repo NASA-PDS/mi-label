@@ -23,6 +23,9 @@
   </properties>
 
   <body>
+    <release version="0.10.0" date="TBD" description="TBD">
+    </release>
+
     <release version="0.9.0" date="2015-09-30" description="This release of the Generate Tool is a component of the integrated release 6.0.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="jpadams" type="update" issue="PDS-379">
         Add new updated MPF template to go along with model version 1400. Create new pds_velocity_macros.xml that contains several Velocity Macros that can perform some functions common to label conversion from PDS3. update test accordingly so I could try out the new template.
