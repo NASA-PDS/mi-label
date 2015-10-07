@@ -6,7 +6,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:strip-space elements="*"/>
  
 <xsl:template match="@*|node()">
-    <xsl:if test=". != '' or ./@* != ''">
+    <xsl:if test=". != ''">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
