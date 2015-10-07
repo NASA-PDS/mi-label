@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.imageio.stream.ImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
@@ -27,7 +26,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
@@ -84,8 +82,8 @@ public class Generator {
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
         
-        // Make the output directory if needed
-        FileUtils.forceMkdir(this.outputFile.getParentFile());
+        if (this.outputFile != null)
+			FileUtils.forceMkdir(this.outputFile.getParentFile());
         
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
@@ -145,13 +143,7 @@ public class Generator {
 			doc.normalize();
 
 			String outputUnclean = doc.toString();
-			Debugger.debug("this.outputFile = "+this.outputFile);
-			
-			// Make sure the file path exists, otherwise make dirs
-//			File outDir = this.outputFile.getParentFile();
-//			if (!outDir.exists()) {
-//			    FileUtils.forceMkdir(outDir);
-//			}
+			Debugger.debug("this.outputFile = "+this.outputFile.getAbsolutePath());
 			
 			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
 			if (Debugger.debugFlag) {
@@ -219,7 +211,7 @@ public class Generator {
 			cout2.close();
 			// End debugging code
 
-			if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+			if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
 				throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
 			} else {	           
 				ios.writeBytes(output);
@@ -306,7 +298,7 @@ public class Generator {
 		// Some debugging output
 		Debugger.debug("generate toStdout " + toStdOut);
 		Debugger.debug("this.pdsObject.getFilePath() "+this.pdsObject.getFilePath() );
-		Debugger.debug("this.outputFile "+this.outputFile);
+		Debugger.debug("this.outputFile "+this.outputFile.getAbsolutePath());
 		String pdsObjFlat = this.pdsObject.toString();
 		Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
@@ -342,6 +334,7 @@ public class Generator {
 					// FIXME Need to implement this here
 				} else {
 					System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
+					
 					out = new PrintWriter(this.outputFile);
 					out.write(output);
 
