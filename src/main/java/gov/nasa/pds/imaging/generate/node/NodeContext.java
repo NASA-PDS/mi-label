@@ -1,6 +1,6 @@
 package gov.nasa.pds.imaging.generate.node;
 
-import gov.nasa.pds.imaging.generate.context.PDSContext;
+import gov.nasa.pds.imaging.generate.context.PDSObjectContext;
 
 /**
  * Extension point for node-specific contexts
@@ -8,6 +8,6 @@ import gov.nasa.pds.imaging.generate.context.PDSContext;
  * @author jpadams
  * 
  */
-public interface NodeContext extends PDSContext {
+public interface NodeContext extends PDSObjectContext {
     public String getNode();
 }

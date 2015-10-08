@@ -1,7 +1,7 @@
 package gov.nasa.pds.imaging.generate.label;
 
 import gov.nasa.pds.imaging.generate.TemplateException;
-import gov.nasa.pds.imaging.generate.context.PDSContext;
+import gov.nasa.pds.imaging.generate.context.PDSObjectContext;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @author jpadams
  * 
  */
-public interface PDSObject extends PDSContext {
+public interface PDSObject extends PDSObjectContext {
     public String getFilePath();
 
     public List getList(String key) throws TemplateException;

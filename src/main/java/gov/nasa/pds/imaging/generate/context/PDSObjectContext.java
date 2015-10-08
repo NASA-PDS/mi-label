@@ -10,6 +10,12 @@ import gov.nasa.pds.imaging.generate.label.PDSObject;
  * @author jpadams
  * 
  */
-public interface PDSContext {
-    public String getContext();
+public interface PDSObjectContext extends PDSContext {
+    public Object get(String key) throws TemplateException;
+
+    public String getUnits(String key);
+    
+    public void setParameters(PDSObject pdsObject);
+
+    public void setMappings() throws Exception;
 }

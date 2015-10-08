@@ -143,7 +143,7 @@ public class Generator {
 			doc.normalize();
 
 			String outputUnclean = doc.toString();
-			Debugger.debug("this.outputFile = "+this.outputFile.getAbsolutePath());
+			Debugger.debug("this.outputFile = "+this.outputFile);
 			
 			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
 			if (Debugger.debugFlag) {

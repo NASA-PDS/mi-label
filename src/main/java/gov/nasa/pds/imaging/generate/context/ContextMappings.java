@@ -14,7 +14,7 @@ public class ContextMappings {
     public static final String XML_TAG = "class";
 
     public HashMap<String, PDSContext> contextMap = new HashMap<String, PDSContext>();
-
+    
     public ContextMappings() throws TemplateException, Exception {
         for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME), XML_TAG)) {
             final PDSContext context = (PDSContext) Class.forName(cl).newInstance();
@@ -33,12 +33,16 @@ public class ContextMappings {
             throws TemplateException, Exception {
         for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME),
                 XML_TAG)) {
-            final PDSContext context = (PDSContext) Class.forName(cl).newInstance();
-            //context.setInputPath(pdsObject.getFilePath());
-            //context.setConfigPath(confPath);
-            context.setParameters(pdsObject);
-            context.setMappings();
-            this.contextMap.put(context.getContext(), context);
+        	Object instance = Class.forName(cl).newInstance();
+        	if (instance instanceof PDSObjectContext) {
+	            final PDSObjectContext context = (PDSObjectContext) instance;
+	            context.setParameters(pdsObject);
+	            context.setMappings();
+	            this.contextMap.put(context.getContext(), context);
+        	} else if (instance instanceof PDSContext) {
+	            final PDSContext context = (PDSContext) instance;
+	            this.contextMap.put(context.getContext(), context);
+        	}
         }
     }
 
