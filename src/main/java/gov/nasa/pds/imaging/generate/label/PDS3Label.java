@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.imageio.stream.ImageInputStream;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -59,6 +61,10 @@ public class PDS3Label implements PDSObject {
     private List<String> pdsObjectNames;
     
     private String filePath;
+    
+    private ImageInputStream imageInputStream;
+    
+    private Long image_start_byte = 0L;
 
     /**
      * Empty Constructor, set everything later on
@@ -78,6 +84,7 @@ public class PDS3Label implements PDSObject {
     public PDS3Label(Document document) {
     	Debugger.debug("PDS3Label constructor document " + document);
         this.filePath = "";
+        this.imageInputStream = null;
         this.document = document;
         this.flatLabel = new PDSTreeMap();
     }
@@ -175,6 +182,25 @@ public class PDS3Label implements PDSObject {
     @Override
     public final void setParameters(PDSObject pdsObject) {
     	this.filePath = pdsObject.getFilePath();
+    	this.imageInputStream = pdsObject.getImageInputStream();
+    	Debugger.debug("PDS3Label.setParameters this.imageInputStream = "+ this.imageInputStream + " this.filePath = "+this.filePath+" ***");
+    }
+    
+    public void setImageInputStream(ImageInputStream iis) {
+    	imageInputStream = iis;
+    }
+    
+    public ImageInputStream getImageInputStream() {
+    	return imageInputStream ;
+    }
+    
+    public void setImageStartByte(Long x) {
+    	image_start_byte = x;
+    }
+    
+    @Override
+    public Long getImageStartByte() {
+    	return image_start_byte;
     }
 
     @Override

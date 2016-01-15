@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import jpl.mipl.io.plugins.PDSLabelToDOM;
 
@@ -24,9 +23,8 @@ import org.w3c.dom.NodeList;
 
 /**
  * 
- * @author astanboli
- * @author atinio
  * @author jpadams
+ * @author slevoe
  * 
  */
 public class PDS3LabelReader {
@@ -34,6 +32,7 @@ public class PDS3LabelReader {
 	// TODO Refactor this into a java object
     private final List<String> pdsObjectTypes;
     private final List<String> pdsObjectNames;
+    private final List<String> vicarTaskNames;
 
     public PDS3LabelReader() {
 
@@ -47,6 +46,9 @@ public class PDS3LabelReader {
         this.pdsObjectTypes.add(FlatLabel.TASK_TYPE);
         
         this.pdsObjectNames = new ArrayList<String>();
+        
+        // from VICAR_LABEL
+        this.vicarTaskNames = new ArrayList<String>();
     }
 
     private Map<String, String> getAttributes(final Node node) {
@@ -128,7 +130,153 @@ public class PDS3LabelReader {
 
         container.put(elementName, itemNode);
     }
+	
+	/**
+     * Handles the items created for each node that contain explicit information
+     * about the node
+     * 
+     * i.e. quoted, units, etc.
+     * 
+     * @param item
+     * @param container
+     */
+	// private void handleTaskItemNode(final Node item, final ArrayList alist) {
+	private void handleTaskItemNode(final Node item, final Map container) {
+        final Map<String, String> attributes = getAttributes(item);
+        String elementName = attributes.get("key");
+        String units = attributes.get("units");
 
+        //ItemNode itemNode = new ItemNode(attributes.get("key"),
+        //        attributes.get("units"));
+        
+        ItemNode itemNode;
+        // If elementName is null, try to get it as a name
+        if (elementName == null) {
+        	// try "name"
+        	elementName = attributes.get("name");
+        }
+
+		// If elementName is still null, then let's get out of here.
+        if (elementName == null) {
+        	// print something??
+        	 Debugger.debug("1x) Return XXXX PDS3LabelReader.handleTaskItemNode nodeName "+item.getNodeName() + ", elementName "+elementName);
+        	return;
+        } else {
+        	elementName = elementName.replace("^", "PTR_"); // could also be "HAT_"
+        }
+        
+        // Check is the units is null
+        // (jp) This doesn't make sense. We want to grab the units from
+        //      the node...
+        if (units == null) {
+        	units = "none"; // ""
+        }
+        itemNode = new ItemNode(elementName, units);
+
+        // An item element node can either
+        // have a #text child or subitem children
+        final Node firstChild = item.getFirstChild();
+        if (firstChild.getNodeType() == Node.TEXT_NODE) {
+            // elementValues.put("values", firstChild.getNodeValue());
+            itemNode.addValue(firstChild.getNodeValue());
+            // container.put(elementName, firstChild.getNodeValue());
+        } else {
+            // item has subitems
+            // TODO - can subitems have subitems?
+            final NodeList subitems = item.getChildNodes();
+            Node subitem = null;
+            // List<String> list = new ArrayList<String>();
+            for (int i = 0; i < subitems.getLength(); ++i) {
+                subitem = subitems.item(i);
+                // The subitem's child should be a #text node
+                itemNode.addValue(subitem.getFirstChild().getNodeValue());
+            }
+        }
+        
+		Debugger.debug("2) PDS3LabelReader.handleTaskItemNode nodeName "+item.getNodeName() + ", elementName "+elementName+" units "+units);
+		Debugger.debug("2) itemNode "+itemNode);
+
+		container.put(elementName, itemNode);
+       
+    }
+
+	 /**
+     * Used to recursively loop through the TaskObjects until a leaf item is
+     * found
+     * 
+     * container may become a List
+     * The Map objects are used for everything
+     * may need to use another List to hold all the arguments so we can #foreach thru them
+     * * TASK is a List
+     *     in each list is a Map 
+     *        the map contains specific items we always see TASK, USER, DAT-TIM
+     *        There will also be a List which contains all the items
+     *        
+     *        check the toString to be sure we can handle it all
+     * 
+     * @param node
+     * @param container
+     */
+    private void handleTaskObjectNode(final Node node, final ArrayList taskList) {
+        final Map attributes = getAttributes(node);
+        String elementName = (String) attributes.get("name");
+        
+        // If element name is null, let's just try to get the name of the node
+        if (elementName == null) {
+        	elementName = node.getNodeName();
+        }
+        
+        // this container is an array. add a new object to the array       
+        final FlatLabel taskObject = new FlatLabel(elementName, node.getNodeName());
+
+		// We now know this element is an object/group
+		// So let's add it to object names to keep track
+		// of all the groupings in the input object
+        this.vicarTaskNames.add(elementName);
+        
+        final Map labels = new PDSTreeMap();
+        int size = taskList.size();
+        Debugger.debug("1) *********************************************************************************\n");
+        Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode ********************************************\n");
+        Debugger.debug("1) *********************************************************************************");
+		Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " elementName "+elementName+" taskList.size "+size);
+
+		final ArrayList args_list = new ArrayList();
+		// container.put(elementName, task);
+		labels.put("ARGS", args_list);
+		
+		
+        final NodeList children = node.getChildNodes();
+        for (int i = 0; i < children.getLength(); ++i) {
+            final Node labelItem = children.item(i);
+            final Map task_arg = new PDSTreeMap();
+            // Handle ELEMENT nodes
+            if (labelItem.getNodeType() == Node.ELEMENT_NODE) {
+
+                // Check if this element node is one of:
+                // GROUP, OBJECT, item, sub-item
+            	if (this.pdsObjectTypes.contains(labelItem.getNodeName()
+                        .toUpperCase())) {
+            		Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " CALLING  handlePDSObjectNode(labelItem, labels)"); 
+                    // SHOULD NEVER GET HERE. we should be below this level now
+            		handlePDSObjectNode(labelItem, labels);
+                } else if (labelItem.getNodeName().equalsIgnoreCase("item")) {
+                	// each item is separate
+                    handleItemNode(labelItem, labels);
+                    // each item is an array element
+                    handleTaskItemNode(labelItem, task_arg);
+                    args_list.add(task_arg);
+                }
+            }
+        }
+        
+		Debugger.debug("2) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
+		Debugger.debug("2)  labels "+labels);
+        
+        taskObject.setElements(labels);
+        taskList.add(taskObject);
+    }
+	
     /**
      * Used to recursively loop through the PDSObjects until a leaf item is
      * found
@@ -145,6 +293,32 @@ public class PDS3LabelReader {
         	elementName = node.getNodeName();
         }
         
+        Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
+		// if (node.getNodeName().equals("TASK") && elementName.equals("TASK")) {
+		if (node.getNodeName().equals("TASK") ) {
+			Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode  TASK *************************************************");
+			
+			// check if we already have a "TASK" object, use it or create a new one
+			// should this be a List instead??
+			
+			this.vicarTaskNames.add(elementName);
+			if (container.containsKey("TASK_LIST")) {
+				System.out.println("container.containsKey('TASK_LIST') is TRUE \n");
+				// check if the Object is an ArrayList ???
+				ArrayList task_list = (ArrayList) container.get("TASK_LIST");				
+				handleTaskObjectNode(node, task_list);				
+			} else {
+				// final Map labels = new PDSTreeMap();
+				// add task to container
+				final ArrayList task_list = new ArrayList();
+				// container.put(elementName, task);
+				container.put("TASK_LIST", task_list);
+				handleTaskObjectNode(node, task_list);
+			}
+			Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode  after TASK *************************************************\n");
+		}
+        
+		
         final FlatLabel object = new FlatLabel(elementName, node.getNodeName());
 
 		// We now know this element is an object/group
@@ -154,7 +328,7 @@ public class PDS3LabelReader {
         
         final Map labels = new PDSTreeMap();
         
-		Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
+		
 
         final NodeList children = node.getChildNodes();
         for (int i = 0; i < children.getLength(); ++i) {
@@ -164,7 +338,7 @@ public class PDS3LabelReader {
 
                 // Check if this element node is one of:
                 // GROUP, OBJECT, item, sub-item
-                if (this.pdsObjectTypes.contains(labelItem.getNodeName()
+            	if (this.pdsObjectTypes.contains(labelItem.getNodeName()
                         .toUpperCase())) {
                     handlePDSObjectNode(labelItem, labels);
                 } else if (labelItem.getNodeName().equalsIgnoreCase("item")) {
@@ -283,6 +457,10 @@ public class PDS3LabelReader {
     
     public List<String> getPDSObjectNames() {
     	return this.pdsObjectNames;
+    }
+    
+    public List<String> getTaskNames() {
+    	return this.vicarTaskNames;
     }
 
 }

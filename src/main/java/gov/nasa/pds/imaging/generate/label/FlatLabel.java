@@ -14,6 +14,9 @@
 //
 package gov.nasa.pds.imaging.generate.label;
 
+import gov.nasa.pds.imaging.generate.util.Debugger;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -44,7 +47,7 @@ public class FlatLabel implements LabelObject {
 
     @Override
     public Object get(final String key) {
-        return this._flatLabel.get(key);
+    	return this._flatLabel.get(key); 
     }
 
     @Override
@@ -54,13 +57,45 @@ public class FlatLabel implements LabelObject {
 
     @Override
     public String toString() {
+    	
         final StringBuffer strBuff = new StringBuffer();
         strBuff.append("\n[" + this._type + ":" + this._name + "]\n");
+        Debugger.debug("++ FlatLabel.toString [" + this._type + ":" + this._name + "] ");
         String key = null;
+        Object obj = null;
+        String name = null;
+        Object value = null;
+        ArrayList args = null;
         for (final Iterator iterator = this._flatLabel.keySet().iterator(); iterator
                 .hasNext();) {
-            key = (String) iterator.next();
-            strBuff.append("  " + key + "=" + this._flatLabel.get(key) + "\n");
+        	obj = iterator.next();
+        	key = (String) obj;
+        	if (this._type.equals("TASK")) {
+        		Debugger.debug("++ TASK FlatLabel.toString "+key+" obj is: "+obj.getClass().getName()+" ");
+        	}
+        	if (obj instanceof ArrayList) {
+        		args = (ArrayList) obj;
+        		Object arg_obj = null;
+        		String arg_key = null;
+        		// ItemNode itemNode = (ItemNode)
+        		Debugger.debug("++ FlatLabel.toString  ArrayList ");
+        		for (final Iterator iterator2 = args.iterator(); iterator2
+                        .hasNext();) {
+                	arg_obj = iterator2.next();
+                	// arg_key = (String) arg_obj;
+                	Debugger.debug("++ FlatLabel.toString  arg_obj is: "+arg_obj.getClass().getName()+" ");
+        		}
+        		
+        	} else {
+        		strBuff.append("  " + key + "=" + this._flatLabel.get(key) + "\n");
+        		if (this._type.equals("TASK")) {
+            		Debugger.debug("++ TASK FlatLabel.toString "+key+"=" + this._flatLabel.get(key) +" ");
+            	}
+        	}
+        	
+        	// key = (String) iterator.next();
+        	       	
+            // strBuff.append("  " + key + "=" + this._flatLabel.get(key) + "\n");
         }
         return strBuff.toString();
     }

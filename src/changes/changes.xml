@@ -24,6 +24,9 @@
 
   <body>
     <release version="0.10.0" date="TBD" description="TBD">
+      <action dev="jpadams" type="update" issue="PDS-379">
+        Update PDS3 label readers and velocity functions to handle image input streams and TASK objects for the Transcoder.
+      </action>
     </release>
 
     <release version="0.9.0" date="2015-09-30" description="This release of the Generate Tool is a component of the integrated release 6.0.0 of the PDS4 System. This is an operational release of the system components to date.">

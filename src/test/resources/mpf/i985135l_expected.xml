@@ -11,10 +11,6 @@
 <?xml-model href="MPF_IMP_raw_1400.sch" 
   schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<!-- All schema locations shown in this label assume access to the schemas stored at
-  http://pds.nasa.gov/.  If you wish to access local copies of these schemas, you will
-  need to configure an XML catalog file.  A sample catalog file is available in the
-  "xml_schema" directory of the archive volume containing this file. -->
 <Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" xmlns:disp="http://pds.nasa.gov/pds4/disp/v1" xmlns:geom="http://pds.nasa.gov/pds4/geom/v1" xmlns:img="http://pds.nasa.gov/pds4/img/v1" xmlns:mpf="http://pds.nasa.gov/pds4/mission/mpf/v1" xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 PDS4_PDS_1400.xsd       http://pds.nasa.gov/pds4/disp/v1 PDS4_DISP_1400.xsd   http://pds.nasa.gov/pds4/img/v1 PDS4_IMG_1400.xsd         http://pds.nasa.gov/pds4/mission/mpf/v1  PDS4_MPF_1400.xsd   http://pds.nasa.gov/pds4/geom/v1 PDS4_GEOM_1100.xsd">
     <Identification_Area>
         <logical_identifier>urn:nasa:pds:mars_mpf_imp_raw:data:imp_edr-1246985135-regular-0154030032</logical_identifier>
