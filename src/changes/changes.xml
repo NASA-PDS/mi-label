@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011-2015, by the California Institute of Technology.
+  Copyright 2011-2016, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology Transfer
   at the California Institute of Technology.
@@ -23,8 +23,8 @@
   </properties>
 
   <body>
-    <release version="0.10.0" date="TBD" description="TBD">
-      <action dev="jpadams" type="update" issue="PDS-379">
+    <release version="0.9.1" date="2016-01-20" description="This release of the Generate Tool is an incremental release separate from the PDS4 integrated release to support a Transcoder build.">
+      <action dev="jpadams,srlevoe" type="update">
         Update PDS3 label readers and velocity functions to handle image input streams and TASK objects for the Transcoder.
       </action>
     </release>
