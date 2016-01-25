@@ -303,7 +303,7 @@ public class PDS3LabelReader {
 			
 			this.vicarTaskNames.add(elementName);
 			if (container.containsKey("TASK_LIST")) {
-				System.out.println("container.containsKey('TASK_LIST') is TRUE \n");
+				Debugger.debug("container.containsKey('TASK_LIST') is TRUE \n");
 				// check if the Object is an ArrayList ???
 				ArrayList task_list = (ArrayList) container.get("TASK_LIST");				
 				handleTaskObjectNode(node, task_list);				

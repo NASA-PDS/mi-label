@@ -43,7 +43,7 @@ public class FileSize implements Element {
     		length = -1;
     	}
     	
-    	System.out.println("length = "+length);
+    	Debugger.debug("length = "+length);
     	return String.valueOf(length);
 	}
 
