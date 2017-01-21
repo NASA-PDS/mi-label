@@ -17,7 +17,7 @@ public enum Flag {
             
     /** Flag to specify the input PDS3 label */
     PDS3("p", "pds3-label", "pds3 label", String.class, true,
-            "Parse the file or list of files as PDS3 Standard labels (also applicable for VICAR labels)."),
+            "Parse the file or list of files as PDS3 Standard labels. This also applies to file formatted similarly to PDS3 labels (i.e. list of key-value pairs, VICAR labels)."),
 
     /** Flag to specify the path of a velocity template. */
     TEMPLATE("t", "template", "velocity template", String.class,
@@ -28,6 +28,9 @@ public enum Flag {
             "Specify an output path to output the new PDS4 labels. By default, the file will"
             + " output in same location as the input file."),
 
+    /** Flag to specify text file output, versus the default XML output */
+    TEXTOUT("x", "text-output", "With this flag set, the software will output the file as plain text. By default, the output is XML."),
+            
     /** Flag to display the version. */
     VERSION("V", "version", "Display application version.");
 
@@ -64,6 +67,7 @@ public enum Flag {
         options.addOption(new ToolsOption(BASEPATH));
         options.addOption(new ToolsOption(OUTPUT));
         options.addOption(new ToolsOption(DEBUG));
+        options.addOption(new ToolsOption(TEXTOUT));
     }
 
     /**

@@ -52,6 +52,9 @@ public class Generator {
 
     // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
 	private String templatePath;
+	
+	/** Flag to specify whether or not the output is XML. defaults to true. **/
+	private boolean isXML;
 
 	private OutputStream outputStream;
 	// ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
@@ -65,6 +68,7 @@ public class Generator {
 		this.template = null;
 		this.pdsObject = null;
 		this.outputFile = null;
+		this.isXML = true;
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
@@ -77,10 +81,33 @@ public class Generator {
 
 	public Generator(final PDSObject pdsObject, final File templateFile,
 			final File outputFile) throws Exception {
+		this(pdsObject, templateFile, outputFile, null);
+	}
+	
+	/**
+	 * Generator constructor class.
+	 * 
+	 * @param pdsObject		pds object, i.e. PDS3 label
+	 * @param templateFile	velocity template file path
+	 * @param outputFile	path to output file. can be null in cases where we output to streams
+	 * @param isXML 		flag to specify whether or not the output is expected to be XML
+	 * @throws Exception
+	 */	
+	public Generator(final PDSObject pdsObject, final File templateFile,
+			final File outputFile, final Boolean isXML) throws Exception {
         this.context = null;
         this.templateFile = templateFile;
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
+        
+        if (isXML == null) {
+        	if (this.outputFile != null && this.outputFile.getName().endsWith(".xml"))
+        		this.isXML = true;
+        	else
+        		this.isXML = false;
+        } else {
+        	this.isXML = isXML;
+        }
         
         if (this.outputFile != null)
 			FileUtils.forceMkdir(this.outputFile.getParentFile());
@@ -109,59 +136,63 @@ public class Generator {
 	 * @throws IOException
 	 */
 	private String clean(final StringWriter sw) {
-		try {
-			final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-					.newInstance();
-			domFactory.setNamespaceAware(true);
-			final DocumentBuilder builder = domFactory.newDocumentBuilder();
-			final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
-					.getBytes()));
-
-			// First, lets make a transformer that will output the raw
-			// XML before we clean out the empty tags
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer();
-
-			StringWriter out = new StringWriter();
-			transformer.transform(new DOMSource(doc), new StreamResult(out));
-			
-			Debugger.debug("outputUnclean ="+out.toString()+"<END>");
-			if (Debugger.debugFlag) {
-			  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
-			  cout.write(out.toString());
-			  cout.close();
+		if (this.isXML) {
+			try {
+				final DocumentBuilderFactory domFactory = DocumentBuilderFactory
+						.newInstance();
+				domFactory.setNamespaceAware(true);
+				final DocumentBuilder builder = domFactory.newDocumentBuilder();
+				final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
+						.getBytes()));
+	
+				// First, lets make a transformer that will output the raw
+				// XML before we clean out the empty tags
+				TransformerFactory tFactory = TransformerFactory.newInstance();
+				Transformer transformer = tFactory.newTransformer();
+	
+				StringWriter out = new StringWriter();
+				transformer.transform(new DOMSource(doc), new StreamResult(out));
+				
+				Debugger.debug("outputUnclean ="+out.toString()+"<END>");
+				if (Debugger.debugFlag) {
+				  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
+				  cout.write(out.toString());
+				  cout.close();
+				}
+				
+				// Next, let's create the transformer with the XSLT to clean out
+				// extra whitespace and remove empty tags
+				tFactory = TransformerFactory.newInstance();
+				transformer = tFactory.newTransformer(new StreamSource(
+						Generator.class.getResourceAsStream(CLEAN_XSLT)));
+	
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+				doc.normalize();
+	
+				String outputUnclean = doc.toString();
+				Debugger.debug("this.outputFile = "+this.outputFile);
+				
+				Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
+				if (Debugger.debugFlag) {
+				  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
+				  cout.write(outputUnclean);
+				  cout.close();
+				}
+	
+				out = new StringWriter();
+				transformer.transform(new DOMSource(doc), new StreamResult(out));
+	
+				Debugger.debug("out.toString() =" + out.toString());
+	
+				return out.toString();
+			} catch (Exception e) {	// TODO Better error handling here
+				System.err.println("Error applying XSLT to output XML.  Verify label and template are correctly formatted.");
 			}
-			
-			// Next, let's create the transformer with the XSLT to clean out
-			// extra whitespace and remove empty tags
-			tFactory = TransformerFactory.newInstance();
-			transformer = tFactory.newTransformer(new StreamSource(
-					Generator.class.getResourceAsStream(CLEAN_XSLT)));
-
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-			doc.normalize();
-
-			String outputUnclean = doc.toString();
-			Debugger.debug("this.outputFile = "+this.outputFile);
-			
-			Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
-			if (Debugger.debugFlag) {
-			  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
-			  cout.write(outputUnclean);
-			  cout.close();
-			}
-
-			out = new StringWriter();
-			transformer.transform(new DOMSource(doc), new StreamResult(out));
-
-			Debugger.debug("out.toString() =" + out.toString());
-
-			return out.toString();
-		} catch (Exception e) {	// TODO Better error handling here
-			System.err.println("Error applying XSLT to output XML.  Verify label and template are correctly formatted.");
+			return sw.toString();
+		} else {
+			return sw.toString();
 		}
-		return null;
 	}
 
 	/**
@@ -182,7 +213,9 @@ public class Generator {
 		// Some debugging code
 		Debugger.debug("generate ImageOutputStream");
 		Debugger.debug("ios "+ios);
+		
 		String pdsObjFlat = this.pdsObject.toString();
+		
 		Debugger.debug("this.pdsObject.toString() " );
 		Debugger.debug(pdsObjFlat );       
 		// this is the flattened PDS3Label used by the velocity template
@@ -206,9 +239,11 @@ public class Generator {
 
 			String output = clean(sw);
 
-			PrintWriter cout2 = new PrintWriter("output.xml");
-			cout2.write(output);
-			cout2.close();
+			if (Debugger.debugFlag) {
+				PrintWriter cout2 = new PrintWriter("output.xml");
+				cout2.write(output);
+				cout2.close();
+			}
 			// End debugging code
 
 			if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
@@ -444,6 +479,11 @@ public class Generator {
 		return templatePath;
 	}
 
+	public boolean getIsXML() {
+		return isXML;
+	}
+
+	
 	public void setContext(final VelocityContext context) {
 		this.context = context;
 	}
@@ -471,6 +511,10 @@ public class Generator {
 
 	public void setTemplatePath(final String templatePath) {
 		this.templatePath = templatePath;
+	}
+
+	public void setIsXML(final boolean isXML) {
+		this.isXML = isXML;
 	}
 
 }

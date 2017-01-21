@@ -51,7 +51,9 @@ public class GenerateLauncher {
     private List<String> lblList;
     private File templateFile;
     private File outputPath;
-    private boolean stdOut;
+    
+    // By default, launcher will assume you want to output an XML document
+    private boolean isXML;
 
     private List<Generator> generatorList;
 
@@ -60,8 +62,8 @@ public class GenerateLauncher {
         this.generatorList = new ArrayList<Generator>();
         this.lblList = new ArrayList<String>();
         this.outputPath = null;
-        this.stdOut = false;
         this.templateFile = null;
+        this.isXML = true;
     }
 
     /**
@@ -88,7 +90,8 @@ public class GenerateLauncher {
 
     public final void generate() throws Exception {
     	for (Generator generator : this.generatorList) {
-    		generator.generate(this.stdOut);
+    		// By using Launcher, output will go to a file, so argument = false
+    		generator.generate(false);
     	}
     }
 
@@ -124,6 +127,7 @@ public class GenerateLauncher {
      */    
     public final void query(final CommandLine line) throws Exception {
         final List<Option> processedOptions = Arrays.asList(line.getOptions());
+        
         for (final Option o : processedOptions) {
             if (o.getOpt().equals(Flag.HELP.getShortName())) {
                 displayHelp();
@@ -143,6 +147,8 @@ public class GenerateLauncher {
                 this.outputPath = new File(Utility.getAbsolutePath(o.getValue().trim()));
             } else if (o.getOpt().equals(Flag.BASEPATH.getShortName())) {
                 this.basePath = o.getValue().trim();
+            } else if (o.getOpt().equals(Flag.TEXTOUT.getShortName())) {
+            	this.isXML = false;
             }
         }
         
@@ -165,7 +171,6 @@ public class GenerateLauncher {
         // Let's default to the one label if -p flag was specified,
         // otherwise loop through the lbl list
         if (this.lblList == null) {
-        	Debugger.debug("in here");
     		throw new InvalidOptionException("Missing -p or -l flags.  " + 
                     "One or many PDS3 label must be specified.");
         } else {
@@ -179,21 +184,36 @@ public class GenerateLauncher {
         			pdsObj = new PDS3Label(lbl);
 	        		pdsObj.setMappings();
 	        		
-	        		// Let's get the output file ready
 	        		// Build up the output filepath
 	        		outputFile = new File(lbl);
+	        		
+	        		// Find out the file suffix
+	        		String suffix = "";
+	        		if (this.isXML)
+	        			suffix = ".xml";
+	        		else
+	        			suffix = ".txt";
+
 	        		filepath = outputFile.getParent();
 	        		filepath = filepath + "/" + 
-	        				outputFile.getName().split("\\.")[0] + ".xml";
+	        				outputFile.getName().split("\\.")[0] + suffix;
+	        		
+	        		// Let's get the output file ready	        		
 	        		if (this.outputPath != null) {
 	        			filepath = this.outputPath.getAbsolutePath() + "/" + 
 	        						filepath.replace(this.basePath, "");
+	        			
+	        			// If the output path is not an XML file, set boolean
+	        			if (!filepath.endsWith("xml"))
+	        				this.isXML = false;
+	        			
 	        		}
+	        		
 	        		outputFile = new File(filepath);
 	        		
 	        		Debugger.debug(outputFile.getAbsolutePath());
 			        this.generatorList.add(new Generator(pdsObj, this.templateFile,
-			                outputFile));
+			                outputFile, this.isXML));
         		} else {
         			log.warning(lbl + " does not exist.");
         		}
