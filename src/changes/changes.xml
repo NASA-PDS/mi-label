@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011-2016, by the California Institute of Technology.
+  Copyright 2011-2017, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   Any commercial use must be negotiated with the Office of Technology Transfer
   at the California Institute of Technology.
@@ -23,12 +23,12 @@
   </properties>
 
   <body>
-    <release version="0.12.0" date="TBD" description="TBD">
-      <action dev="jpadams" type="update">
-        Add new "text out" flag (-x) in order to allow a user to output non-XML files. This required some updates to the Generator class as well to ignore the clean() function (which applies an XSLT) if it is not XML output.
-      </action>
+    <release version="0.12.0" date="2017-03-31" description="This release of the Generate Tool is a component of the integrated release 7.1.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="mcayanan" type="fix" issue="PDS-470">
         Fixed to allow elements with a nil="true" attribute to pass through from the template to the output file.
+      </action>
+      <action dev="jpadams" type="update">
+        Add new "text out" flag (-x) in order to allow a user to output non-XML files. This required some updates to the Generator class as well to ignore the clean() function (which applies an XSLT) if it is not XML output.
       </action>
     </release>
 
