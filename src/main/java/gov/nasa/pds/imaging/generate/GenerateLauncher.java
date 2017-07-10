@@ -18,6 +18,7 @@ import gov.nasa.pds.imaging.generate.cli.options.Flag;
 import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
 import gov.nasa.pds.imaging.generate.label.PDS3Label;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.readers.ParserType;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.ToolInfo;
 import gov.nasa.pds.imaging.generate.util.Utility;
@@ -56,6 +57,8 @@ public class GenerateLauncher {
     private boolean isXML;
 
     private List<Generator> generatorList;
+    
+    private List<String> includePaths;
 
     public GenerateLauncher() {
         this.basePath = "";
@@ -64,6 +67,7 @@ public class GenerateLauncher {
         this.outputPath = null;
         this.templateFile = null;
         this.isXML = true;
+        this.includePaths = new ArrayList<String>();
     }
 
     /**
@@ -149,7 +153,10 @@ public class GenerateLauncher {
                 this.basePath = o.getValue().trim();
             } else if (o.getOpt().equals(Flag.TEXTOUT.getShortName())) {
             	this.isXML = false;
-            }
+            } else if (o.getOpt().equals(Flag.INCLUDES.getShortName())) {
+              setIncludePaths(o.getValuesList());
+            } 
+              
         }
         
         // First check we have a Template File
@@ -175,13 +182,24 @@ public class GenerateLauncher {
                     "One or many PDS3 label must be specified.");
         } else {
         	String filepath;
+        	PDS3Label pdsLabel;
         	PDSObject pdsObj;
         	File outputFile;
+          String parserType = System.getProperty("pds.generate.parser.type");
         	for (String lbl : this.lblList) {
         		// Make sure the lbl exists
         		if ((new File(lbl)).isFile()) {
         			// Set the pds3 lable object
-        			pdsObj = new PDS3Label(lbl);
+        			pdsLabel = new PDS3Label(lbl);
+        			if (parserType != null) {
+        			  if ("vicar".equalsIgnoreCase(parserType)) {
+        			    pdsLabel.setParserType(ParserType.VICAR);
+        			  } else if ("product-tools".equalsIgnoreCase(parserType)) {
+        			    pdsLabel.setParserType(ParserType.PRODUCT_TOOLS);
+        			    pdsLabel.setIncludePaths(includePaths);
+        			  }
+        			}
+        			pdsObj = pdsLabel;
 	        		pdsObj.setMappings();
 	        		
 	        		// Build up the output filepath
@@ -220,6 +238,18 @@ public class GenerateLauncher {
         	}
         }
 
+    }
+    
+    /**
+     * Set the paths to search for files referenced by pointers.
+     * <p>
+     * Default is to always look first in the same directory
+     * as the label, then search specified directories.
+     * @param i List of paths
+     */
+    public void setIncludePaths(List<String> i) {
+      this.includePaths = new ArrayList<String> (i);
+      while(this.includePaths.remove(""));
     }
     
     /**

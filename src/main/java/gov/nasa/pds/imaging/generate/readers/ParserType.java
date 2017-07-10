@@ -11,39 +11,8 @@
 // providing access to foreign nationals.
 //
 // $Id$
-package gov.nasa.pds.imaging.generate.label;
+package gov.nasa.pds.imaging.generate.readers;
 
-import java.util.List;
-import java.util.Map;
-
-public interface LabelObject {
-
-    /**
-     * Retrieves the value of this object's element as identified by key.
-     * 
-     * @param key
-     * @return
-     */
-    public Object get(String key);
-
-    /**
-     * Retrieves the child objects. 
-     * 
-     * @return
-     */
-    public List<Object> getChildObjects();
-    
-    /**
-     * Retrieves the name.
-     * 
-     * @return
-     */
-    public String getName();
-    
-    /**
-     * Set the elements of this object
-     * 
-     * @param elements
-     */
-    public void setElements(Map elements);
+public enum ParserType {
+  VICAR, PRODUCT_TOOLS
 }

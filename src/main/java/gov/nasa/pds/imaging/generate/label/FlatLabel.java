@@ -1,4 +1,4 @@
-//	Copyright 2013, by the California Institute of Technology.
+//	Copyright 2013-2017, by the California Institute of Technology.
 //	ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
 //	Any commercial use must be negotiated with the Office of Technology 
 //	Transfer at the California Institute of Technology.
@@ -18,6 +18,7 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class FlatLabel implements LabelObject {
@@ -50,6 +51,31 @@ public class FlatLabel implements LabelObject {
     	return this._flatLabel.get(key); 
     }
 
+    public String getName() {
+      return this._name;
+    }
+    
+    public List<Object> getChildObjects() {
+      List<Object> objects = new ArrayList<Object>();
+      for (final Iterator iterator = this._flatLabel.keySet().iterator(); iterator
+          .hasNext();) {
+        Object object = this._flatLabel.get(iterator.next());
+        if (object instanceof ItemNode) {
+          continue;
+        } else if (object instanceof FlatLabel) {
+          objects.add(object);
+        } else if (object instanceof ArrayList) {
+          ArrayList list = (ArrayList) object;
+          for (Object item : list) {
+            if (item instanceof FlatLabel) {
+              objects.add(item);
+            }
+          }
+        }
+      }
+      return objects;
+    }
+    
     @Override
     public void setElements(final Map elements) {
         this._flatLabel = elements;

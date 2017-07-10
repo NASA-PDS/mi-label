@@ -275,6 +275,11 @@
             <artifactId>vicario</artifactId>
             <version>4.0</version>
         </dependency>
+    <dependency>
+      <groupId>gov.nasa.pds</groupId>
+      <artifactId>product-tools</artifactId>
+      <version>${product-tools-version}</version>
+    </dependency>        
     </dependencies>
 
     <!-- Project Information and Reports inherited from parent. -->
