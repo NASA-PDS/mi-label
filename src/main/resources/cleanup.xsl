@@ -6,7 +6,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:strip-space elements="*"/>
  
 <xsl:template match="@*|node()">
-    <xsl:if test=". != '' or (./@*[name() = 'xsi:nil'] = 'true')">
+    <xsl:if test="(. != '') or (./@*[name() = 'xsi:nil'] = 'true') or (name(.) = 'Time_Coordinates')">
        <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
        </xsl:copy>
