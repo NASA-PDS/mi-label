@@ -24,4 +24,8 @@
         <context>object_md5_checksum</context>
         <class>gov.nasa.pds.imaging.generate.automatic.elements.ObjectMd5Checksum</class>
     </element>
+    <element>
+        <context>model_version</context>
+        <class>gov.nasa.pds.imaging.generate.automatic.elements.ModelVersion</class>
+    </element>
 </generated>

@@ -21,6 +21,8 @@ public class ToolInfo {
     public static final String RELEASE_DATE = "generate.date";
 
     public static final String COPYRIGHT = "generate.copyright";
+    
+    public static final String MODEL_VERSION = "model.version";
 
     private static final Properties props = new Properties();
 
@@ -68,5 +70,17 @@ public class ToolInfo {
      */
     public static String getVersion() {
         return props.getProperty(VERSION);
+    }
+    
+    public static String getModelVersion() {
+      StringBuffer buffer = new StringBuffer(props.getProperty(MODEL_VERSION));
+      String model = "";
+      for(int i = 0; i < buffer.length(); i++) {
+        model += buffer.charAt(i);
+        if (i != (buffer.length() - 1)) {
+          model += ".";
+        }
+      }
+      return model;
     }
 }
