@@ -23,6 +23,12 @@
   </properties>
 
   <body>
+    <release version="0.14.0" date="TBD" description="TBD">
+      <action dev="jpadams" type="add" issue="PDS-514">
+        Update return value for variables that are not found from null to GENERATE_VARIABLE_NOT_FOUND.
+      </action>
+    </release>
+    
     <release version="0.13.0" date="TBD" description="TBD">
       <action dev="mcayanan" type="add" issue="PDS-243">
         Added support to use the product-tools library as an underlying parser.
