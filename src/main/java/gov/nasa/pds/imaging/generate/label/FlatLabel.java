@@ -48,11 +48,7 @@ public class FlatLabel implements LabelObject {
 
     @Override
     public Object get(final String key) {
-        if (this._flatLabel.containsKey(key)) {
-            return this._flatLabel.get(key);
-        } else {
-            return "GENERATE_VARIABLE_NOT_FOUND";
-        }
+    	return this._flatLabel.get(key); 
     }
 
     public String getName() {

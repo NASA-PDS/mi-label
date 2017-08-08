@@ -129,8 +129,7 @@ public class PDS3Label implements PDSObject {
       final Object node = getNode(key.toUpperCase());
       Debugger.debug("\n\n++ Get " + key + " ----->");
       if (node == null) {
-        // if the requested node doesn't exist, return NULL string
-        return "GENERATE_VARIABLE_NOT_FOUND";
+        return null;
       } else if (node instanceof ItemNode) {
       	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node).toString());
           return StringEscapeUtils.escapeXml(((ItemNode) node).toString());
