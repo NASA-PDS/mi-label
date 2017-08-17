@@ -33,6 +33,9 @@
       <action dev="mcayanan" type="update" issue="PDS-505">
         Update PDS4 label transformations to the latest model. 
       </action>
+      <action dev="jpadams" type="update">
+        Refactor Generator.clean function to improve pretty printing of the output XML.
+      </action>
     </release>
 
     <release version="0.12.0" date="2017-03-31" description="This release of the Generate Tool is a component of the integrated release 7.1.0 of the PDS4 System. This is an operational release of the system components to date.">

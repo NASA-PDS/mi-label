@@ -6,7 +6,9 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
@@ -22,6 +24,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
@@ -32,7 +37,12 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.ToolManager;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.OutputStream;
 
@@ -52,6 +62,8 @@ public class Generator {
 
     // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
 	private String templatePath;
+	
+	private boolean removedNode = false;
 	
 	/** Flag to specify whether or not the output is XML. defaults to true. **/
 	private boolean isXML;
@@ -138,62 +150,107 @@ public class Generator {
 	private String clean(final StringWriter sw) {
 		if (this.isXML) {
 			try {
-				final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-						.newInstance();
-				domFactory.setNamespaceAware(true);
-				final DocumentBuilder builder = domFactory.newDocumentBuilder();
-				final Document doc = builder.parse(new ByteArrayInputStream(sw.toString()
-						.getBytes()));
-	
-				// First, lets make a transformer that will output the raw
-				// XML before we clean out the empty tags
-				TransformerFactory tFactory = TransformerFactory.newInstance();
-				Transformer transformer = tFactory.newTransformer();
-	
-				StringWriter out = new StringWriter();
-				transformer.transform(new DOMSource(doc), new StreamResult(out));
-				
-				Debugger.debug("outputUnclean ="+out.toString()+"<END>");
-				if (Debugger.debugFlag) {
-				  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
-				  cout.write(out.toString());
-				  cout.close();
-				}
-				
-				// Next, let's create the transformer with the XSLT to clean out
-				// extra whitespace and remove empty tags
-				tFactory = TransformerFactory.newInstance();
-				transformer = tFactory.newTransformer(new StreamSource(
-						Generator.class.getResourceAsStream(CLEAN_XSLT)));
-	
-				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-				doc.normalize();
-	
-				String outputUnclean = doc.toString();
-				Debugger.debug("this.outputFile = "+this.outputFile);
-				
-				Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
-				if (Debugger.debugFlag) {
-				  PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
-				  cout.write(outputUnclean);
-				  cout.close();
-				}
-	
-				out = new StringWriter();
-				transformer.transform(new DOMSource(doc), new StreamResult(out));
-	
-				Debugger.debug("out.toString() =" + out.toString());
+				DocumentBuilderFactory dbFactory;
+	            DocumentBuilder dBuilder;
+	            Document document = null;
+	            
+                dbFactory = DocumentBuilderFactory.newInstance();
+                dBuilder = dbFactory.newDocumentBuilder();
+                document = dBuilder.parse(new ByteArrayInputStream(sw.toString().getBytes()));
+                
+                String outputUnclean = document.toString();
+                Debugger.debug("this.outputFile = "+this.outputFile);
+
+                Debugger.debug("outputUnclean ="+outputUnclean+"<END>");
+                if (Debugger.debugFlag) {
+                    PrintWriter cout = new PrintWriter(this.outputFile+"_doc.xml");
+                    cout.write(outputUnclean);
+                    cout.close();
+                }
+                
+                this.formatDocument(document);
+                
+                // Set all the transformer stuff to pretty print it
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+             
+                StringWriter out = new StringWriter();
+                StreamResult streamResult = new StreamResult(out);
+             
+                transformer.transform(new DOMSource(document), streamResult);
+             
+                Debugger.debug(out.toString());
 	
 				return out.toString();
-			} catch (Exception e) {	// TODO Better error handling here
-				System.err.println("Error applying XSLT to output XML.  Verify label and template are correctly formatted.");
-			}
+			} catch (SAXParseException e) {
+			    System.err.println("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
+			    System.err.println(e.getMessage());
+			    System.err.println("Outputting without formatting. \n\n");
+		    } catch (Exception e) {
+		        System.err.println("Error attempting to format XML. Malformed XML expected.");
+		    }
 			return sw.toString();
 		} else {
 			return sw.toString();
 		}
 	}
+	
+	/**
+	 * format the XML by normalizing the spacing and recursively visiting each node a remove if empty.
+	 * will repeat the method if any nodes (or attributes) were removed in case that now leaves another node (or class)
+	 * empty .
+	 * 
+	 * @param document
+	 * @throws Exception
+	 */
+	private void formatDocument(Document document) throws Exception{
+	    this.removedNode = false;
+	    
+        handleNode(document.getDocumentElement());
+        
+        // normalize new lines
+        document.getDocumentElement().normalize();
+        
+        // need to run an Xpath to clean up spaces. the SAX pretty print allows for spaces if you put them in there
+        // so we need to use XPath to clean them up first
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        NodeList nodeList = (NodeList) xPath.evaluate("//text()[normalize-space()='']", document, XPathConstants.NODESET);
+     
+        for (int i = 0; i < nodeList.getLength(); ++i) {
+            Node node = nodeList.item(i);
+            node.getParentNode().removeChild(node);
+        }
+        
+        // if we removed something let's run through the cleanup again
+        if (this.removedNode) {
+            this.formatDocument(document);
+        }
+	}
+	
+	/**
+	 * method to recursively check a node and it's children for those that have no attributes and are empty
+	 * @param node
+	 * @param stop
+	 */
+	private void handleNode(Node node) {       
+      if (node.getChildNodes().getLength() == 0 && 
+              ("".equals(node.getNodeValue()) || node.getNodeValue() == null) && 
+              node.getAttributes().getLength() == 0) {
+          node.getParentNode().removeChild(node);
+          
+          this.removedNode = true;
+
+          return;
+      }
+
+      // recurse the children
+      for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+          handleNode(node.getChildNodes().item(i));
+      }
+  }
 
 	/**
 	 * Functionality to generate the PDS4 Label from the Velocity Template
@@ -517,4 +574,27 @@ public class Generator {
 		this.isXML = isXML;
 	}
 
+//    public static void main(String[] args) throws IOException, ParsingException {
+//        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
+//                .newInstance();
+//        domFactory.setNamespaceAware(true);
+//        final DocumentBuilder builder = domFactory.newDocumentBuilder();
+//        final Document doc = builder.parse(new File("original.xml"));
+////        Document document = new Builder().build(new File("original.xml"));
+//        handleNode(doc.getDocumentElement());
+//        System.out.println(doc.toXML()); // empty elements now removed
+//    }
+
+//    private static void handleNode(Element node) {
+//        if (node.getChildNodes().getLength() == 0 && "".equals(node.getNodeValue())) {
+//            node.getParentNode().removeChild(oldChild)
+//            node.getParent().removeChild(node);
+//            return;
+//        }
+//        // recurse the children
+//        for (int i = 0; i < node.getChildCount(); i++) { 
+//            handleNode(node.getChild(i));
+//        }
+//    }
+	
 }
