@@ -66,7 +66,7 @@ public class Generator {
 	private boolean removedNode = false;
 	
 	/** Flag to specify whether or not the output is XML. defaults to true. **/
-	private boolean isXML;
+	private boolean isXML = true;
 
 	private OutputStream outputStream;
 	// ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
@@ -80,7 +80,6 @@ public class Generator {
 		this.template = null;
 		this.pdsObject = null;
 		this.outputFile = null;
-		this.isXML = true;
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
@@ -91,9 +90,17 @@ public class Generator {
 		this.ctxtMappings = new ContextMappings();
 	}
 
+	/**
+	 * Initialize Generator object with a PDSObject. Defaults as XML output.
+	 * 
+	 * @param pdsObject
+	 * @param templateFile
+	 * @param outputFile
+	 * @throws Exception
+	 */
 	public Generator(final PDSObject pdsObject, final File templateFile,
 			final File outputFile) throws Exception {
-		this(pdsObject, templateFile, outputFile, null);
+		this(pdsObject, templateFile, outputFile, true);
 	}
 	
 	/**
@@ -111,15 +118,7 @@ public class Generator {
         this.templateFile = templateFile;
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
-        
-        if (isXML == null) {
-        	if (this.outputFile != null && this.outputFile.getName().endsWith(".xml"))
-        		this.isXML = true;
-        	else
-        		this.isXML = false;
-        } else {
-        	this.isXML = isXML;
-        }
+        this.isXML = isXML;
         
         if (this.outputFile != null)
 			FileUtils.forceMkdir(this.outputFile.getParentFile());
@@ -137,7 +136,7 @@ public class Generator {
     }
 
 	/**
-	 * Method to use XSLT in order to remove all empty tags and whitespace from
+	 * Method to use to remove all empty tags and whitespace from
 	 * the generated XML
 	 *
 	 * @param sw
@@ -235,15 +234,18 @@ public class Generator {
 	 * @param node
 	 * @param stop
 	 */
-	private void handleNode(Node node) {       
-      if (node.getChildNodes().getLength() == 0 && 
-              ("".equals(node.getNodeValue()) || node.getNodeValue() == null) && 
-              node.getAttributes().getLength() == 0) {
-          node.getParentNode().removeChild(node);
-          
-          this.removedNode = true;
-
-          return;
+	private void handleNode(Node node) {  
+	    // first lets check we have no child nodes (text or other)
+      if (node.getChildNodes().getLength() == 0) {
+          // next check if the value is null or empty string
+          if ("".equals(node.getNodeValue()) || node.getNodeValue() == null) {
+              // finally make sure it does not have xsi:nil attribute
+              if (node.getAttributes().getLength() == 0 || node.getAttributes().getNamedItem("xsi:nil") == null) {
+                  node.getParentNode().removeChild(node);
+                  this.removedNode = true;
+                  return;
+              }
+          }
       }
 
       // recurse the children
@@ -275,6 +277,7 @@ public class Generator {
 		
 		Debugger.debug("this.pdsObject.toString() " );
 		Debugger.debug(pdsObjFlat );       
+		
 		// this is the flattened PDS3Label used by the velocity template
 		if (Debugger.debugFlag) {
 		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
@@ -284,18 +287,26 @@ public class Generator {
 		// End debugging code
 
 		try {
-			// Some debugging code
-			// how is context set??
 			Debugger.debug("this.context before merge");
 			Debugger.debug(this.context.toString());
 
-			this.template.merge(this.context, sw);
+            // Check if context has been set
+            if (this.context == null) {
+                setContext();
+            }
 
-			Debugger.debug("this.context after merge");
-			Debugger.debug(this.context.toString());
+            // Do some velocity engine stuff
+            this.template.merge(this.context, sw);
+
+            Debugger.debug("this.context after merge");
+            Debugger.debug(this.context.toString());
 
 			String output = clean(sw);
 
+            PrintWriter cout3 = new PrintWriter("output.xml");
+            cout3.write(output);
+            cout3.close();
+			
 			if (Debugger.debugFlag) {
 				PrintWriter cout2 = new PrintWriter("output.xml");
 				cout2.write(output);
@@ -305,7 +316,7 @@ public class Generator {
 
 			if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
 				throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
-			} else {	           
+			} else {
 				ios.writeBytes(output);
 				ios.flush();
 			}
@@ -573,28 +584,5 @@ public class Generator {
 	public void setIsXML(final boolean isXML) {
 		this.isXML = isXML;
 	}
-
-//    public static void main(String[] args) throws IOException, ParsingException {
-//        final DocumentBuilderFactory domFactory = DocumentBuilderFactory
-//                .newInstance();
-//        domFactory.setNamespaceAware(true);
-//        final DocumentBuilder builder = domFactory.newDocumentBuilder();
-//        final Document doc = builder.parse(new File("original.xml"));
-////        Document document = new Builder().build(new File("original.xml"));
-//        handleNode(doc.getDocumentElement());
-//        System.out.println(doc.toXML()); // empty elements now removed
-//    }
-
-//    private static void handleNode(Element node) {
-//        if (node.getChildNodes().getLength() == 0 && "".equals(node.getNodeValue())) {
-//            node.getParentNode().removeChild(oldChild)
-//            node.getParent().removeChild(node);
-//            return;
-//        }
-//        // recurse the children
-//        for (int i = 0; i < node.getChildCount(); i++) { 
-//            handleNode(node.getChild(i));
-//        }
-//    }
 	
 }
