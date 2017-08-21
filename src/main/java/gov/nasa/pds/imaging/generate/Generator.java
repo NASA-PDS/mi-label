@@ -6,9 +6,7 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
@@ -23,7 +21,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
@@ -37,10 +34,8 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.ToolManager;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -48,115 +43,111 @@ import java.io.OutputStream;
 
 public class Generator {
 
-	private static final String CLEAN_XSLT = "cleanup.xsl";
+    private PDSObject pdsObject = null;
+    private Template template;
+    private VelocityContext context;
+    private ContextMappings ctxtMappings;
 
-	private PDSObject pdsObject = null;
-	private Template template;
-	private VelocityContext context;
-	private ContextMappings ctxtMappings;
-	
-	private final Map<String, Map> mapped = null;
-
-	private File templateFile;
-	private File outputFile;
+    private File templateFile;
+    private File outputFile;
 
     // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
-	private String templatePath;
-	
-	private boolean removedNode = false;
-	
-	/** Flag to specify whether or not the output is XML. defaults to true. **/
-	private boolean isXML = true;
+    private String templatePath;
 
-	private OutputStream outputStream;
-	// ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
-	// this allows the OutputStream to be passed in from the caller (jConvertIIO)
-	// Then all writers work in a consistent way. Also allows writing to a URL (webdav)
+    private boolean removedNode = false;
 
-	public Generator() throws Exception {
-		this.context = null;
-		this.templatePath = "";
-		this.templateFile = null;
-		this.template = null;
-		this.pdsObject = null;
-		this.outputFile = null;
+    /** Flag to specify whether or not the output is XML. defaults to true. **/
+    private boolean isXML = true;
+
+    private OutputStream outputStream;
+    // ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
+    // this allows the OutputStream to be passed in from the caller (jConvertIIO)
+    // Then all writers work in a consistent way. Also allows writing to a URL (webdav)
+
+    public Generator() throws Exception {
+        this.context = null;
+        this.templatePath = "";
+        this.templateFile = null;
+        this.template = null;
+        this.pdsObject = null;
+        this.outputFile = null;
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
                 "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
-            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
+        System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
                 "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
 
-		this.ctxtMappings = new ContextMappings();
-	}
+        this.ctxtMappings = new ContextMappings();
+    }
 
-	/**
-	 * Initialize Generator object with a PDSObject. Defaults as XML output.
-	 * 
-	 * @param pdsObject
-	 * @param templateFile
-	 * @param outputFile
-	 * @throws Exception
-	 */
-	public Generator(final PDSObject pdsObject, final File templateFile,
-			final File outputFile) throws Exception {
-		this(pdsObject, templateFile, outputFile, true);
-	}
-	
-	/**
-	 * Generator constructor class.
-	 * 
-	 * @param pdsObject		pds object, i.e. PDS3 label
-	 * @param templateFile	velocity template file path
-	 * @param outputFile	path to output file. can be null in cases where we output to streams
-	 * @param isXML 		flag to specify whether or not the output is expected to be XML
-	 * @throws Exception
-	 */	
-	public Generator(final PDSObject pdsObject, final File templateFile,
-			final File outputFile, final Boolean isXML) throws Exception {
+    /**
+     * Initialize Generator object with a PDSObject. Defaults as XML output.
+     * 
+     * @param pdsObject
+     * @param templateFile
+     * @param outputFile
+     * @throws Exception
+     */
+    public Generator(final PDSObject pdsObject, final File templateFile,
+            final File outputFile) throws Exception {
+        this(pdsObject, templateFile, outputFile, true);
+    }
+
+    /**
+     * Generator constructor class.
+     * 
+     * @param pdsObject		pds object, i.e. PDS3 label
+     * @param templateFile	velocity template file path
+     * @param outputFile	path to output file. can be null in cases where we output to streams
+     * @param isXML 		flag to specify whether or not the output is expected to be XML
+     * @throws Exception
+     */	
+    public Generator(final PDSObject pdsObject, final File templateFile,
+            final File outputFile, final Boolean isXML) throws Exception {
         this.context = null;
         this.templateFile = templateFile;
         this.pdsObject = pdsObject;
         this.outputFile = outputFile;
         this.isXML = isXML;
-        
+
         if (this.outputFile != null)
-			FileUtils.forceMkdir(this.outputFile.getParentFile());
-        
+            FileUtils.forceMkdir(this.outputFile.getParentFile());
+
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
                 "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
-            System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
+        System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
                 "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
 
         this.ctxtMappings = new ContextMappings(this.pdsObject);
-               
+
         initTemplate();
         setContext();
     }
 
-	/**
-	 * Method to use to remove all empty tags and whitespace from
-	 * the generated XML
-	 *
-	 * @param sw
-	 * @return
-	 * @throws TransformerException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 */
-	private String clean(final StringWriter sw) {
-		if (this.isXML) {
-			try {
-				DocumentBuilderFactory dbFactory;
-	            DocumentBuilder dBuilder;
-	            Document document = null;
-	            
+    /**
+     * Method to use to remove all empty tags and whitespace from
+     * the generated XML
+     *
+     * @param sw
+     * @return
+     * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    private String clean(final StringWriter sw) {
+        if (this.isXML) {
+            try {
+                DocumentBuilderFactory dbFactory;
+                DocumentBuilder dBuilder;
+                Document document = null;
+
                 dbFactory = DocumentBuilderFactory.newInstance();
                 dBuilder = dbFactory.newDocumentBuilder();
                 document = dBuilder.parse(new ByteArrayInputStream(sw.toString().getBytes()));
-                
+
                 String outputUnclean = document.toString();
                 Debugger.debug("this.outputFile = "+this.outputFile);
 
@@ -166,138 +157,138 @@ public class Generator {
                     cout.write(outputUnclean);
                     cout.close();
                 }
-                
+
                 this.formatDocument(document);
-                
+
                 // Set all the transformer stuff to pretty print it
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
                 transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-             
+
                 StringWriter out = new StringWriter();
                 StreamResult streamResult = new StreamResult(out);
-             
+
                 // add the comment node    
                 document.insertBefore(document.createComment(" "), document.getDocumentElement());
                 transformer.transform(new DOMSource(document), streamResult);
-             
+
                 Debugger.debug(out.toString());
-                
-             // cleanup the top of the XML by adding in some newlines
+
+                // cleanup the top of the XML by adding in some newlines
                 String outputXmlString = out.toString()
-                    .replaceFirst("<!-- -->", "\n\n")
-                    .replaceAll("<\\?xml-model", "\n<?xml-model")
-                    .replaceAll("xmlns:", "\n    xmlns:")
-                    .replaceAll("xsi:schemaLocation", "\n    xsi:schemaLocation");
-	
-				return outputXmlString;
-			} catch (SAXParseException e) {
-			    System.err.println("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
-			    System.err.println(e.getMessage());
-			    System.err.println("Outputting without formatting. \n\n");
-		    } catch (Exception e) {
-		        System.err.println("Error attempting to format XML. Malformed XML expected.");
-		    }
-			return sw.toString();
-		} else {
-			return sw.toString();
-		}
-	}
-	
-	/**
-	 * format the XML by normalizing the spacing and recursively visiting each node a remove if empty.
-	 * will repeat the method if any nodes (or attributes) were removed in case that now leaves another node (or class)
-	 * empty .
-	 * 
-	 * @param document
-	 * @throws Exception
-	 */
-	private void formatDocument(Document document) throws Exception{
-	    this.removedNode = false;
-	    
+                        .replaceFirst("<!-- -->", "\n\n")
+                        .replaceAll("<\\?xml-model", "\n<?xml-model")
+                        .replaceAll("xmlns:", "\n    xmlns:")
+                        .replaceAll("xsi:schemaLocation", "\n    xsi:schemaLocation");
+
+                return outputXmlString;
+            } catch (SAXParseException e) {
+                System.err.println("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
+                System.err.println(e.getMessage());
+                System.err.println("Outputting without formatting. \n\n");
+            } catch (Exception e) {
+                System.err.println("Error attempting to format XML. Malformed XML expected.");
+            }
+            return sw.toString();
+        } else {
+            return sw.toString();
+        }
+    }
+
+    /**
+     * format the XML by normalizing the spacing and recursively visiting each node a remove if empty.
+     * will repeat the method if any nodes (or attributes) were removed in case that now leaves another node (or class)
+     * empty .
+     * 
+     * @param document
+     * @throws Exception
+     */
+    private void formatDocument(Document document) throws Exception{
+        this.removedNode = false;
+
         handleNode(document.getDocumentElement());
-        
+
         // normalize new lines
         document.getDocumentElement().normalize();
-        
+
         // need to run an Xpath to clean up spaces. the SAX pretty print allows for spaces if you put them in there
         // so we need to use XPath to clean them up first
         XPath xPath = XPathFactory.newInstance().newXPath();
         NodeList nodeList = (NodeList) xPath.evaluate("//text()[normalize-space()='']", document, XPathConstants.NODESET);
-     
+
         for (int i = 0; i < nodeList.getLength(); ++i) {
             Node node = nodeList.item(i);
             node.getParentNode().removeChild(node);
         }
-        
+
         // if we removed something let's run through the cleanup again
         if (this.removedNode) {
             this.formatDocument(document);
         }
-	}
-	
-	/**
-	 * method to recursively check a node and it's children for those that have no attributes and are empty
-	 * @param node
-	 * @param stop
-	 */
-	private void handleNode(Node node) {  
-	    // first lets check we have no child nodes (text or other)
-      if (node.getChildNodes().getLength() == 0) {
-          // next check if the value is null or empty string
-          if ("".equals(node.getNodeValue()) || node.getNodeValue() == null) {
-              // finally make sure it does not have xsi:nil attribute
-              if (node.getAttributes().getLength() == 0 || node.getAttributes().getNamedItem("xsi:nil") == null) {
-                  node.getParentNode().removeChild(node);
-                  this.removedNode = true;
-                  return;
-              }
-          }
-      }
+    }
 
-      // recurse the children
-      for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-          handleNode(node.getChildNodes().item(i));
-      }
-  }
+    /**
+     * method to recursively check a node and it's children for those that have no attributes and are empty
+     * @param node
+     * @param stop
+     */
+    private void handleNode(Node node) {  
+        // first lets check we have no child nodes (text or other)
+        if (node.getChildNodes().getLength() == 0) {
+            // next check if the value is null or empty string
+            if ("".equals(node.getNodeValue()) || node.getNodeValue() == null) {
+                // finally make sure it does not have xsi:nil attribute
+                if (node.getAttributes().getLength() == 0 || node.getAttributes().getNamedItem("xsi:nil") == null) {
+                    node.getParentNode().removeChild(node);
+                    this.removedNode = true;
+                    return;
+                }
+            }
+        }
 
-	/**
-	 * Functionality to generate the PDS4 Label from the Velocity Template
-	 * 
-	 * @param ImageOutputStream - ImageOutputStream write to
-	 * ImageOutputStream and OutputStream are NOT related so we must use one or the other
-	 * no casting allowed
-	 * 
-	 * @throws Exception - when output file does not exist, or error close String writer
-	 * @throws TemplateException - when output is null - reason needs to be found 
-	 * * may be able to merge the 2 generate()s together since we actually write to a PrintWriter
-	 * which can wrap a File or OutputStream
-	 */
-	public void generate(ImageOutputStream ios) throws Exception {
-		final StringWriter sw = new StringWriter();
+        // recurse the children
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            handleNode(node.getChildNodes().item(i));
+        }
+    }
 
-		// Some debugging code
-		Debugger.debug("generate ImageOutputStream");
-		Debugger.debug("ios "+ios);
-		
-		String pdsObjFlat = this.pdsObject.toString();
-		
-		Debugger.debug("this.pdsObject.toString() " );
-		Debugger.debug(pdsObjFlat );       
-		
-		// this is the flattened PDS3Label used by the velocity template
-		if (Debugger.debugFlag) {
-		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-		  cout.write(pdsObjFlat);
-		  cout.close();
-		}
-		// End debugging code
+    /**
+     * Functionality to generate the PDS4 Label from the Velocity Template
+     * 
+     * @param ImageOutputStream - ImageOutputStream write to
+     * ImageOutputStream and OutputStream are NOT related so we must use one or the other
+     * no casting allowed
+     * 
+     * @throws Exception - when output file does not exist, or error close String writer
+     * @throws TemplateException - when output is null - reason needs to be found 
+     * * may be able to merge the 2 generate()s together since we actually write to a PrintWriter
+     * which can wrap a File or OutputStream
+     */
+    public void generate(ImageOutputStream ios) throws Exception {
+        final StringWriter sw = new StringWriter();
 
-		try {
-			Debugger.debug("this.context before merge");
-			Debugger.debug(this.context.toString());
+        // Some debugging code
+        Debugger.debug("generate ImageOutputStream");
+        Debugger.debug("ios "+ios);
+
+        String pdsObjFlat = this.pdsObject.toString();
+
+        Debugger.debug("this.pdsObject.toString() " );
+        Debugger.debug(pdsObjFlat );       
+
+        // this is the flattened PDS3Label used by the velocity template
+        if (Debugger.debugFlag) {
+            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
+            cout.write(pdsObjFlat);
+            cout.close();
+        }
+        // End debugging code
+
+        try {
+            Debugger.debug("this.context before merge");
+            Debugger.debug(this.context.toString());
 
             // Check if context has been set
             if (this.context == null) {
@@ -310,288 +301,288 @@ public class Generator {
             Debugger.debug("this.context after merge");
             Debugger.debug(this.context.toString());
 
-			String output = clean(sw);
+            String output = clean(sw);
 
             PrintWriter cout3 = new PrintWriter("output.xml");
             cout3.write(output);
             cout3.close();
-			
-			if (Debugger.debugFlag) {
-				PrintWriter cout2 = new PrintWriter("output.xml");
-				cout2.write(output);
-				cout2.close();
-			}
-			// End debugging code
 
-			if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
-				throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
-			} else {
-				ios.writeBytes(output);
-				ios.flush();
-			}
-		} finally {
-			sw.close();
-			try {
-				// out.close();
-				// ios.close();
-				// it seems writers do not close the stream. It will be done later
-			} catch (final NullPointerException e) {
-				System.out.println("NullPointerException "+ e);
-			}
-		}
-	}
+            if (Debugger.debugFlag) {
+                PrintWriter cout2 = new PrintWriter("output.xml");
+                cout2.write(output);
+                cout2.close();
+            }
+            // End debugging code
+
+            if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
+                throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
+            } else {
+                ios.writeBytes(output);
+                ios.flush();
+            }
+        } finally {
+            sw.close();
+            try {
+                // out.close();
+                // ios.close();
+                // it seems writers do not close the stream. It will be done later
+            } catch (final NullPointerException e) {
+                System.out.println("NullPointerException "+ e);
+            }
+        }
+    }
 
 
-	/**
-	 * Functionality to generate the PDS4 Label from the Velocity Template
-	 * 
-	 * @param OutputStream - OutputStream write to
-	 * 
-	 * @throws Exception - when output file does not exist, or error close String writer
-	 * @throws TemplateException - when output is null - reason needs to be found 
-	 * * may be able to merge the 2 generate()s together since we actually write to a PrintWriter
-	 * which can wrap a File or OutputStream
-	 */
-	public void generate(OutputStream os) throws Exception {
-		final StringWriter sw = new StringWriter();
-		PrintWriter out = null;
+    /**
+     * Functionality to generate the PDS4 Label from the Velocity Template
+     * 
+     * @param OutputStream - OutputStream write to
+     * 
+     * @throws Exception - when output file does not exist, or error close String writer
+     * @throws TemplateException - when output is null - reason needs to be found 
+     * * may be able to merge the 2 generate()s together since we actually write to a PrintWriter
+     * which can wrap a File or OutputStream
+     */
+    public void generate(OutputStream os) throws Exception {
+        final StringWriter sw = new StringWriter();
+        PrintWriter out = null;
 
-		// Some debugging code
-		Debugger.debug("generate OutputStream");
-		Debugger.debug("os "+os);
-		String pdsObjFlat = this.pdsObject.toString();
-		Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
+        // Some debugging code
+        Debugger.debug("generate OutputStream");
+        Debugger.debug("os "+os);
+        String pdsObjFlat = this.pdsObject.toString();
+        Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
-		// this is the flattened PDS3Label
-		if (Debugger.debugFlag) {
-		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-		  cout.write(pdsObjFlat);
-		  cout.close();
-		}
-		// End debugging code
+        // this is the flattened PDS3Label
+        if (Debugger.debugFlag) {
+            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
+            cout.write(pdsObjFlat);
+            cout.close();
+        }
+        // End debugging code
 
-		try {
-			this.template.merge(this.context, sw);
+        try {
+            this.template.merge(this.context, sw);
 
-			Debugger.debug("this.context");
-			Debugger.debug(this.context.toString());
+            Debugger.debug("this.context");
+            Debugger.debug(this.context.toString());
 
-			String output = clean(sw);
+            String output = clean(sw);
 
-			if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
-				throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
-			} else {
+            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+                throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
+            } else {
 
-				System.out.println("New PDS4 Label:");
-				out = new PrintWriter(os);
-				out.write(output);
-			}
-		} finally {
-			sw.close();
-			try {
-				out.close();
-			} catch (final NullPointerException e) {
-			}
-		}
-	}
+                System.out.println("New PDS4 Label:");
+                out = new PrintWriter(os);
+                out.write(output);
+            }
+        } finally {
+            sw.close();
+            try {
+                out.close();
+            } catch (final NullPointerException e) {
+            }
+        }
+    }
 
-	/**
-	 * Functionality to generate the PDS4 Label from the Velocity Template
-	 *
-	 * @param toStdOut - Determines whether the output should be to a file or System.out
-	 *
-	 * @throws Exception - when output file does not exist, or error close String writer
-	 * @throws TemplateException - when output is null - reason needs to be found
-	 */
-	public void generate(final boolean toStdOut) throws Exception {
-		final StringWriter sw = new StringWriter();
-		PrintWriter out = null;
+    /**
+     * Functionality to generate the PDS4 Label from the Velocity Template
+     *
+     * @param toStdOut - Determines whether the output should be to a file or System.out
+     *
+     * @throws Exception - when output file does not exist, or error close String writer
+     * @throws TemplateException - when output is null - reason needs to be found
+     */
+    public void generate(final boolean toStdOut) throws Exception {
+        final StringWriter sw = new StringWriter();
+        PrintWriter out = null;
 
-		// Some debugging output
-		Debugger.debug("generate toStdout " + toStdOut);
-		Debugger.debug("this.pdsObject.getFilePath() "+this.pdsObject.getFilePath() );
-		Debugger.debug("this.outputFile "+this.outputFile.getAbsolutePath());
-		String pdsObjFlat = this.pdsObject.toString();
-		Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
+        // Some debugging output
+        Debugger.debug("generate toStdout " + toStdOut);
+        Debugger.debug("this.pdsObject.getFilePath() "+this.pdsObject.getFilePath() );
+        Debugger.debug("this.outputFile "+this.outputFile.getAbsolutePath());
+        String pdsObjFlat = this.pdsObject.toString();
+        Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
-		// this is the flattened PDS3Label
-		if (Debugger.debugFlag) {
-		  PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
+        // this is the flattened PDS3Label
+        if (Debugger.debugFlag) {
+            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
 
-		  cout.write(pdsObjFlat);
-		  cout.close();
-		}
-		// End debugging output
+            cout.write(pdsObjFlat);
+            cout.close();
+        }
+        // End debugging output
 
-		try {
-			// Check if context has been set
-			if (this.context == null) {
-				setContext();
-			}
+        try {
+            // Check if context has been set
+            if (this.context == null) {
+                setContext();
+            }
 
-			// Do some velocity engine stuff
-			this.template.merge(this.context, sw);
+            // Do some velocity engine stuff
+            this.template.merge(this.context, sw);
 
-			Debugger.debug("this.context");
-			Debugger.debug(this.context.toString());
+            Debugger.debug("this.context");
+            Debugger.debug(this.context.toString());
 
-			String output = clean(sw);
+            String output = clean(sw);
 
-			if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
-				throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
-			} else {
-				if (toStdOut) {
-					System.out.println(output);
-				} else if (this.outputStream != null) {
-					// FIXME Need to implement this here
-				} else {
-					System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
-					
-					out = new PrintWriter(this.outputFile);
-					out.write(output);
+            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+                throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
+            } else {
+                if (toStdOut) {
+                    System.out.println(output);
+                } else if (this.outputStream != null) {
+                    // FIXME Need to implement this here
+                } else {
+                    System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
 
-				}
-			}
-		} finally {
-			sw.close();
-			try {
-				out.close();
-			} catch (final NullPointerException e) {
-			}
-		}
-	}
+                    out = new PrintWriter(this.outputFile);
+                    out.write(output);
 
-	/**
-	 * Initializes and reads in the Velocity Template into the Velocity
-	 * Engine.
-	 *
-	 * @throws TemplateException
-	 * @throws IOException
-	 */
-	public void initTemplate() throws TemplateException {
-		final String filename = this.templateFile.getName();
+                }
+            }
+        } finally {
+            sw.close();
+            try {
+                out.close();
+            } catch (final NullPointerException e) {
+            }
+        }
+    }
 
-		VelocityEngine ve = new VelocityEngine();
-		ve.setProperty("file.resource.loader.path", // Need to add base path
-				// for resource loader
-				this.templateFile.getParent());
-		ve.setProperty("file.resource.loader.cache",
-				"false");
-		ve.init();
+    /**
+     * Initializes and reads in the Velocity Template into the Velocity
+     * Engine.
+     *
+     * @throws TemplateException
+     * @throws IOException
+     */
+    public void initTemplate() throws TemplateException {
+        final String filename = this.templateFile.getName();
 
-		this.context = new VelocityContext();
+        VelocityEngine ve = new VelocityEngine();
+        ve.setProperty("file.resource.loader.path", // Need to add base path
+                // for resource loader
+                this.templateFile.getParent());
+        ve.setProperty("file.resource.loader.cache",
+                "false");
+        ve.init();
 
-		try {
-			this.template = ve.getTemplate(filename);
-		} catch (final ResourceNotFoundException e) {
-			throw new TemplateException("Template not found - "
-					+ this.templatePath);
-		} catch (final ParseErrorException e) {
-			throw new TemplateException("Error parsing the template at "
-					+ e.getLineNumber() + ":" + e.getColumnNumber() + ". "
-					+ e.getMessage());
-		} catch (final MethodInvocationException e) {
-			throw new TemplateException("Error in template syntax "
-					+ e.getLineNumber() + ":" + e.getColumnNumber() + ". "
-					+ e.getMessage());
-		}
-	}
+        this.context = new VelocityContext();
 
-	/**
-	 * Sets the Velocity Template contexts specified by the PDSObject API and
-	 * ContextMappings object.
-	 *
-	 * @throws TemplateException
-	 * @throws Exception
-	 */
-	public void setContext() throws TemplateException, Exception {
-		addToolManager();
+        try {
+            this.template = ve.getTemplate(filename);
+        } catch (final ResourceNotFoundException e) {
+            throw new TemplateException("Template not found - "
+                    + this.templatePath);
+        } catch (final ParseErrorException e) {
+            throw new TemplateException("Error parsing the template at "
+                    + e.getLineNumber() + ":" + e.getColumnNumber() + ". "
+                    + e.getMessage());
+        } catch (final MethodInvocationException e) {
+            throw new TemplateException("Error in template syntax "
+                    + e.getLineNumber() + ":" + e.getColumnNumber() + ". "
+                    + e.getMessage());
+        }
+    }
 
-		// Set default contexts
-		for (final String str : this.ctxtMappings.contextMap.keySet()) {
-			this.context.put(str, this.ctxtMappings.contextMap.get(str));
-		}
+    /**
+     * Sets the Velocity Template contexts specified by the PDSObject API and
+     * ContextMappings object.
+     *
+     * @throws TemplateException
+     * @throws Exception
+     */
+    public void setContext() throws TemplateException, Exception {
+        addToolManager();
 
-		// Set context for base initial PDSObject
-		this.context.put(this.pdsObject.getContext(), this.pdsObject);
-	}
+        // Set default contexts
+        for (final String str : this.ctxtMappings.contextMap.keySet()) {
+            this.context.put(str, this.ctxtMappings.contextMap.get(str));
+        }
 
-	private void addToolManager() {
-		ToolManager velocityToolManager = new ToolManager();
-		velocityToolManager.configure("gov/nasa/pds/imaging/generate/velocity-tools.xml");
-		this.context = new VelocityContext(velocityToolManager.createContext());
-	}
+        // Set context for base initial PDSObject
+        this.context.put(this.pdsObject.getContext(), this.pdsObject);
+    }
 
-	// **************************************************************//
-	// Getter/Setter methods for local variables. Included for API //
-	// to allow external software to plug directly into Generator //
-	// object. //
-	// **************************************************************//
+    private void addToolManager() {
+        ToolManager velocityToolManager = new ToolManager();
+        velocityToolManager.configure("gov/nasa/pds/imaging/generate/velocity-tools.xml");
+        this.context = new VelocityContext(velocityToolManager.createContext());
+    }
 
-	public VelocityContext getContext() {
-		return context;
-	}
+    // **************************************************************//
+    // Getter/Setter methods for local variables. Included for API //
+    // to allow external software to plug directly into Generator //
+    // object. //
+    // **************************************************************//
 
-	public ContextMappings getContextMappings() {
-		return ctxtMappings;
-	}
+    public VelocityContext getContext() {
+        return context;
+    }
 
-	public File getOutputFile() {
-		return outputFile;
-	}
+    public ContextMappings getContextMappings() {
+        return ctxtMappings;
+    }
 
-	public PDSObject getPdsObject() {
-		return pdsObject;
-	}
+    public File getOutputFile() {
+        return outputFile;
+    }
 
-	public Template getTemplate() {
-		return template;
-	}
+    public PDSObject getPdsObject() {
+        return pdsObject;
+    }
 
-	public File getTemplateFile() {
-		return templateFile;
-	}
+    public Template getTemplate() {
+        return template;
+    }
 
-	public String getTemplatePath() {
-		return templatePath;
-	}
+    public File getTemplateFile() {
+        return templateFile;
+    }
 
-	public boolean getIsXML() {
-		return isXML;
-	}
+    public String getTemplatePath() {
+        return templatePath;
+    }
 
-	
-	public void setContext(final VelocityContext context) {
-		this.context = context;
-	}
+    public boolean getIsXML() {
+        return isXML;
+    }
 
-	public void setContextMappings(final ContextMappings ctxMappings) {
-		this.ctxtMappings = ctxMappings;
-	}
 
-	public void setOutputFile(final File outputFile) {
-		this.outputFile = outputFile;
-	}
+    public void setContext(final VelocityContext context) {
+        this.context = context;
+    }
 
-	public void setPDSObject(final PDSObject pdsObject) {
-		this.pdsObject = pdsObject;
-	}
+    public void setContextMappings(final ContextMappings ctxMappings) {
+        this.ctxtMappings = ctxMappings;
+    }
 
-	public void setTemplate(final Template template) {
-		this.template = template;
-	}
+    public void setOutputFile(final File outputFile) {
+        this.outputFile = outputFile;
+    }
 
-	public void setTemplateFile(final File templateFile) throws TemplateException {
-		this.templateFile = templateFile;
-		initTemplate();
-	}
+    public void setPDSObject(final PDSObject pdsObject) {
+        this.pdsObject = pdsObject;
+    }
 
-	public void setTemplatePath(final String templatePath) {
-		this.templatePath = templatePath;
-	}
+    public void setTemplate(final Template template) {
+        this.template = template;
+    }
 
-	public void setIsXML(final boolean isXML) {
-		this.isXML = isXML;
-	}
-	
+    public void setTemplateFile(final File templateFile) throws TemplateException {
+        this.templateFile = templateFile;
+        initTemplate();
+    }
+
+    public void setTemplatePath(final String templatePath) {
+        this.templatePath = templatePath;
+    }
+
+    public void setIsXML(final boolean isXML) {
+        this.isXML = isXML;
+    }
+
 }
