@@ -179,11 +179,20 @@ public class Generator {
                 StringWriter out = new StringWriter();
                 StreamResult streamResult = new StreamResult(out);
              
+                // add the comment node    
+                document.insertBefore(document.createComment(" "), document.getDocumentElement());
                 transformer.transform(new DOMSource(document), streamResult);
              
                 Debugger.debug(out.toString());
+                
+             // cleanup the top of the XML by adding in some newlines
+                String outputXmlString = out.toString()
+                    .replaceFirst("<!-- -->", "\n\n")
+                    .replaceAll("<\\?xml-model", "\n<?xml-model")
+                    .replaceAll("xmlns:", "\n    xmlns:")
+                    .replaceAll("xsi:schemaLocation", "\n    xsi:schemaLocation");
 	
-				return out.toString();
+				return outputXmlString;
 			} catch (SAXParseException e) {
 			    System.err.println("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
 			    System.err.println(e.getMessage());
