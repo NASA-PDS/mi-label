@@ -165,7 +165,7 @@ public class Generator {
                 transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
                 transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
                 StringWriter out = new StringWriter();
                 StreamResult streamResult = new StreamResult(out);
