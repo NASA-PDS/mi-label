@@ -153,7 +153,14 @@ public class ProductToolsLabelReader {
 
     // An item element node can either
     // have a #text child or subitem children
-    itemNode.addValue(pointer.getValue().toString());
+    if (pointer.getValue() instanceof Sequence) {
+      Sequence s = (Sequence) pointer.getValue();
+      for (int i = 0; i < s.size(); i++) {
+        itemNode.addValue(s.get(i).toString());
+      }
+    } else {
+      itemNode.addValue(pointer.getValue().toString());
+    }
     
     
     Debugger.debug("2) PDS3LabelReader.handlePointerNode nodeName "+ pointer.getClass().getName() + ", elementName "+elementName+" units "+units);
