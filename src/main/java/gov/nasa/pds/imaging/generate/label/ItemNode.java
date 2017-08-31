@@ -64,14 +64,30 @@ public class ItemNode extends ArrayList<String>{
     @Override
     public String toString() {
         String out = "";
-        if (this.size() == 1) {
+        if (name.startsWith("PTR_")) {
+          if (this.size() == 1) {
             out = this.get(0);
-        } else {
+          } else {
             out = "(";
             for (String value : this) {
                 out += value + ",";
             }
-            out = out.substring(0, out.length()-1) + ")";
+            out = out.substring(0, out.length()-1);
+            if (!units.equals("none")) {
+              out += " " + units;
+            }
+            out = out + ")";
+          }
+        } else {
+          if (this.size() == 1) {
+              out = this.get(0);
+          } else {
+              out = "(";
+              for (String value : this) {
+                  out += value + ",";
+              }
+              out = out.substring(0, out.length()-1) + ")";
+          }
         }
         return out;
     }

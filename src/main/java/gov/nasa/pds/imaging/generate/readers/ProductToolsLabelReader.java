@@ -22,6 +22,7 @@ import gov.nasa.pds.tools.label.AttributeStatement;
 import gov.nasa.pds.tools.label.GroupStatement;
 import gov.nasa.pds.tools.label.Label;
 import gov.nasa.pds.tools.label.ManualPathResolver;
+import gov.nasa.pds.tools.label.Numeric;
 import gov.nasa.pds.tools.label.ObjectStatement;
 import gov.nasa.pds.tools.label.PointerStatement;
 import gov.nasa.pds.tools.label.Scalar;
@@ -132,8 +133,19 @@ public class ProductToolsLabelReader {
     elementName = "PTR_" + elementName; // could also be "HAT_"
     
     // Check is the units is null
-    // (jp) This doesn't make sense. We want to grab the units from
-    //      the node...
+    if (pointer.getValue() instanceof Sequence) {
+      Sequence s = (Sequence) pointer.getValue();
+      if (s.size() == 2) {
+        Value value = s.get(1);
+        if (value instanceof Numeric) {
+          Numeric n = (Numeric) value;
+          if (n.getUnits() != null) {
+            units = n.getUnits();
+          }
+        }
+      }
+    }
+
     if (units == null) {
       units = "none"; // ""
     }
