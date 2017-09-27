@@ -19,8 +19,12 @@ public class TextUtil extends WordUtils implements PDSContext {
 	 * @return
 	 */
 	public static String capitalize(String str) {
-		str = str.replace('_', ' ');
-		return WordUtils.capitalizeFully(str);
+	    if (str != null) {
+    		str = str.replace('_', ' ');
+    		return WordUtils.capitalizeFully(str);
+	    } else {
+	        return str;
+	    }
 	}
 	
     /**
@@ -31,7 +35,11 @@ public class TextUtil extends WordUtils implements PDSContext {
      * @return
      */
     public static String capitalize(Object obj) {
-        String str = obj.toString().replace('_', ' ');
-        return WordUtils.capitalizeFully(str);
+        if (obj != null) {
+            String str = obj.toString().replace('_', ' ');
+            return WordUtils.capitalizeFully(str);
+        } else {
+            return null;
+        }
     }
 }

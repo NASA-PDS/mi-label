@@ -155,7 +155,9 @@ public class GenerateLauncher {
             	this.isXML = false;
             } else if (o.getOpt().equals(Flag.INCLUDES.getShortName())) {
               setIncludePaths(o.getValuesList());
-            } 
+            } else if (o.getOpt().equals(Flag.DEBUG.getShortName())) {
+                Debugger.debugFlag = true;
+            }  
               
         }
         
