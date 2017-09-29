@@ -26,12 +26,11 @@
 
     <groupId>gov.nasa.pds.2010.preparation</groupId>
     <artifactId>generate</artifactId>
-    <version>0.13.0-dev</version>
+    <version>0.13.0</version>
     <packaging>jar</packaging>
 
     <name>Generate Tool</name>
-    <description> The Generate Tool provides a command-line interface for generating PDS4 Labels
-        from either a PDS3 Label or a PDS-specific DOM object. </description>
+    <description>The Generate Tool provides a command-line interface for generating PDS4 Labels from either a PDS3 Label or a PDS-specific DOM object.</description>
     <url>https://pds-cm.jpl.nasa.gov/pds4/preparation/generate/</url>
 
     <licenses>
@@ -54,6 +53,15 @@
             </roles>
         </developer>
         <developer>
+            <name>Michael Cayanan</name>
+            <id>mcayanan</id>
+            <email>Michael.Cayanan@jpl.nasa.gov</email>
+            <organization>NASA Jet Propulsion Laboratory</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
             <name>Steven Levoe</name>
             <id>srlevoe</id>
             <email>Steven.R.Levoe@jpl.nasa.gov</email>
@@ -66,6 +74,14 @@
     </developers>
 
     <contributors>
+        <contributor>
+            <name>Sean Hardman</name>
+            <email>Sean.Hardman@jpl.nasa.gov</email>
+            <organization>NASA Jet Propulsion Laboratory</organization>
+            <roles>
+                <role>EN Development Lead</role>
+            </roles>
+        </contributor>
         <contributor>
             <name>Elizabeth Rye</name>
             <email>Elzabeth.D.Rye@jpl.nasa.gov</email>
@@ -275,11 +291,11 @@
             <artifactId>vicario</artifactId>
             <version>4.0</version>
         </dependency>
-    <dependency>
-      <groupId>gov.nasa.pds</groupId>
-      <artifactId>product-tools</artifactId>
-      <version>${product-tools-version}</version>
-    </dependency>        
+        <dependency>
+            <groupId>gov.nasa.pds</groupId>
+            <artifactId>product-tools</artifactId>
+            <version>${product-tools-version}</version>
+        </dependency>        
     </dependencies>
 
     <!-- Project Information and Reports inherited from parent. -->
