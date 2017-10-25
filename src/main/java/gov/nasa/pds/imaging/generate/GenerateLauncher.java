@@ -35,6 +35,10 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.Priority;
 
 /**
  * Class used as Command-line interface endpoint. Parses command-line arguments
@@ -262,6 +266,9 @@ public class GenerateLauncher {
             System.out.println("\nType 'generate -h' for usage");
             System.exit(0);
         }
+        ConsoleAppender ca = new ConsoleAppender(new PatternLayout("%-5p %m%n"));
+        ca.setThreshold(Priority.FATAL);
+        BasicConfigurator.configure(ca);
         try {
             final GenerateLauncher launcher = new GenerateLauncher();
             final CommandLine commandline = launcher.parse(args);

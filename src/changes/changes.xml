@@ -36,6 +36,9 @@
       <action dev="mcayanan" type="update" issue="PDS-505">
         Update PDS4 label transformations to the latest model. 
       </action>
+      <action dev="mcayanan" type="update" issue="PDS-519">
+        Update to suppress Log4j warning message.
+      </action>
       <action dev="jpadams" type="update">
         Refactor Generator.clean function to improve pretty printing of the output XML.
       </action>
