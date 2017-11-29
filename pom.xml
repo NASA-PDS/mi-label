@@ -30,7 +30,7 @@
     <packaging>jar</packaging>
 
     <name>Generate Tool</name>
-    <description>The Generate Tool provides a command-line interface for generating PDS4 Labels from either a PDS3 Label or a PDS-specific DOM object.</description>
+    <description>The Generate Tool provides a command-line interface for generating PDS4 Labels using a user provided PDS4 XML template and input (source) data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports detached and attached ODL/PDS3 labels with plans to support VICAR attached labels and CSV files.</description>
     <url>https://pds-cm.jpl.nasa.gov/pds4/preparation/generate/</url>
 
     <licenses>
