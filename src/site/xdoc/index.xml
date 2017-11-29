@@ -23,7 +23,7 @@
 
   <body>
     <section name="About Generate Tool">
-      <p>The Generate Tool provides a command-line interface for generating PDS4 Labels using a PDS4 XML template and input data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports ODL/PDS3 detached labels with plans to support VICAR attached labels and CSV files.
+      <p>The Generate Tool provides a command-line interface for generating PDS4 Labels using a PDS4 XML template and input data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports detached and attached ODL/PDS3 labels with plans to support VICAR attached labels and CSV files.
       </p>
 
       <p>
