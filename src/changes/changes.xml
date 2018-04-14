@@ -23,6 +23,9 @@
   </properties>
 
   <body>
+    <release version="0.15.0" date="TBD" description="TBD">
+    </release>
+
     <release version="0.14.0" date="2018-03-30" description="This release of the Generate Tool is a component of the integrated release 8.1.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="jpadams" type="update" issue="PDS-530">
         Update About information to be more clear about Generate usage.
