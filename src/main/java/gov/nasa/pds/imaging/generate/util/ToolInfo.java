@@ -76,7 +76,12 @@ public class ToolInfo {
       StringBuffer buffer = new StringBuffer(props.getProperty(MODEL_VERSION));
       String model = "";
       for(int i = 0; i < buffer.length(); i++) {
-        model += buffer.charAt(i);
+        char value = buffer.charAt(i);
+        if (Character.isLetter(value)) {
+          model += Integer.parseInt(Character.toString(value), 16);
+        } else {
+          model += value;
+        }
         if (i != (buffer.length() - 1)) {
           model += ".";
         }
