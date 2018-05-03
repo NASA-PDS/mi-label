@@ -198,8 +198,10 @@ public class ProductToolsLabelReader {
       } else if (childStatement instanceof GroupStatement) {
         handlePDSGroupNode((GroupStatement) childStatement, labels);
       } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level of label
-        handleItemNode((AttributeStatement) childStatement, labels);
-      }     
+        handleItemNode((AttributeStatement) childStatement, labels); 
+      } else if (childStatement instanceof PointerStatement) {
+      	handlePointerNode((PointerStatement) childStatement, labels);
+      }
     }
     
     Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode nodeName "+ objectStatement.getClass().getName() + " elementName "+elementName);
@@ -231,7 +233,9 @@ public class ProductToolsLabelReader {
         handlePDSGroupNode((GroupStatement) childStatement, labels);
       } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level of label
         handleItemNode((AttributeStatement) childStatement, labels);
-      }     
+      } else if (childStatement instanceof PointerStatement) {
+      	handlePointerNode((PointerStatement) childStatement, labels);
+      }
     }
     
     Debugger.debug("2) PDS3LabelReader.handlePDSGroupNode nodeName "+ groupStatement.getClass().getName() + " elementName "+elementName);
