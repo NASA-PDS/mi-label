@@ -289,7 +289,7 @@
         <dependency>
             <groupId>jpl.mipl.io</groupId>
             <artifactId>vicario</artifactId>
-            <version>4.0</version>
+            <version>${vicario-version}</version>
         </dependency>
         <dependency>
             <groupId>gov.nasa.pds</groupId>

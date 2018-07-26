@@ -24,6 +24,15 @@
 
   <body>
     <release version="0.15.0" date="TBD" description="TBD">
+      <action dev="slevoe" type="fix" issue="PDS-493">
+        Fixed an issue with multi-line comments in PDS3 labels when using the vicario parser type. Inherited from vicario.
+      </action>
+      <action dev="slevoe" type="fix" issue="PDS-500">
+        Fixed an issue with parenthesis characters in descriptions when reading PDS3 labels when using the vicario parser type. Inherited from vicario.
+      </action>     
+      <action dev="hyunlee" type="update" issue="PDS-539">
+        Support explicit FILE objects for target PDS3 labels when using the product-tools parser type.
+      </action>  
     </release>
 
     <release version="0.14.0" date="2018-03-30" description="This release of the Generate Tool is a component of the integrated release 8.1.0 of the PDS4 System. This is an operational release of the system components to date.">
