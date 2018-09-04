@@ -23,7 +23,7 @@
   </properties>
 
   <body>
-    <release version="0.15.0" date="TBD" description="TBD">
+    <release version="0.15.0" date="TBD" description="This release of the Generate Tool is a component of the integrated release 9.0.0 of the PDS4 System. This is an operational release of the system components to date.">
       <action dev="slevoe" type="fix" issue="PDS-493">
         Fixed an issue with multi-line comments in PDS3 labels when using the vicario parser type. Inherited from vicario.
       </action>
