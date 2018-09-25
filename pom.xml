@@ -26,7 +26,7 @@
 
     <groupId>gov.nasa.pds.2010.preparation</groupId>
     <artifactId>generate</artifactId>
-    <version>0.15.0-dev</version>
+    <version>0.15.0</version>
     <packaging>jar</packaging>
 
     <name>Generate Tool</name>
