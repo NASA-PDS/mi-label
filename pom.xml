@@ -286,11 +286,11 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>jpl.mipl.io</groupId>
-            <artifactId>vicario</artifactId>
-            <version>${vicario-version}</version>
-        </dependency>
+	<dependency>
+	  <groupId>gov.nasa.jpl.ammos.ids.vicario</groupId>
+	  <artifactId>vicario</artifactId>
+	  <version>${vicario-version}</version>
+	</dependency>
         <dependency>
             <groupId>gov.nasa.pds</groupId>
             <artifactId>product-tools</artifactId>
