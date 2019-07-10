@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1A10.sch"
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1A10.xsd">
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:data:msx-c-spirit3-3-msxsb-v1.0:halebopp_ahalebp_fit</logical_identifier>
+    <version_id>1.0</version_id>
+    <title>ahalebp</title>
+    <!-- hardcoding IM version for test case. will test this elsewhere -->
+    <information_model_version>1.10.1.0</information_model_version>
+    <product_class>Product_Observational</product_class>
+    <Modification_History>
+      <Modification_Detail>
+        <!-- hardcoding modification date for test case. will test this elsewhere -->
+        <modification_date>2018-07-26</modification_date>
+        <version_id>1.0</version_id>
+        <description>Auto generated PDS4 product label created by the Transform Tool.</description>
+      </Modification_Detail>
+    </Modification_History>
+  </Identification_Area>
+  <Observation_Area>
+    <Time_Coordinates>
+      <start_date_time>1996-10-08T01:24:25.660Z</start_date_time>
+      <stop_date_time>1996-10-08T01:53:40.660Z</stop_date_time>
+    </Time_Coordinates>
+    <Investigation_Area/>
+    <Observing_System>
+      <Observing_System_Component>
+        <name>midcourse space experiment</name>
+        <type>Spacecraft</type>
+      </Observing_System_Component>
+      <Observing_System_Component>
+        <name>spatial infrared imaging telescope</name>
+        <type>Instrument</type>
+      </Observing_System_Component>
+    </Observing_System>
+    <Target_Identification>
+      <name>c/hale-bopp (1995 o1)</name>
+      <type>Planet</type>
+    </Target_Identification>
+  </Observation_Area>
+  <File_Area_Observational>
+    <File>
+      <file_name>ahalebp.fit</file_name>
+    </File>
+    <Array_2D_Image>
+      <offset unit="byte">5760</offset>
+      <axes>2</axes>
+      <axis_index_order>Last Index Fastest</axis_index_order>
+      <Element_Array/>
+      <Axis_Array>
+        <axis_name>Line</axis_name>
+        <elements>2420</elements>
+        <sequence_number>1</sequence_number>
+      </Axis_Array>
+      <Axis_Array>
+        <axis_name>Sample</axis_name>
+        <elements>938</elements>
+        <sequence_number>2</sequence_number>
+      </Axis_Array>
+    </Array_2D_Image>
+  </File_Area_Observational>
+</Product_Observational>

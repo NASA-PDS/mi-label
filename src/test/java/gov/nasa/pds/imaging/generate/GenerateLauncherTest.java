@@ -43,7 +43,7 @@ public class GenerateLauncherTest extends GenerateTest {
 	@BeforeClass
 	public static void oneTimeSetUp() throws Exception {
 		Debugger.debugFlag = true;
-		testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest");
+		testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_launchertest");
 		FileUtils.forceMkdir(new File(System.getProperty("user.dir") + "/" + TestConstants.TEST_OUT_DIR));
 	}
 	
@@ -70,7 +70,7 @@ public class GenerateLauncherTest extends GenerateTest {
             File output = new File(outFilePath + "/pds3_example.xml" );
             File expected = new File(testPath + "/generationDemo_expected.xml");
             
-            String[] args = {"-d", 
+            String[] args = {//"-d", 
                     "-p",exPath + "/pds3_example.lbl",
                     "-t",exPath + "/template_example.vm",
                     "-o",outFilePath, "-b", exPath};
@@ -99,7 +99,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testGenerationMER() {
     	try {
-    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatelaunchertest/");
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_launchertest/");
     		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
     		
 	        String filebase = "1p216067135edn76pop2102l2m1";
@@ -131,7 +131,7 @@ public class GenerateLauncherTest extends GenerateTest {
     @Ignore
     public void testGenerationMPFExample() {
     	try {
-    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/mpf/");
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_mpf/");
     		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
     		String dataPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/mpf_example/");
     		
@@ -167,9 +167,9 @@ public class GenerateLauncherTest extends GenerateTest {
     @Test
     public void testCleanup() {
     	try {
-    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatortest/");
+    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_generatortest/");
     		String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
-    		String dataPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/generatortest/");
+    		String dataPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_generatortest/");
     		
 	        String filebase = "mpf";
     		

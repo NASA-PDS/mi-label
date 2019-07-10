@@ -30,7 +30,7 @@ public class PDS3LabelReaderTest extends GenerateTest {
 	public void testGetSimple() {
 	    try {
 	        Debugger.debugFlag = true;
-	        String filePath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1/gen_ELE_MOM.LBL");
+	        String filePath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259/gen_ELE_MOM.LBL");
 	        final BufferedReader input = new BufferedReader(new FileReader(filePath));
 	        // TODO - what is the purpose of this
 	        // in PDSLabelToDOM

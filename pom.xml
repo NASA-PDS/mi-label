@@ -286,16 +286,21 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
-	<dependency>
-	  <groupId>gov.nasa.jpl.ammos.ids.vicario</groupId>
-	  <artifactId>vicario</artifactId>
-	  <version>${vicario-version}</version>
-	</dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.9.8</version>
+    		</dependency>
+        <dependency>
+          <groupId>gov.nasa.jpl.ammos.ids.vicario</groupId>
+          <artifactId>vicario</artifactId>
+          <version>${vicario-version}</version>
+        </dependency>
         <dependency>
             <groupId>gov.nasa.pds</groupId>
             <artifactId>product-tools</artifactId>
             <version>${product-tools-version}</version>
-        </dependency>        
+        </dependency>
     </dependencies>
 
     <!-- Project Information and Reports inherited from parent. -->

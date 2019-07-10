@@ -3,6 +3,7 @@ package gov.nasa.pds.imaging.generate;
 import gov.nasa.pds.imaging.generate.context.ContextMappings;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.imageio.stream.ImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
@@ -26,9 +28,14 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.Priority;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.app.event.EventCartridge;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -43,21 +50,28 @@ import java.io.OutputStream;
 
 public class Generator {
 
-    private PDSObject pdsObject = null;
+    private Map<String, PDSObject> pdsObjects ;
     private Template template;
     private VelocityContext context;
     private ContextMappings ctxtMappings;
 
     private File templateFile;
     private File outputFile;
+    // used to set the include path to the directory of the input file
+    private File inputFile;
 
-    // (srl) eventually we could also pass this in as an InputStream (derived using webdav from a URL)
+    // eventually we could also pass this in as an InputStream (derived using webdav from a URL)
     private String templatePath;
+    private String inputFilePath;
+    private VelocityEngine ve;
 
     private boolean removedNode = false;
 
     /** Flag to specify whether or not the output is XML. defaults to true. **/
     private boolean isXML = true;
+    
+    // boolean noContext = true;
+    boolean noContext = false;
 
     private OutputStream outputStream;
     // ImageOutputStream, RandomAccessFile, OutputStream, FileOutputStream
@@ -67,10 +81,12 @@ public class Generator {
     public Generator() throws Exception {
         this.context = null;
         this.templatePath = "";
+        this.inputFilePath = "";
         this.templateFile = null;
         this.template = null;
-        this.pdsObject = null;
+        this.pdsObjects = new TreeMap<>();
         this.outputFile = null;
+        this.inputFile = null;
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
@@ -91,36 +107,79 @@ public class Generator {
      */
     public Generator(final PDSObject pdsObject, final File templateFile,
             final File outputFile) throws Exception {
-        this(pdsObject, templateFile, outputFile, true);
+        this(pdsObject, templateFile, outputFile, null, true);
+    }
+    
+    /**
+     * Initialize Generator object with a PDSObject. Defaults as XML output.
+     * 
+     * @param pdsObject
+     * @param templateFile
+     * @param outputFile
+     * @param inputFile
+     * @throws Exception
+     */
+    public Generator(final PDSObject pdsObject, final File templateFile,
+            final File outputFile, final File inputFile) throws Exception {
+        this(pdsObject, templateFile, outputFile, inputFile, true);
+    }
+    
+    /**
+     * Initialize Generator object with a PDSObject. Defaults as XML output.
+     * 
+     * @param pdsObject
+     * @param templateFile
+     * @param outputFile
+     * @param isXML 		flag to specify whether or not the output is expected to be XML
+     * @throws Exception
+     */
+    public Generator(final PDSObject pdsObject, final File templateFile,
+            final File outputFile, final Boolean isXML) throws Exception {
+        this(pdsObject, templateFile, outputFile, null, isXML);
     }
 
     /**
      * Generator constructor class.
+     *
      * 
      * @param pdsObject		pds object, i.e. PDS3 label
      * @param templateFile	velocity template file path
      * @param outputFile	path to output file. can be null in cases where we output to streams
+     * @param inputFile	    path to input file. can be null in cases where we don't care
      * @param isXML 		flag to specify whether or not the output is expected to be XML
      * @throws Exception
      */	
+    @SuppressWarnings("deprecation")
     public Generator(final PDSObject pdsObject, final File templateFile,
-            final File outputFile, final Boolean isXML) throws Exception {
+    	             final File outputFile, final File inputFile, final Boolean isXML) throws Exception {
         this.context = null;
         this.templateFile = templateFile;
-        this.pdsObject = pdsObject;
+        Map<String, PDSObject> pdsObjects = new TreeMap<>();
+        this.pdsObjects = pdsObjects;
+        this.pdsObjects.put("label", pdsObject);
+        // this.pdsObjects = pdsObjects;
         this.outputFile = outputFile;
+        this.inputFile = inputFile;
         this.isXML = isXML;
-
+        
+        Debugger.debug("Generator.java : Generator(final PDSObject pdsObject, final File templateFile, final File outputFile, final File inputFile, final Boolean isXML)  ");
         if (this.outputFile != null)
             FileUtils.forceMkdir(this.outputFile.getParentFile());
+        
+        if (this.inputFile != null)
+            this.inputFilePath = this.inputFile.getParent();  //  this.inputFile.getParentFile();
+        
+        ConsoleAppender ca = new ConsoleAppender(new PatternLayout("%-5p %m%n"));
+        ca.setThreshold(Priority.FATAL);
+        BasicConfigurator.configure(ca);
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",
                 "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
         System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
                 "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-
-        this.ctxtMappings = new ContextMappings(this.pdsObject);
+        
+        this.ctxtMappings = new ContextMappings(pdsObject);
 
         initTemplate();
         setContext();
@@ -269,22 +328,34 @@ public class Generator {
     public void generate(ImageOutputStream ios) throws Exception {
         final StringWriter sw = new StringWriter();
 
+        
         // Some debugging code
         Debugger.debug("generate ImageOutputStream");
         Debugger.debug("ios "+ios);
 
-        String pdsObjFlat = this.pdsObject.toString();
+        // loop thru all the pdsObjects in the map
+        for (Map.Entry<String, PDSObject> entry : pdsObjects.entrySet()) {
+            PDSObject pdsObject = entry.getValue();
+            String key = entry.getKey();
+            String context_label = pdsObject.getContext();
+            Debugger.debug("this.pdsObject.toString() "+key+" "+context_label+" " );
+            
+                 
+            // this is the flattened PDS3Label used by the velocity template
+            if (Debugger.debugFlag) {
+            	String pdsObjFlat = pdsObject.toString();
+            	Debugger.debug(pdsObjFlat);  
+            	String fname = context_label+"_flatten.txt" ;
+                PrintWriter cout = new PrintWriter(fname);
+                cout.write(pdsObjFlat);
+                cout.close();
+                System.out.println("pdsObject "+key+" "+context_label+" "+fname);
+            }
+            // End debugging code   		
+       }
+       
 
-        Debugger.debug("this.pdsObject.toString() " );
-        Debugger.debug(pdsObjFlat );       
-
-        // this is the flattened PDS3Label used by the velocity template
-        if (Debugger.debugFlag) {
-            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-            cout.write(pdsObjFlat);
-            cout.close();
-        }
-        // End debugging code
+       
 
         try {
             Debugger.debug("this.context before merge");
@@ -320,6 +391,9 @@ public class Generator {
                 ios.writeBytes(output);
                 ios.flush();
             }
+        } catch (ResourceNotFoundException e) {
+        	System.out.println("Generator ***** ResourceNotFoundException "+ e);
+        	e.printStackTrace(); 
         } finally {
             sw.close();
             try {
@@ -350,18 +424,33 @@ public class Generator {
         // Some debugging code
         Debugger.debug("generate OutputStream");
         Debugger.debug("os "+os);
-        String pdsObjFlat = this.pdsObject.toString();
-        Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
-        // this is the flattened PDS3Label
-        if (Debugger.debugFlag) {
-            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-            cout.write(pdsObjFlat);
-            cout.close();
-        }
-        // End debugging code
+        for (Map.Entry<String, PDSObject> entry : pdsObjects.entrySet()) {
+            PDSObject pdsObject = entry.getValue();
+            String key = entry.getKey();
+            String context_label = pdsObject.getContext();
+            Debugger.debug("this.pdsObject.toString() "+key+" "+context_label+" " );
+            
+                 
+            // this is the flattened PDS3Label used by the velocity template
+            if (Debugger.debugFlag) {
+            	String pdsObjFlat = pdsObject.toString();
+            	Debugger.debug(pdsObjFlat);  
+            	String fname = context_label+"_flatten.txt" ;
+                PrintWriter cout = new PrintWriter(fname);
+                cout.write(pdsObjFlat);
+                cout.close();
+                System.out.println("pdsObject "+key+" "+context_label+" "+fname);
+            }   		
+       }
+       // End debugging code
 
         try {
+        	// Check if context has been set
+            if (this.context == null) {
+                setContext();
+            }
+            
             this.template.merge(this.context, sw);
 
             Debugger.debug("this.context");
@@ -373,7 +462,7 @@ public class Generator {
                 throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
 
-                System.out.println("New PDS4 Label:");
+            	Debugger.debug("New PDS4 Label:");
                 out = new PrintWriter(os);
                 out.write(output);
             }
@@ -400,20 +489,28 @@ public class Generator {
 
         // Some debugging output
         Debugger.debug("generate toStdout " + toStdOut);
-        Debugger.debug("this.pdsObject.getFilePath() "+this.pdsObject.getFilePath() );
-        Debugger.debug("this.outputFile "+this.outputFile.getAbsolutePath());
-        String pdsObjFlat = this.pdsObject.toString();
-        Debugger.debug("this.pdsObject.toString() "+pdsObjFlat );
 
-        // this is the flattened PDS3Label
-        if (Debugger.debugFlag) {
-            PrintWriter cout = new PrintWriter("PDS3_flatten.txt");
-
-            cout.write(pdsObjFlat);
-            cout.close();
-        }
-        // End debugging output
-
+        // loop thru all the pdsObjects in the map
+        for (Map.Entry<String, PDSObject> entry : pdsObjects.entrySet()) {
+            PDSObject pdsObject = entry.getValue();
+            String key = entry.getKey();
+            String context_label = pdsObject.getContext();
+            Debugger.debug("this.pdsObject.toString() "+key+" "+context_label+" " );
+            
+                 
+            // this is the flattened PDS3Label used by the velocity template
+            if (Debugger.debugFlag) {
+            	String pdsObjFlat = pdsObject.toString();
+            	Debugger.debug(pdsObjFlat);  
+            	String fname = context_label+"_flatten.txt" ;
+                PrintWriter cout = new PrintWriter(fname);
+                cout.write(pdsObjFlat);
+                cout.close();
+                System.out.println("pdsObject "+key+" "+context_label+" "+fname);
+            }
+            // End debugging code   		
+       }
+        
         try {
             // Check if context has been set
             if (this.context == null) {
@@ -436,7 +533,7 @@ public class Generator {
                 } else if (this.outputStream != null) {
                     // FIXME Need to implement this here
                 } else {
-                    System.out.println("New PDS4 Label: " + this.outputFile.getAbsolutePath());
+                	Debugger.debug("New PDS4 Label: " + this.outputFile.getAbsolutePath());
 
                     out = new PrintWriter(this.outputFile);
                     out.write(output);
@@ -462,15 +559,31 @@ public class Generator {
     public void initTemplate() throws TemplateException {
         final String filename = this.templateFile.getName();
 
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty("file.resource.loader.path", // Need to add base path
+        Debugger.debug("Generator.initTemplate()");
+        // VelocityEngine ve = new VelocityEngine();
+        Debugger.debug(String.format("Generator.initTemplate() %s, this.inputFilePath = %s \n", this.templateFile.getParent(), this.inputFilePath ));
+        this.ve = new VelocityEngine();
+        if (this.inputFilePath != null && !this.inputFilePath.equals("")) {
+        	// add the directory of the input file to the path, check if a resource can be loaded from a full path
+        	/// that would be supplied by the extra file
+        	String paths = String.format("%s, %s", this.templateFile.getParent(), this.inputFilePath);
+        	Debugger.debug(String.format("paths = %s \n", paths));
+        	ve.setProperty("file.resource.loader.path", // Need to add base path
+                    // for resource loader
+                    paths);       	
+        } else {
+        	ve.setProperty("file.resource.loader.path", // Need to add base path
                 // for resource loader
                 this.templateFile.getParent());
+        }
         ve.setProperty("file.resource.loader.cache",
                 "false");
+        
         ve.init();
 
         this.context = new VelocityContext();
+        
+        
 
         try {
             this.template = ve.getTemplate(filename);
@@ -486,6 +599,89 @@ public class Generator {
                     + e.getLineNumber() + ":" + e.getColumnNumber() + ". "
                     + e.getMessage());
         }
+        
+       
+        
+    }
+    
+    
+    /**
+     * 
+     * addPdsObject
+     * 
+     * add an additional PDSObject
+     * The contextStr is the variable prefix used in a velocity template
+     * * $extra.SOMETHING if contextStr is "extra"
+     * The pdsObject.getContext() value should be this same String
+     * * it is used by getPdsObject
+     * 
+     * @param extraLabel
+     * @param contextStr
+     * @throws TemplateException
+     * @throws Exception
+     */
+    public void addPdsObject(PDSObject pdsObject, String contextStr) throws TemplateException, Exception {
+    	
+    	Debugger.debug("Generator.addPdsObject() contextStr="+contextStr+" ");
+    	
+    	
+    	if (pdsObject != null) {
+    		String context_label = pdsObject.getContext();
+    		Debugger.debug("addPdsObject "+contextStr+"  "+context_label+" ");
+    		this.pdsObjects.put(contextStr, pdsObject);
+    		if (noContext == true) {
+    			Debugger.debug("addPdsObject  noContext is true. Not adding "+contextStr+" ");
+    		} else {
+    			this.context.put(contextStr, pdsObject);
+    		}
+        	
+        }
+    	
+    	if (Debugger.debugFlag) {
+	    	// show what has been set
+	        Object[] keys = this.context.getKeys();
+	        System.out.println("Generator.setContext() keys"+keys);
+	        // print each key 
+	        for (int i = 0; i < keys.length; i++)
+	        	{
+	        	System.out.printf("%d) key %s %s \n", i, keys[i].getClass().toString(), keys[i].toString());
+	        	}	
+    	}
+    }
+    
+    public void setPDSObject(PDSObject pdsObject) {
+    	// could also call addPdsObject. Then loop thru them all?
+    	if (pdsObject != null) {
+    		String context_label = pdsObject.getContext();
+    		Debugger.debug("Generator.setContext()  "+context_label+" ");
+    		
+    		this.pdsObjects.put(context_label, pdsObject);
+    		if (noContext == true) {
+    			Debugger.debug("addPdsObject  noContext is true. Not adding ");
+    		} else {
+    			this.context.put(context_label, pdsObject);
+    		}
+        }
+    }
+    
+    
+    public PDSObject getPdsObject() {
+    	return getPdsObject(null);
+    }
+    
+    /**
+     * getPdsObject
+     * 
+     * @return
+     */
+    public PDSObject getPdsObject(String context_label) {
+    	PDSObject pdsObject = null;
+    	if (context_label == null) {
+    		pdsObject = pdsObjects.get("label"); // default label
+    	} else {
+    		pdsObject = pdsObjects.get(context_label);
+    	}
+        return pdsObject;
     }
 
     /**
@@ -497,14 +693,48 @@ public class Generator {
      */
     public void setContext() throws TemplateException, Exception {
         addToolManager();
+        
+        if (noContext == true) {
+        	Debugger.debug("setContext() not setting context ");
+        	return;
+        }
+        
 
+        Debugger.debug("Generator.setContext()");
         // Set default contexts
         for (final String str : this.ctxtMappings.contextMap.keySet()) {
             this.context.put(str, this.ctxtMappings.contextMap.get(str));
         }
 
-        // Set context for base initial PDSObject
-        this.context.put(this.pdsObject.getContext(), this.pdsObject);
+        for (Map.Entry<String, PDSObject> entry : pdsObjects.entrySet()) {
+            PDSObject pdsObject = entry.getValue();
+            String key = entry.getKey();
+            String context_label = pdsObject.getContext();
+            Debugger.debug("this.pdsObject.toString() "+key+" "+context_label+" " );
+            // System.out.println("setContext pdsObject "+key+" "+context_label+" " );
+            this.context.put(context_label, pdsObject);
+            // check if a key already exists? Will a duplicate make 2 of the same things 
+            // or will it replace one with the same label??
+        }
+        
+        // add a function to check if a parse file exists
+        // this function can be passed an argument. The methods set by generate-mappings cannot
+        ExistTemplate incl = new ExistTemplate(this.ve);
+        this.context.put("incl",  incl);
+        Debugger.debug(this.context.toString());
+        
+        if (Debugger.debugFlag) {
+	        // show what has been set
+	        Object[] keys = this.context.getKeys();
+	        System.out.println("Generator.setContext() keys"+keys);
+	        // print each key 
+	        for (int i = 0; i < keys.length; i++)
+	        {
+	        	System.out.printf("%d) key %s %s \n", i, keys[i].getClass().toString(), keys[i].toString());
+	        }
+        }
+        EventCartridge ec = this.context.getEventCartridge();
+        // use this to add the event handler
     }
 
     private void addToolManager() {
@@ -529,10 +759,6 @@ public class Generator {
 
     public File getOutputFile() {
         return outputFile;
-    }
-
-    public PDSObject getPdsObject() {
-        return pdsObject;
     }
 
     public Template getTemplate() {
@@ -564,10 +790,6 @@ public class Generator {
         this.outputFile = outputFile;
     }
 
-    public void setPDSObject(final PDSObject pdsObject) {
-        this.pdsObject = pdsObject;
-    }
-
     public void setTemplate(final Template template) {
         this.template = template;
     }
@@ -579,6 +801,12 @@ public class Generator {
 
     public void setTemplatePath(final String templatePath) {
         this.templatePath = templatePath;
+    }
+    
+    public void setInputFilePath(final String inputFilePath) {
+    	
+        this.inputFilePath = inputFilePath;
+        Debugger.debug("Generator.setInputFilePath this.inputFilePath = "+this.inputFilePath);
     }
 
     public void setIsXML(final boolean isXML) {

@@ -55,6 +55,8 @@ public class ProductToolsLabelReader {
   private final List<String> pdsObjectNames;
   
   private List<URL> includePaths;
+  
+  private final List<String> pdsSimpleItemNames;
 
   public ProductToolsLabelReader() {
 
@@ -64,6 +66,9 @@ public class ProductToolsLabelReader {
     this.pdsObjectTypes.add(FlatLabel.OBJECT_TYPE);
     
     this.pdsObjectNames = new ArrayList<String>();
+    
+    // all items not in a GROUP or OBJECT
+    this.pdsSimpleItemNames = new ArrayList<String>();
     this.includePaths = new ArrayList<URL>();
     
   }
@@ -319,9 +324,12 @@ public class ProductToolsLabelReader {
           flatLabel.put("PDS3", map);
         } else {
           handleItemNode(attribute, flatLabel);
+          this.pdsSimpleItemNames.add(attribute.getElementIdentifier());
         }
       } else if (statement instanceof PointerStatement) {
+    	PointerStatement ps = (PointerStatement) statement;
         handlePointerNode((PointerStatement) statement, flatLabel);
+        this.pdsSimpleItemNames.add("PTR_" + ps.getIdentifier().getId());
       }
     }
   //  FlatLabel table = (FlatLabel) flatLabel.get("AFM_F_ERROR_TABLE");
@@ -339,6 +347,10 @@ public class ProductToolsLabelReader {
     
   public List<String> getPDSObjectNames() {
     return this.pdsObjectNames;
+  }
+  
+  public List<String> getPDSSimpleItemNames() {
+	return this.pdsSimpleItemNames;
   }
   
   /**

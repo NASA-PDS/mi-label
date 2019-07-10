@@ -17,10 +17,16 @@ import javax.imageio.stream.ImageInputStream;
  */
 public interface PDSObject extends PDSObjectContext {
     public String getFilePath();
+    
+    public void setFilePath(String filePath);
 
     public List getList(String key) throws TemplateException;
     
     public ImageInputStream getImageInputStream();
     
     public Long getImageStartByte();
+    
+    public void setReaderFormat(String format);
+    
+    public String getReaderFormat();
 }

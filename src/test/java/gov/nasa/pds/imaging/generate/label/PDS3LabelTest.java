@@ -26,7 +26,7 @@ public class PDS3LabelTest extends GenerateTest {
 	public void testGetSimple() {
 	    try {
 	        Debugger.debugFlag = true;
-            PDS3Label label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1/gen_ELE_MOM.LBL"));
+            PDS3Label label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259/gen_ELE_MOM.LBL"));
             label.setMappings();
     		String expected = "VG2-J-PLS-5-SUMM-ELE-MOM-96.0SEC-V1.0";
     		System.out.println("DATA_SET_ID:" + label.get("DATA_SET_ID").toString());
@@ -44,7 +44,7 @@ public class PDS3LabelTest extends GenerateTest {
 	@Ignore
 	public void testLabelReader() {
 	    try {
-	        PDS3Label label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/cli1/gen_ELE_MOM.LBL"));
+	        PDS3Label label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259/gen_ELE_MOM.LBL"));
 	        label.setMappings();
         
     		HashMap<String, String>keyValueMap = new HashMap<String, String>();
@@ -62,32 +62,5 @@ public class PDS3LabelTest extends GenerateTest {
 	        fail("Exception thrown.");
 	    }
 	}
-	
-//	@Test
-//    public void testLabelReaderListValues() {
-//        try {
-//            Debugger.debugFlag = true;
-//            PDS3Label label = new PDS3Label(Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/pds3labeltest/pds3_example.lbl"));
-//            label.setMappings();
-//            System.out.println(label.get("BAND_BIN"));
-//            System.out.println("BAND_BIN.BAND_BIN_UNIT:" + label.get("BAND_BIN.BAND_BIN_UNIT"));
-//            System.out.println("BAND_BIN.CENTER:" + label.get("BAND_BIN.CENTER").getClass());
-//            System.out.println(label.get("BAND_BIN.CENTER").size());
-            
-//            HashMap<String, String>keyValueMap = new HashMap<String, String>();
-//            keyValueMap.put("PROCESSING_HISTORY_TEXT", "CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA     JPL/MIPL MPFTELEMPROC");
-//            keyValueMap.put("INST_CMPRS_NAME", "JPEG DISCRETE COSINE TRANSFORM (DCT);        HUFFMAN/RATIO");
-//            for (String key : keyValueMap.keySet()) {
-//                //System.out.println(this.label.get(key) + "\n");           
-//                if (!this.label.get(key).equals(keyValueMap.get(key))) {
-//                    fail("'" + key + "' returned '" + this.label.get(key) + "'\n" +
-//                            "Expected: '" + keyValueMap.get(key) + "'");
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception thrown.");
-//        }
-//    }
 	
 }

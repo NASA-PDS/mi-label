@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="">
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:data:vg2-j-pls-5-summ-ele-mom-96.0sec-v1.0:ele_mom.tab</logical_identifier>
+    <version_id>1.0</version_id>
+    <title>vg2-j-pls-5-summ-ele-mom-96.0sec-v1.0 ele_mom.tab</title>
+    <information_model_version>1.2.0.1</information_model_version>
+    <product_class>Product_Observational</product_class>
+    <Modification_History>
+      <Modification_Detail>
+        <modification_date>2015-08-10</modification_date>
+        <version_id>1.0</version_id>
+        <description>Auto generated PDS4 product label created by the Transform Tool.</description>
+      </Modification_Detail>
+    </Modification_History>
+  </Identification_Area>
+  <Observation_Area>
+    <Time_Coordinates>
+      <start_date_time>1979-07-06T00:00:42.687Z</start_date_time>
+      <stop_date_time>1979-07-09T23:59:06.436Z</stop_date_time>
+    </Time_Coordinates>
+    <Investigation_Area>
+      <name>voyager 2 jupiter encounter</name>
+      <type>Mission</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:investigation.voyager.2.jupiter.encounter</lid_reference>
+        <reference_type>data_to_investigation</reference_type>
+      </Internal_Reference>
+    </Investigation_Area>
+    <Observing_System>
+      <Observing_System_Component>
+        <name>plasma science experiment</name>
+        <type>Instrument</type>
+      </Observing_System_Component>
+    </Observing_System>
+    <Target_Identification>
+      <name>jupiter</name>
+      <type>Planet</type>
+    </Target_Identification>
+  </Observation_Area>
+  <File_Area_Observational>
+    <File>
+      <file_name>ele_mom.tab</file_name>
+    </File>
+    <Table_Character>
+      <offset unit="byte">0</offset>
+      <records>2278</records>
+      <record_delimiter>Carriage-Return Line-Feed</record_delimiter>
+      <Record_Character>
+        <fields>3</fields>
+        <groups>0</groups>
+        <record_length unit="byte">46</record_length>
+        <Field_Character>
+          <name>time</name>
+          <field_location unit="byte">1</field_location>
+          <data_type>ASCII_Date_Time</data_type>
+          <field_length unit="byte">24</field_length>
+        </Field_Character>
+        <Field_Character>
+          <name>ele_den</name>
+          <field_location unit="byte">25</field_location>
+          <data_type>ASCII_Real</data_type>
+          <field_length unit="byte">10</field_length>
+        </Field_Character>
+        <Field_Character>
+          <name>ele_temp</name>
+          <field_location unit="byte">35</field_location>
+          <data_type>ASCII_Real</data_type>
+          <field_length unit="byte">10</field_length>
+        </Field_Character>
+      </Record_Character>
+    </Table_Character>
+  </File_Area_Observational>
+</Product_Observational>

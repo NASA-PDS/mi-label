@@ -78,8 +78,6 @@
             <dph:spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</dph:spacecraft_clock_start_count>
             <dph:spacecraft_clock_stop_count>$label.SPACECRAFT_CLOCK_STOP_COUNT</dph:spacecraft_clock_stop_count>
         </Mission_Area>
-        <Node_Area>
-        </Node_Area>
     </Observation_Area>
     
      <File_Area_Observational>

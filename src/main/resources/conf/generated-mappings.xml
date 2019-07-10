@@ -28,4 +28,9 @@
         <context>model_version</context>
         <class>gov.nasa.pds.imaging.generate.automatic.elements.ModelVersion</class>
     </element>
+    <element>
+        <context>reader_format</context>
+        <class>gov.nasa.pds.imaging.generate.automatic.elements.ReaderFormat</class>
+    </element>
+    
 </generated>

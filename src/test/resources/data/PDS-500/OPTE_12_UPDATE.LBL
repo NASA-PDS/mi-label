@@ -1,0 +1,107 @@
+PDS_VERSION_ID                = PDS3                                          
+DATA_SET_ID                   = "GO-J-MAG-2-RAW-DATA-V1.0"                    
+STANDARD_DATA_PRODUCT_ID      = "MAG RAW OPT AVG"                             
+PRODUCT_ID                    = "OPTE_12"                                     
+PRODUCT_TYPE                  = DATA                                          
+PRODUCT_VERSION_ID            = "1"                                           
+PRODUCT_CREATION_TIME         = 2003-08-20T11:47:52                           
+                                                                              
+RECORD_TYPE                   = FIXED_LENGTH                                  
+RECORD_BYTES                  = 36                                            
+FILE_RECORDS                  = 173                                           
+                                                                              
+START_TIME                    = 1997-12-16T21:05:06.292                       
+STOP_TIME                     = 1997-12-20T17:50:15.426                       
+SPACECRAFT_CLOCK_START_COUNT  = "1/04263259:00:0:0"                           
+SPACECRAFT_CLOCK_STOP_COUNT   = "1/04268763:00:0:0"                           
+                                                                              
+INSTRUMENT_HOST_NAME          = "GALILEO ORBITER"                             
+INSTRUMENT_HOST_ID            = "GO"                                          
+MISSION_PHASE_NAME            = "EUROPA 12 ORBIT"                             
+ORBIT_NUMBER                  = 12                                            
+TARGET_NAME                   = JUPITER                                       
+INSTRUMENT_NAME               = "TRIAXIAL FLUXGATE MAGNETOMETER"              
+INSTRUMENT_ID                 = "MAG"                                         
+DESCRIPTION                   = "                                             
+      Galileo MAG edited optimal averager magnetic field data near Jupiter    
+      from the EUROPA 12 ORBIT in despun spacecraft IRC coordinates. The    
+      data cover 1997-12-16T21:00 to 1997-12-20T17:00."                       
+                                                                              
+^TABLE                        = "OPTE_12.DAT"                                 
+OBJECT                        = TABLE                                         
+  INTERCHANGE_FORMAT          = BINARY                                        
+  ROWS                        = 173                                           
+  COLUMNS                     = 5                                             
+  ROW_BYTES                   = 36                                            
+  DESCRIPTION                 = "                                             
+      An IEEE binary table containing raw edited Galileo magnetometer       
+      optimal averager data in despun spacecraft IRC coordinates.           
+      Processing was performed onboard the spacecraft to correct for errors   
+      in gain, zero-level offsets, and inorthogonality in the sensors, then   
+      to despin the data using the 'spin angle.' In addition, the data have   
+      been edited from the raw telemetered form to correct time tag errors    
+      and to flag or remove corrupted data.                                   
+                                                                              
+      In IRC coordinates X is along the southward ecliptic normal, Z is       
+      along the spin axis and points in the opposite direction from the HGA,  
+      and Y completes the right handed set."                                  
+                                                                              
+  OBJECT                      = COLUMN                                        
+    NAME                      = "SPACECRAFT CLOCK"                            
+    COLUMN_NUMBER             = 1                                             
+    UNIT                      = "N/A"                                         
+    DATA_TYPE                 = CHARACTER                                     
+    START_BYTE                = 1                                             
+    BYTES                     = 16                                            
+    DESCRIPTION               = "                                             
+      Spacecraft clock counter in the form RIM:mod91:mod10:mod8. The          
+      partition number is 1."                                                 
+  END_OBJECT                  = COLUMN                                        
+                                                                              
+  OBJECT                      = COLUMN                                        
+    NAME                      = "SPACECRAFT EVENT TIME"                       
+    COLUMN_NUMBER             = 2                                             
+    UNIT                      = "second"                                      
+    DATA_TYPE                 = IEEE_REAL                                     
+    START_BYTE                = 17                                            
+    BYTES                     = 8                                             
+    DESCRIPTION               = "                                             
+      Spacecraft event time at which the spacecraft sampled the magnetometer  
+      instrument memory in order to generate the packetized data. Time is     
+      given in seconds since 1966-Jan-01 00:00:00.000."                       
+  END_OBJECT                  = COLUMN                                        
+                                                                              
+  OBJECT                      = COLUMN                                        
+    NAME                      = "BX"                                          
+    COLUMN_NUMBER             = 3                                             
+    UNIT                      = "DATA NUMBER"                                 
+    DATA_TYPE                 = MSB_INTEGER                                   
+    START_BYTE                = 25                                            
+    BYTES                     = 4                                             
+    DESCRIPTION               = "                                             
+      Magnetic field X component in IRC coordinates."                         
+  END_OBJECT                  = COLUMN                                        
+                                                                              
+  OBJECT                      = COLUMN                                        
+    NAME                      = "BY"                                          
+    COLUMN_NUMBER             = 4                                             
+    UNIT                      = "DATA NUMBER"                                 
+    DATA_TYPE                 = MSB_INTEGER                                   
+    START_BYTE                = 29                                            
+    BYTES                     = 4                                             
+    DESCRIPTION               = "                                             
+      Magnetic field Y component in IRC coordinates."                         
+  END_OBJECT                  = COLUMN                                        
+                                                                              
+  OBJECT                      = COLUMN                                        
+    NAME                      = "BZ"                                          
+    COLUMN_NUMBER             = 5                                             
+    UNIT                      = "DATA NUMBER"                                 
+    DATA_TYPE                 = MSB_INTEGER                                   
+    START_BYTE                = 33                                            
+    BYTES                     = 4                                             
+    DESCRIPTION               = "                                             
+      Magnetic field Z component in IRC coordinates."                         
+  END_OBJECT                  = COLUMN                                        
+END_OBJECT                    = TABLE                                         
+END                                                                           

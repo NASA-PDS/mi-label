@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1A10.sch"
+  schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1A10.xsd">
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:data:go-j-mag-2-raw-data-v1.0:opte_12</logical_identifier>
+    <version_id>1.0</version_id>
+    <title>go-j-mag-2-raw-data-v1.0 opte_12</title>
+    <!-- hardcoding IM version for test case. will test this elsewhere -->
+    <information_model_version>1.10.1.0</information_model_version>
+    <product_class>Product_Observational</product_class>
+    <Modification_History>
+      <Modification_Detail>
+        <!-- hardcoding modification date for test case. will test this elsewhere -->
+        <modification_date>2018-07-26</modification_date>
+        <version_id>1.0</version_id>
+        <description>Auto generated PDS4 product label created by the Transform Tool.</description>
+      </Modification_Detail>
+    </Modification_History>
+  </Identification_Area>
+  <Observation_Area>
+    <Time_Coordinates>
+      <start_date_time>1997-12-16T21:05:06.292Z</start_date_time>
+      <stop_date_time>1997-12-20T17:50:15.426Z</stop_date_time>
+    </Time_Coordinates>
+    <Investigation_Area>
+      <name>europa 12 orbit</name>
+      <type>Mission</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:investigation.europa.12.orbit</lid_reference>
+        <reference_type>data_to_investigation</reference_type>
+      </Internal_Reference>
+    </Investigation_Area>
+    <Observing_System>
+      <Observing_System_Component>
+        <name>galileo orbiter</name>
+        <type>Spacecraft</type>
+      </Observing_System_Component>
+      <Observing_System_Component>
+        <name>triaxial fluxgate magnetometer</name>
+        <type>Instrument</type>
+      </Observing_System_Component>
+    </Observing_System>
+    <Target_Identification>
+      <name>jupiter</name>
+      <type>Planet</type>
+    </Target_Identification>
+  </Observation_Area>
+  <File_Area_Observational>
+    <File>
+      <file_name>OPTE_12.DAT</file_name>
+    </File>
+    <Table_Binary>
+      <offset unit="byte">0</offset>
+      <records>173</records>
+      <Record_Binary>
+        <fields>5</fields>
+        <groups>0</groups>
+        <record_length unit="byte">36</record_length>
+        <Field_Binary>
+          <name>spacecraft clock</name>
+          <field_location unit="byte">1</field_location>
+          <data_type>ASCII_String</data_type>
+          <field_length unit="byte">16</field_length>
+        </Field_Binary>
+        <Field_Binary>
+          <name>spacecraft event time</name>
+          <field_location unit="byte">17</field_location>
+          <data_type>IEEE754MSBDouble</data_type>
+          <field_length unit="byte">8</field_length>
+        </Field_Binary>
+        <Field_Binary>
+          <name>bx</name>
+          <field_location unit="byte">25</field_location>
+          <data_type>SignedMSB4</data_type>
+          <field_length unit="byte">4</field_length>
+        </Field_Binary>
+        <Field_Binary>
+          <name>by</name>
+          <field_location unit="byte">29</field_location>
+          <data_type>SignedMSB4</data_type>
+          <field_length unit="byte">4</field_length>
+        </Field_Binary>
+        <Field_Binary>
+          <name>bz</name>
+          <field_location unit="byte">33</field_location>
+          <data_type>SignedMSB4</data_type>
+          <field_length unit="byte">4</field_length>
+        </Field_Binary>
+      </Record_Binary>
+    </Table_Binary>
+  </File_Area_Observational>
+</Product_Observational>

@@ -3,6 +3,7 @@
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.XMLUtil;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 import java.util.HashMap;
 
@@ -31,6 +32,7 @@ public class ContextMappings {
      */
     public ContextMappings(final PDSObject pdsObject)
             throws TemplateException, Exception {
+    	Debugger.debug("Generator.ContextMappings()");
         for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME),
                 XML_TAG)) {
         	Object instance = Class.forName(cl).newInstance();

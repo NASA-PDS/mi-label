@@ -10,7 +10,6 @@
 //	may be required before exporting such information to foreign countries or 
 //	providing access to foreign nationals.
 //	
-//	$Id$
 //
 package gov.nasa.pds.imaging.generate;
 
@@ -35,10 +34,6 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.Priority;
 
 /**
  * Class used as Command-line interface endpoint. Parses command-line arguments
@@ -65,7 +60,7 @@ public class GenerateLauncher {
     private List<String> includePaths;
 
     public GenerateLauncher() {
-        this.basePath = "";
+        this.basePath = null;
         this.generatorList = new ArrayList<Generator>();
         this.lblList = new ArrayList<String>();
         this.outputPath = null;
@@ -96,11 +91,15 @@ public class GenerateLauncher {
         System.err.println(ToolInfo.getCopyright() + "\n");
     }
 
-    public final void generate() throws Exception {
-    	for (Generator generator : this.generatorList) {
-    		// By using Launcher, output will go to a file, so argument = false
-    		generator.generate(false);
-    	}
+    public final void generate(){
+      try {
+      	for (Generator generator : this.generatorList) {
+      		// By using Launcher, output will go to a file, so argument = false
+      		generator.generate(false);
+      	}
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
 
     private String getConfigPath() {
@@ -184,7 +183,7 @@ public class GenerateLauncher {
         // Let's default to the one label if -p flag was specified,
         // otherwise loop through the lbl list
         if (this.lblList == null) {
-    		throw new InvalidOptionException("Missing -p or -l flags.  " + 
+          throw new InvalidOptionException("Missing -p or -l flags.  " + 
                     "One or many PDS3 label must be specified.");
         } else {
         	String filepath;
@@ -218,21 +217,26 @@ public class GenerateLauncher {
 	        		else
 	        			suffix = ".txt";
 
+              // Let's get the output file ready
 	        		filepath = outputFile.getParent();
-	        		filepath = filepath + "/" + 
-	        				outputFile.getName().split("\\.")[0] + suffix;
-	        		
-	        		// Let's get the output file ready	        		
+
 	        		if (this.outputPath != null) {
-	        			filepath = this.outputPath.getAbsolutePath() + "/" + 
-	        						filepath.replace(this.basePath, "");
-	        			
-	        			// If the output path is not an XML file, set boolean
-	        			if (!filepath.endsWith("xml"))
-	        				this.isXML = false;
-	        			
+	              if (this.basePath != null) {
+  	        			filepath = this.outputPath.getAbsolutePath() + "/" + 
+  	        			    filepath.replace(this.basePath, "");
+	        		  } else {
+	        		    filepath = this.outputPath.getAbsolutePath();
+	        		  }
+	        		  
 	        		}
-	        		
+
+              filepath = filepath + "/" + 
+                  outputFile.getName().split("\\.")[0] + suffix;
+
+              // If the output path is not an XML file, set boolean
+              if (!filepath.endsWith("xml"))
+                this.isXML = false;
+
 	        		outputFile = new File(filepath);
 	        		
 	        		Debugger.debug(outputFile.getAbsolutePath());
@@ -266,9 +270,6 @@ public class GenerateLauncher {
             System.out.println("\nType 'generate -h' for usage");
             System.exit(0);
         }
-        ConsoleAppender ca = new ConsoleAppender(new PatternLayout("%-5p %m%n"));
-        ca.setThreshold(Priority.FATAL);
-        BasicConfigurator.configure(ca);
         try {
             final GenerateLauncher launcher = new GenerateLauncher();
             final CommandLine commandline = launcher.parse(args);
@@ -280,7 +281,7 @@ public class GenerateLauncher {
                     + pEx.getMessage());
             System.exit(1);
         } catch (final Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
             System.exit(1);
         }
     }    

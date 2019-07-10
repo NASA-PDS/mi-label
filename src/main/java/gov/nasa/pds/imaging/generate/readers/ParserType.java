@@ -14,5 +14,5 @@
 package gov.nasa.pds.imaging.generate.readers;
 
 public enum ParserType {
-  VICAR, PRODUCT_TOOLS
+  VICAR, PRODUCT_TOOLS, JSON
 }
