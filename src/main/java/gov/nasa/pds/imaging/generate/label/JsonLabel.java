@@ -61,8 +61,8 @@ public class JsonLabel implements PDSObject {
 	// allow this to be set by the user?? Not final
 	public ContextUtil ctxtUtil;
 
-	// private static final boolean debug = false;
-	private static final boolean debug = true;
+	private static final boolean debug = false;
+	// private static final boolean debug = true;
 
 
 	
@@ -147,12 +147,12 @@ public class JsonLabel implements PDSObject {
 		  if (debug) System.out.printf("++json++ node(0) get(%s) ------>\n", key);
 		  // new Exception().printStackTrace();
 	      final Object node = getNode(key.toUpperCase());
-	      System.out.printf("++json++ node(0.1) get(%s) after getNode  -->\n", key);
+	      if (debug) System.out.printf("++json++ node(0.1) get(%s) after getNode  -->\n", key);
 	     
 	      Debugger.debug("\n\n++ Get " + key + " ----->");
 	      
 	      if (node == null) {
-	    	 System.out.printf("++json++ node(0.2) get(%s) node is null  -->\n", key);
+	    	 if (debug) System.out.printf("++json++ node(0.2) get(%s) node is null  -->\n", key);
 	        return null;
 	      } else if (node instanceof ItemNode) {
 	      	Debugger.debug("++json++ node(2) ------>\n" + ((ItemNode) node).toString());
@@ -267,7 +267,7 @@ public class JsonLabel implements PDSObject {
 				  
 				  for (int i = 0; i < in.size(); i++) {
 					  String s = in.get(i);
-					  System.out.printf("%d) %s \n", i, s);
+					  if (debug) System.out.printf("%d) %s \n", i, s);
 					  values.add(s);
 				  }
 				  if (debug) {System.out.printf("### JsonLabel.getNode(%s) value = %s - returning List\n", key, value);}
@@ -276,33 +276,33 @@ public class JsonLabel implements PDSObject {
 				  String s = in.get(0);
 				  if (debug) {System.out.printf("### JsonLabel.getNode(%s) value = %s - check for array \n", key, s);}
 				  if (s.startsWith("(") && s.endsWith(")") ) { // could also check for []
-					  System.out.printf("treat as an array s=%s \n", s);
+					  if (debug) System.out.printf("treat as an array s=%s \n", s);
 					  List values = new ArrayList<String>();
-					  System.out.printf("s=%s replace ()\n", s);
+					  if (debug) System.out.printf("s=%s replace ()\n", s);
 					  // split by ,
 					  s = s.replaceAll("[()]",""); 
 					 
-					  System.out.printf("s=%s \n", s);
+					  if (debug) System.out.printf("s=%s \n", s);
 					  String[] words = s.split(",");
 					  for (int i = 0; i < words.length; i++) {
 						  String word = words[i];
-						  System.out.printf("%d) %s \n", i, word);
+						  if (debug) System.out.printf("%d) %s \n", i, word);
 						  values.add(word);
 					  }
 					  if (debug) {System.out.printf("#### JsonLabel.getNode(%s) value = %s - %s returning List\n", key, value, values);}
 					  return values;
 				  } else if (s.startsWith("[") && s.endsWith("]") ) { // could also check for []
-					  System.out.printf("treat as an array s=%s \n", s);
+					  if (debug) System.out.printf("treat as an array s=%s \n", s);
 					  List values = new ArrayList<String>();
-					  System.out.printf("s=%s replace []\n", s);
+					  if (debug) System.out.printf("s=%s replace []\n", s);
 					  // split by ,
 					  s = s.replaceAll("\\[|\\]", "");
 					 
-					  System.out.printf("s=%s \n", s);
+					  if (debug) System.out.printf("s=%s \n", s);
 					  String[] words = s.split(",");
 					  for (int i = 0; i < words.length; i++) {
 						  String word = words[i];
-						  System.out.printf("%d) %s \n", i, word);
+						  if (debug) System.out.printf("%d) %s \n", i, word);
 						  values.add(word);
 					  }
 					  if (debug) {System.out.printf("#### JsonLabel.getNode(%s) value = %s - %s returning List\n", key, value, values);}
@@ -315,15 +315,15 @@ public class JsonLabel implements PDSObject {
 	      
 	      if (debug) {
 	    	  if (value != null) {
-		    	  System.out.printf("## JsonLabel.getNode(%s) returning %s class = %s\n", key, value, value.getClass().toString() );
+		    	  if (debug) System.out.printf("## JsonLabel.getNode(%s) returning %s class = %s\n", key, value, value.getClass().toString() );
 		    	  if (value instanceof ItemNode) {
 		    		  
 		    		  ItemNode in = (ItemNode) value;
 		    		  
-		    		  System.out.printf("## JsonLabel.getNode(%s) value is an ItemNode size = %d\n", key, in.size());
+		    		  if (debug) System.out.printf("## JsonLabel.getNode(%s) value is an ItemNode size = %d\n", key, in.size());
 		    	  }
 	    	  } else{
-	    		  System.out.printf("## JsonLabel.getNode(%s) returning null value \n", key);
+	    		  if (debug) System.out.printf("## JsonLabel.getNode(%s) returning null value \n", key);
 	    	  }
 	    	  //  gov.nasa.pds.imaging.generate.label.ItemNode
 	      }
@@ -537,7 +537,7 @@ public class JsonLabel implements PDSObject {
 
 		} catch (IOException e ) {
 			// TODO Auto-generated catch block
-			System.out.println("IOException reading jsonString "+e);
+			if (debug) System.out.println("IOException reading jsonString "+e);
 			e.printStackTrace();
 		}
 	  // end of parseJson 
@@ -561,7 +561,7 @@ public class JsonLabel implements PDSObject {
 		  String NodeName = "";
 		  String units = "none";
 			Iterator<JsonNode> elements =  aNode.elements();
-			System.out.printf(" elements.size = %d [ ", aNode.size());
+			if (debug) System.out.printf(" elements.size = %d [ ", aNode.size());
 			String nodeValueStr = "[";
 			
 			ItemNode itemNode = new ItemNode(nodeName, units);
