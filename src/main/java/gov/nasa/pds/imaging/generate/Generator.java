@@ -488,7 +488,7 @@ public class Generator {
 
             String output = clean(sw);
 
-            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+            if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
                 throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
 
