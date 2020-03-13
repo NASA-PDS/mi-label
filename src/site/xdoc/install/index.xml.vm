@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011-2016, by the California Institute of Technology.
-  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
-  Any commercial use must be negotiated with the Office of Technology Transfer
-  at the California Institute of Technology.
-
-  This software is subject to U. S. export control laws and regulations
-  (22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software
-  is subject to U.S. export control laws and regulations, the recipient has
-  the responsibility to obtain export licenses or other export authority as
-  may be required before exporting such information to foreign countries or
-  providing access to foreign nationals.
-
-  $Id$
+  Copyright 2020, California Institute of Technology ("Caltech").
+  U.S. Government sponsorship acknowledged.
+  
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+  
+  * Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+  * Redistributions must reproduce the above copyright notice, this list of
+  conditions and the following disclaimer in the documentation and/or other
+  materials provided with the distribution.
+  * Neither the name of Caltech nor its operating division, the Jet Propulsion
+  Laboratory, nor the names of its contributors may be used to endorse or
+  promote products derived from this software without specific prior written
+  permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
 -->
 
 <document>
@@ -25,7 +41,7 @@
 
   <body>
     <section name="Installation">
-      <p>This document describes how to install the Generate Tool contained in the <i>${project.artifactId}</i> package. The following topics can be found in this document:
+      <p>This document describes how to install the MILabel contained in the <i>${project.artifactId}</i> package. The following topics can be found in this document:
       </p>
 
       <ul>
@@ -36,11 +52,11 @@
     </section>
 
     <section name="System Requirements">
-      <p>This section details the system requirements for installing and operating the Generate Tool.
+      <p>This section details the system requirements for installing and operating the MILabel.
       </p>
 
       <subsection name="Java Runtime Environment">
-        <p>The Generate Tool was developed using Java and will run on any platform with a supported Java Runtime Environment (JRE). The software was specifically compiled for and tested in Java version 1.8. The following commands test the local Java installation in a UNIX-based environment:
+        <p>The MILabel was developed using Java and will run on any platform with a supported Java Runtime Environment (JRE). The software was specifically compiled for and tested in Java version 1.8. The following commands test the local Java installation in a UNIX-based environment:
         </p>
 
         <source>
@@ -92,7 +108,7 @@ or
           </p>
         </li>
         <li><b>doc/</b><br/>
-          <p>This directory contains a local web site with the Generate Tool documentation, javadoc, unit test results and other configuration management related information. Just point the desired web browser to the <i>index.html</i> file in this directory.
+          <p>This directory contains a local web site with the MILabel documentation, javadoc, unit test results and other configuration management related information. Just point the desired web browser to the <i>index.html</i> file in this directory.
           </p>
         </li>
         <li><b>examples/</b><br/>
@@ -100,14 +116,14 @@ or
           </p>
         </li>
         <li><b>lib/</b><br/>
-          <p>This directory contains the dependent jar files for the tool along with the executable jar file (${project.artifactId}-${project.version}.jar) containing the Generate Tool software.
+          <p>This directory contains the dependent jar files for the tool along with the executable jar file (${project.artifactId}-${project.version}.jar) containing the MILabel software.
           </p>
         </li>
       </ul>
     </section>
 
     <section name="Configuring the Environment">
-      <p>In order to execute the Generate Tool, the local environment must first be configured appropriately. This section describes how to setup the user environment on UNIX-based and Windows machines.
+      <p>In order to execute the MILabel, the local environment must first be configured appropriately. This section describes how to setup the user environment on UNIX-based and Windows machines.
       </p>
 
       <subsection name="UNIX-Based Environment">
