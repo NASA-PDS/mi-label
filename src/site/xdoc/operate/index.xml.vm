@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright 2011-2012, by the California Institute of Technology.
-  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
-  Any commercial use must be negotiated with the Office of Technology Transfer
-  at the California Institute of Technology.
-
-  This software is subject to U. S. export control laws and regulations
-  (22 C.F.R. 120-130 and 15 C.F.R. 730-774). To the extent that the software
-  is subject to U.S. export control laws and regulations, the recipient has
-  the responsibility to obtain export licenses or other export authority as
-  may be required before exporting such information to foreign countries or
-  providing access to foreign nationals.
-
-  $Id$
+  Copyright 2020, California Institute of Technology ("Caltech").
+  U.S. Government sponsorship acknowledged.
+  
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+  
+  * Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+  * Redistributions must reproduce the above copyright notice, this list of
+  conditions and the following disclaimer in the documentation and/or other
+  materials provided with the distribution.
+  * Neither the name of Caltech nor its operating division, the Jet Propulsion
+  Laboratory, nor the names of its contributors may be used to endorse or
+  promote products derived from this software without specific prior written
+  permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
 -->
 
 <document>
@@ -25,7 +41,7 @@
 
   <body>
     <section name="Operation">
-      <p>This document describes how to operate the Generate Tool software. The following topics can be found in this document:
+      <p>This document describes how to operate the MILabel software. The following topics can be found in this document:
       </p>
 
       <ul>
@@ -38,7 +54,7 @@
     </section>
 
     <section name="Tool Execution">
-      <p>Generate Tool can be executed in various ways. This section describes how to run the tool, as well as its behaviors and caveats.
+      <p>MILabel can be executed in various ways. This section describes how to run the tool, as well as its behaviors and caveats.
       </p>
 
       <subsection name="Command-Line Options">
@@ -59,11 +75,11 @@
 
       </subsection>
 
-      <subsection name="Execute Generate Tool">
+      <subsection name="Execute MILabel">
         <p>This section demonstrates execution of the tool using the command-line options. The examples below execute the tool via the batch/shell script.
         </p>
 
-        <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to a file:
+        <p>The following command demonstrates how to run the MILabel to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output to a file:
         </p>
 
         <source>
@@ -73,7 +89,7 @@
         <p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml
         </p>
 
-        <p>The following command demonstrates how to run the Generate Tool to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output all debug information to standard out:
+        <p>The following command demonstrates how to run the MILabel to convert from a PDS3 Label to a PDS4 Label using a Velocity template file and output all debug information to standard out:
         </p>
 
         <source>
@@ -88,7 +104,7 @@
       </p>
       
       <subsection name="Changing the Underlying Parser">
-        <p>The Generate Tool defaults to using the VicarIO library as the underlying parser when parsing input labels. The tool provides a capability to change the underlying parser to use the Product-Tools library instead. A common use case of changing the underlying parser is when an input label contains a ^STRUCTURE pointer. This section details how to set the underlying parser to the product-tools library.
+        <p>The MILabel defaults to using the VicarIO library as the underlying parser when parsing input labels. The tool provides a capability to change the underlying parser to use the Product-Tools library instead. A common use case of changing the underlying parser is when an input label contains a ^STRUCTURE pointer. This section details how to set the underlying parser to the product-tools library.
         </p>
         
         <p><b><i>UNIX-Based Environment</i></b></p>
@@ -123,7 +139,7 @@ to
         
         <p><b><i>API Method</i></b></p>
         
-        <p>When calling the Generate Tool through the API, add the following line of code to change the underlying parser to use the Product-Tools library:
+        <p>When calling the Generate Tool through the API, add the following line of code to change the underlying parser to use the PDS3 Product Tools library:
         </p>
         
         <source>
