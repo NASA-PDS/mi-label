@@ -49,14 +49,14 @@ set LIB_DIR=%PARENT_DIR%\lib
 
 :: Check for dependencies.
 if exist "%LIB_DIR%\generate-*.jar" (
-set GENERATE_JAR=%LIB_DIR%\generate-*.jar
+set GENERATE_JAR=%LIB_DIR%\mi-label-*.jar
 ) else (
 echo Cannot find Generate Tool jar file in %LIB_DIR%
 goto END
 )
 
 :: Finds the jar file in LIB_DIR and sets it to GENERATE_JAR
-for %%i in ("%LIB_DIR%"\generate-*.jar) do set GENERATE_JAR=%%i
+for %%i in ("%LIB_DIR%"\mi-label-*.jar) do set GENERATE_JAR=%%i
 
 :: Executes GENERATE_TOOL via the executable jar file
 :: The special variable '%*' allows the arguments
