@@ -1,9 +1,20 @@
 # Change Log
 
-## [v1.0.0](https://github.com/NASA-PDS-Incubator/mi-label/tree/v1.0.0) (2020-03-27)
+## [v1.1.0](https://github.com/NASA-PDS/mi-label/tree/v1.1.0) (2020-05-04)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.0.0...v1.1.0)
+
+**Implemented enhancements:**
+
+- Complete Generate rename and open source [\#4](https://github.com/NASA-PDS/mi-label/issues/4)
+
 **Merged pull requests:**
 
-- Bump jackson-databind from 2.9.8 to 2.9.10.3 [\#1](https://github.com/NASA-PDS-Incubator/mi-label/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump jackson-databind from 2.9.10.3 to 2.9.10.4 [\#5](https://github.com/NASA-PDS/mi-label/pull/5) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v1.0.0](https://github.com/NASA-PDS/mi-label/tree/v1.0.0) (2020-03-27)
+**Merged pull requests:**
+
+- Bump jackson-databind from 2.9.8 to 2.9.10.3 [\#1](https://github.com/NASA-PDS/mi-label/pull/1) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 
 
