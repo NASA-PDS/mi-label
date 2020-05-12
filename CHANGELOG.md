@@ -1,5 +1,8 @@
 # Change Log
 
+## [v1.1.1](https://github.com/NASA-PDS/mi-label/tree/v1.1.1) (2020-05-12)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.0...v1.1.1)
+
 ## [v1.1.0](https://github.com/NASA-PDS/mi-label/tree/v1.1.0) (2020-05-04)
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.0.0...v1.1.0)
 
