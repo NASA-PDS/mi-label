@@ -33,17 +33,31 @@
 
 <document>
   <properties>
-    <title>About Generate Tool</title>
+    <title>About MILabel</title>
     <author email="Jordan.Padams@jpl.nasa.gov">Jordan Padams</author>
   </properties>
 
   <body>
-    <section name="About Generate Tool">
-      <p>The Generate Tool provides a command-line interface for generating PDS4 Labels using a user provided PDS4 XML template and input (source) data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports detached and attached ODL/PDS3 labels with plans to support VICAR attached labels and CSV files.
+    <section name="About MILabel">
+      <p>The Metadata Injector for PDS Labels (MILabel) provides a command-line interface for generating PDS4 Labels using a user provided PDS4 XML template and input (source) data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports detached and attached ODL/PDS3 labels with plans to support VICAR attached labels and CSV files.
       </p>
-
-      <p>Please send comments, change requests and bug reports to the <a href="mailto:pds_operator@jpl.nasa.gov">PDS Operator</a> at pds_operator@jpl.nasa.gov.
+    </section>
+    
+    <hr />
+    
+    <section name="Support">
+      <p><b><i>Found a bug?</i></b> Or <b><i>want a new feature?</i></b> We would love your feedback and contributions. Here are some links to our public Github repository for source code and submitting issues:</p>
+      
+      <ul>
+        <li>Issue Tracker: <a href="https://github.com/NASA-PDS/${project.artifactId}/issues">https://github.com/NASA-PDS/${project.artifactId}/issues</a></li>
+        <li>Source Code: <a href="https://github.com/NASA-PDS/${project.artifactId}/">https://github.com/NASA-PDS/${project.artifactId}</a></li>
+      </ul>
+      
+      <p>If you need help with installation or operation of the software, or any other additional feedback, please contact us at 
+        <a href="mailto:pds_operator@jpl.nasa.gov">pds_operator@jpl.nasa.gov</a>.
       </p>
+      
+      <p></p>
     </section>
   </body>
 </document>
