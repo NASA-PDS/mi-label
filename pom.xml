@@ -44,7 +44,7 @@
   
   <groupId>gov.nasa.pds</groupId>
   <artifactId>mi-label</artifactId>
-  <version>1.1.2</version>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
