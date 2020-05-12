@@ -44,27 +44,28 @@
   </bannerLeft>
 
   <bannerRight>
-    <name>Generate Tool</name>
+    <name>MILabel</name>
   </bannerRight>
 
   <version/>
 
   <body>
     <links>
-      <item name="Generate Tool" href="/development/pds4/generate/index.html" />
+      <item name="MILabel Github Repo" href="https://github.com/NASA-PDS/${project.artifactId}/" />
     </links>
 
     <menu name="Software Documentation">
-      <item name="About Generate Tool" href="index.html"/>
+      <item name="About MILabel" href="index.html"/>
       <!--item name="Design" href="design/index.html"/-->
       <item name="Installation" href="install/index.html"/>
       <item name="Operation" href="operate/index.html"/>
       <item name="Template Guide" href="templates/index.html"/>
+      <item name="Support" href="index.html#Support"/>
     </menu>
 
     <menu name="Download">
-      <item name="Binary Package (tar.gz)" href="https://pds.nasa.gov/software/pds4/${project.artifactId}-${project.version}-bin.tar.gz"/>
-      <item name="Binary Package (zip)" href="https://pds.nasa.gov/software/pds4/${project.artifactId}-${project.version}-bin.zip"/>
+      <item name="Binary Package (tar.gz)" href="https://github.com/NASA-PDS/${project.artifactId}/releases/download/v${project.version}/${project.artifactId}-${project.version}-bin.tar.gz"/>
+      <item name="Binary Package (zip)" href="https://github.com/NASA-PDS/${project.artifactId}/releases/download/v${project.version}/${project.artifactId}-${project.version}-bin.zip"/>
     </menu>
 
     <menu ref="reports"/>
