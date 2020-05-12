@@ -32,7 +32,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<project name="Generate Tool">
+<project name="MILabel">
   <skin>
     <groupId>org.apache.maven.skins</groupId>
     <artifactId>maven-fluido-skin</artifactId>
@@ -40,7 +40,7 @@
   </skin>
   <bannerLeft>
     <src>images/pds4_logo.png</src>
-    <href>https://pds-engineering.jpl.nasa.gov/development/pds4/</href>
+    <href>https://github.com/NASA-PDS/${project.artifactId}/</href>
   </bannerLeft>
 
   <bannerRight>
