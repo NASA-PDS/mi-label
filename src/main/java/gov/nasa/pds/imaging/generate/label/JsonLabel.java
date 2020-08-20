@@ -533,9 +533,9 @@ public class JsonLabel implements PDSObject {
 												// total_pages, page, limit, dataset
 				JsonNode aNode = node.get(fieldName);
 				if (debug) System.out.printf("%s = %s,   %s\n", fieldName, aNode.asText(), aNode.getNodeType().toString()); // prints
-				if (aNode.getNodeType().toString() == "ARRAY") {
+				if (aNode.getNodeType().toString().equals("ARRAY")) {
 					handleJsonArray(aNode, nodeName, parentStr, aFlatLabel);
-				} else if (aNode.getNodeType().toString() == "OBJECT") {
+				} else if (aNode.getNodeType().toString().equals("OBJECT")) {
 					parentStr = nodeName+"." ;
 					handleJsonObject(aNode, nodeName, parentStr, aFlatLabel);
 				} else {
@@ -635,12 +635,12 @@ public class JsonLabel implements PDSObject {
 				JsonNode aNode2 = aNode.get(fieldName);
 				
 				nodeName2 = fieldName;
-				if (aNode2.getNodeType().toString() == "OBJECT") { 
+				if (aNode2.getNodeType().toString().equals("OBJECT")) { 
 					if (debug) System.out.printf("handleJsonOBJECT %d parentStr = %s nodeName = %s nodeName2 = %s \n", aNode2.size(), parentStr, nodeName, nodeName2);
 					parentStr = parentStr+"."+nodeName2;
 					handleJsonObject(aNode2, nodeName2, parentStr, flatLabel) ;
 				
-				} else if (aNode2.getNodeType().toString() == "ARRAY") {
+				} else if (aNode2.getNodeType().toString().equals("ARRAY")) {
 					if (debug) System.out.printf("handleJsonARRAY %d parentStr = %s nodeName = %s nodeName2 = %s \n", aNode2.size(), parentStr, nodeName, nodeName2);
 					handleJsonArray(aNode2, nodeName2, parentStr, flatLabel) ;
 					
