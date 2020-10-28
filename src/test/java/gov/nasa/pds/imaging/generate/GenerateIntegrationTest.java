@@ -219,7 +219,8 @@ public class GenerateIntegrationTest extends GenerateTest {
         String[] args = {//"-d", 
             "-p", testPath + "/ahalebp-1.LBL",
             "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath
+            "-o", outFilePath,
+            "-b", testPath
             };
         GenerateLauncher.main(args);
         
@@ -253,7 +254,8 @@ public class GenerateIntegrationTest extends GenerateTest {
         String[] args = {//"-d", 
             "-p", testPath + "/ahalebp-3.LBL",
             "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath
+            "-o", outFilePath,
+            "-b", testPath
             };
         GenerateLauncher.main(args);
         
@@ -290,7 +292,8 @@ public class GenerateIntegrationTest extends GenerateTest {
         String[] args = {//"-d", 
             "-p", testPath + "/OPTE_12.LBL",
             "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath
+            "-o", outFilePath,
+            "-b", testPath
             };
 
         GenerateLauncher.main(args);

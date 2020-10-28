@@ -59,8 +59,8 @@
       <directory>src/main/resources/bin</directory>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>generate</include>
-        <include>generate.bat</include>
+        <include>pds-generate</include>
+        <include>pds-generate.bat</include>
       </includes>
       <fileMode>755</fileMode>
       <lineEnding>keep</lineEnding>
