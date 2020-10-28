@@ -28,11 +28,11 @@
 :: ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 :: POSSIBILITY OF SUCH DAMAGE.
 
-:: Batch file that allows easy execution of the PDS4 Generate Tool
+:: Batch file that allows easy execution of the PDS4 MILabel Tool
 :: without the need to set the CLASSPATH or having to type in that long java
 :: command (java gov.nasa.pds.pds4.generate.GenerateLauncher ...)
 
-:: Expects PDS4 Generate Tool jar file to be located in the ../lib directory.
+:: Expects PDS4 MILabel Tool jar file to be located in the ../lib directory.
 
 @echo off
 
@@ -48,19 +48,19 @@ set PARENT_DIR=%SCRIPT_DIR%..
 set LIB_DIR=%PARENT_DIR%\lib
 
 :: Check for dependencies.
-if exist "%LIB_DIR%\generate-*.jar" (
-set GENERATE_JAR=%LIB_DIR%\mi-label-*.jar
+if exist "%LIB_DIR%\mi-label-*.jar" (
+set MILABEL_JAR=%LIB_DIR%\mi-label-*.jar
 ) else (
-echo Cannot find Generate Tool jar file in %LIB_DIR%
+echo Cannot find MILabel Tool jar file in %LIB_DIR%
 goto END
 )
 
-:: Finds the jar file in LIB_DIR and sets it to GENERATE_JAR
-for %%i in ("%LIB_DIR%"\mi-label-*.jar) do set GENERATE_JAR=%%i
+:: Finds the jar file in LIB_DIR and sets it to MILABEL_JAR
+for %%i in ("%LIB_DIR%"\mi-label-*.jar) do set MILABEL_JAR=%%i
 
-:: Executes GENERATE_TOOL via the executable jar file
+:: Executes MILabel via the executable jar file
 :: The special variable '%*' allows the arguments
 :: to be passed into the executable.
-"%JAVA_HOME%"\bin\java -jar "%GENERATE_JAR%" %*
+"%JAVA_HOME%"\bin\java -jar "%MILABEL_JAR%" %*
 
 :END
