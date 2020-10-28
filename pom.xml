@@ -39,7 +39,7 @@
   <parent>
     <groupId>gov.nasa</groupId>
     <artifactId>pds</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
   </parent>
   
   <groupId>gov.nasa.pds</groupId>
@@ -49,12 +49,12 @@
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>The Metadata Injector for PDS Labels (MILabel) provides a command-line interface for generating PDS4 Labels using a user provided PDS4 XML template and input (source) data products. The PDS4 XML Templates use Apache Velocity variables and logic to generate the PDS4 labels. For inputs, the tool currently supports detached and attached ODL/PDS3 labels with plans to support VICAR attached labels and CSV files.</description>
-  <url>https://nasa-pds-incubator.github.io/mi-label/</url>
+  <url>https://nasa-pds.github.io/mi-label/</url>
   
   <scm>
-    <url>https://github.com/NASA-PDS-Incubator/mi-label/tree/master</url>
-    <connection>scm:git:git://github.com/NASA-PDS-Incubator/mi-label.git</connection>
-    <developerConnection>scm:git:ssh://github.com:NASA-PDS-Incubator/mi-label.git</developerConnection>
+    <url>https://github.com/NASA-PDS/mi-label/tree/master</url>
+    <connection>scm:git:git://github.com/NASA-PDS/mi-label.git</connection>
+    <developerConnection>scm:git:ssh://github.com:NASA-PDS/mi-label.git</developerConnection>
   </scm>
   
   <licenses>
