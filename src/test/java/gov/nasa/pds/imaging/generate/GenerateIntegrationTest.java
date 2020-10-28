@@ -217,7 +217,7 @@ public class GenerateIntegrationTest extends GenerateTest {
       File expected = new File(testPath + "/ahalebp-1_expected.xml");
 
         String[] args = {//"-d", 
-            "-p", testPath + "/ahalebp-1.LBL",
+            "-p", testPath + "/ahalebp-1.lbl",
             "-t", testPath + "/generic-pds3_to_pds4.vm",
             "-o", outFilePath,
             "-b", testPath
@@ -252,7 +252,7 @@ public class GenerateIntegrationTest extends GenerateTest {
       File expected = new File(testPath + "/ahalebp-3_expected.xml");
 
         String[] args = {//"-d", 
-            "-p", testPath + "/ahalebp-3.LBL",
+            "-p", testPath + "/ahalebp-3.lbl",
             "-t", testPath + "/generic-pds3_to_pds4.vm",
             "-o", outFilePath,
             "-b", testPath
