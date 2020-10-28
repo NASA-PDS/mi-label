@@ -83,7 +83,7 @@
         </p>
 
         <source>
-% generate -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
+% pds-generate -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
         </source>
 
         <p>The output would go into a file &lt;pds3-label-path&gt;.xml (i.e. $HOME/mpf123.img -&gt; $HOME/mpf123.xml
@@ -93,7 +93,7 @@
         </p>
 
         <source>
-% generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
+% pds-generate -d -p &lt;pds3-label-path&gt; -t &lt;velocity-template-path&gt;
         </source>
 
       </subsection>
@@ -109,37 +109,37 @@
         
         <p><b><i>UNIX-Based Environment</i></b></p>
         
-        <p>To change the underlying parser, set the <i>pds.generate.parser.type</i> Java system property to <i>product-tools</i> in the <i>generate</i> shell script as follows:
+        <p>To change the underlying parser, set the <i>pds.generate.parser.type</i> Java system property to <i>product-tools</i> in the <i>pds-generate</i> shell script as follows:
         </p>
         
         <source>
 Change the following line 
         
-"${JAVA_HOME}"/bin/java -jar ${GENERATE_JAR} "$@"
+"${JAVA_HOME}"/bin/java -jar ${MILABEL_JAR} "$@"
 
 to
         
-"${JAVA_HOME}"/bin/java -Dpds.generate.parser.type=product-tools -jar ${GENERATE_JAR} "$@"                
+"${JAVA_HOME}"/bin/java -Dpds.generate.parser.type=product-tools -jar ${MILABEL_JAR} "$@"                
         </source>
         
         <p><b><i>Windows Environmnet</i></b></p>
         
-        <p>To change the underlying parser, set the <i>pds.generate.parser.type</i> Java system property to <i>product-tools</i> in the <i>generate.bat</i> batch file as follows:
+        <p>To change the underlying parser, set the <i>pds.generate.parser.type</i> Java system property to <i>product-tools</i> in the <i>pds-generate.bat</i> batch file as follows:
         </p>
         
         <source>
 Change the following line 
         
-"%JAVA_HOME%"\bin\java -jar "%GENERATE_JAR%" %*
+"%JAVA_HOME%"\bin\java -jar "%MILABEL_JAR%" %*
 
 to
 
-"%JAVA_HOME%"\bin\java -Dpds.generate.parser.type=product-tools -jar "%GENERATE_JAR%" %*               
+"%JAVA_HOME%"\bin\java -Dpds.generate.parser.type=product-tools -jar "%MILABEL_JAR%" %*               
         </source>
         
         <p><b><i>API Method</i></b></p>
         
-        <p>When calling the Generate Tool through the API, add the following line of code to change the underlying parser to use the PDS3 Product Tools library:
+        <p>When calling the MILabel Generator Tool through the API, add the following line of code to change the underlying parser to use the PDS3 Product Tools library:
         </p>
         
         <source>
