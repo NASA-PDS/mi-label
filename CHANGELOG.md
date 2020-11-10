@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/NASA-PDS/mi-label/tree/HEAD)
+## [1.2.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/1.2.0-SNAPSHOT) (2020-10-28)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.2...HEAD)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.2...1.2.0-SNAPSHOT)
 
 **Defects:**
 
