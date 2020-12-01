@@ -163,8 +163,11 @@ public class PDS3Label implements PDSObject {
       } else if (node instanceof ItemNode) {
       	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node).toString());
       	Debugger.debug("++++ node(2) ------>\n" + StringEscapeUtils.escapeXml(((ItemNode) node).toString()));
-            
-          return StringEscapeUtils.escapeXml(((ItemNode) node).toString());
+      	Debugger.debug("++++ node(2) return as node -- "+key+" --> '" + StringEscapeUtils.escapeXml(((ItemNode) node).toString())+"'");
+      	return node; 
+      	// returnig this as node is consistent with all the other returns.
+      	// It allows other functions such as getUnits() to work properly
+        // return StringEscapeUtils.escapeXml(((ItemNode) node).toString());
       } else {
       	Debugger.debug("++ node(1) ------>\n" + node);
           return node;
@@ -362,6 +365,7 @@ public class PDS3Label implements PDSObject {
 
   @Override
   public final String getUnits(final String key) {
+	  Debugger.debug("PDS3label.getUnits "+key+" ");
 	  
 	  if (key.contains(".")) {
 		  return ((ItemNode) getNode(key)).getUnits();
