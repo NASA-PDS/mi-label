@@ -45,7 +45,7 @@
   </Observation_Area>
   <File_Area_Observational>
     <File>
-      <file_name>ele_mom.tab</file_name>
+      <file_name>ELE_MOM.TAB</file_name>
     </File>
     <Table_Character>
       <offset unit="byte">0</offset>

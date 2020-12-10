@@ -7,19 +7,19 @@
     xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1A10.xsd">
   <Identification_Area>
   #if ( $label.PRODUCT_ID )
-    <logical_identifier>urn:nasa:pds:data:$label.DATA_SET_ID.toLowerCase().replaceAll("/","-"):$label.PRODUCT_ID.toLowerCase()</logical_identifier>
-    #set ($title = $label.DATA_SET_ID.toLowerCase().concat(" ").concat($label.PRODUCT_ID.toLowerCase()))
+    <logical_identifier>urn:nasa:pds:data:$label.DATA_SET_ID.toString().toLowerCase().replaceAll("/","-"):$label.PRODUCT_ID.toString().toLowerCase()</logical_identifier>
+    #set ($title = $label.DATA_SET_ID.toString().toLowerCase().concat(" ").concat($label.PRODUCT_ID.toString().toLowerCase()))
   #else
-    <logical_identifier>urn:nasa:pds:data:$label.DATA_SET_ID.toLowerCase().replaceAll("/","-"):$generate.file_name.toLowerCase()</logical_identifier>
-    #set ($title = $label.DATA_SET_ID.toLowerCase())
+    <logical_identifier>urn:nasa:pds:data:$label.DATA_SET_ID.toString().toLowerCase().replaceAll("/","-"):$generate.file_name.toLowerCase()</logical_identifier>
+    #set ($title = $label.DATA_SET_ID.toString().toLowerCase())
   #end
     <version_id>1.0</version_id>
   #if ( $label.OBSERVATION_NAME )
-     <title>$label.OBSERVATION_NAME.toLowerCase()</title>
+     <title>$label.OBSERVATION_NAME.toString().toLowerCase()</title>
   #elseif ( $label.OBSERVATION_ID )
-     <title>$label.OBSERVATION_ID.toLowerCase()</title>
+     <title>$label.OBSERVATION_ID.toString().toLowerCase()</title>
   #elseif ( $label.PRODUCT_NAME )
-     <title>$label.PRODUCT_NAME.toLowerCase()</title>
+     <title>$label.PRODUCT_NAME.toString().toLowerCase()</title>
   #else
      <title>$title</title>
   #end
@@ -38,21 +38,21 @@
 
   <Observation_Area>
     <Time_Coordinates>
-    #if ( $label.START_TIME && !($label.START_TIME.trim().equals("N/A") || $label.START_TIME.trim().equals("NULL") || $label.START_TIME.trim().equals("UNK")) )
-      #if ( $label.START_TIME.trim().endsWith("Z") )
-        <start_date_time>${label.START_TIME}</start_date_time>
+    #if ( $label.START_TIME && !($label.START_TIME.toString().trim().equals("N/A") || $label.START_TIME.toString().trim().equals("NULL") || $label.START_TIME.toString().trim().equals("UNK")) )
+      #if ( $label.START_TIME.toString.trim().endsWith("Z") )
+        <start_date_time>${label.START_TIME.toString()}</start_date_time>
       #else
-        <start_date_time>${label.START_TIME}Z</start_date_time>
+        <start_date_time>${label.START_TIME.toString()}Z</start_date_time>
       #end
     #else
       <start_date_time xsi:nil="true"></start_date_time>
     #end
 
-    #if( $label.STOP_TIME && !($label.STOP_TIME.trim().equals("N/A") || $label.STOP_TIME.trim().equals("NULL") || $label.STOP_TIME.trim().equals("UNK")) )
-      #if ( $label.STOP_TIME.trim().endsWith("Z") )
-        <stop_date_time>${label.STOP_TIME}</stop_date_time>
+    #if( $label.STOP_TIME && !($label.STOP_TIME.toString().trim().equals("N/A") || $label.STOP_TIME.toString().trim().equals("NULL") || $label.STOP_TIME.toString().trim().equals("UNK")) )
+      #if ( $label.STOP_TIME.toString().trim().endsWith("Z") )
+        <stop_date_time>${label.STOP_TIME.toString()}</stop_date_time>
       #else
-        <stop_date_time>${label.STOP_TIME}Z</stop_date_time>
+        <stop_date_time>${label.STOP_TIME.toString()}Z</stop_date_time>
       #end
     #else
       <stop_date_time xsi:nil="true"></stop_date_time>
@@ -61,7 +61,7 @@
 
     <Investigation_Area>
     #if ( $label.MISSION_NAME )
-       #set ( $missionName = $label.MISSION_NAME )
+       #set ( $missionName = $label.MISSION_NAME.toString() )
       <name>$missionName.toLowerCase()</name>
       <type>Mission</type>
       <Internal_Reference>
@@ -69,7 +69,7 @@
         <reference_type>data_to_investigation</reference_type>
       </Internal_Reference>
     #elseif ( $label.MISSION_PHASE_NAME )
-      #set ( $missionPhaseName = $label.MISSION_PHASE_NAME )
+      #set ( $missionPhaseName = $label.MISSION_PHASE_NAME.toString() )
       <name>$missionPhaseName.toLowerCase()</name>
       <type>Mission</type>
       <Internal_Reference>
@@ -82,30 +82,31 @@
     <Observing_System>
     #if ( $label.INSTRUMENT_HOST_NAME )
       <Observing_System_Component>
-        <name>$label.INSTRUMENT_HOST_NAME.toLowerCase()</name>
+        <name>$label.INSTRUMENT_HOST_NAME.toString().toLowerCase()</name>
         <type>Spacecraft</type>
       </Observing_System_Component>
     #end
     #if ( $label.INSTRUMENT_NAME )
       <Observing_System_Component>
-        <name>$label.INSTRUMENT_NAME.toLowerCase()</name>
+        <name>$label.INSTRUMENT_NAME.toString().toLowerCase()</name>
         <type>Instrument</type>
       </Observing_System_Component>
     #elseif ( $label.INSTRUMENT_ID )
       <Observing_System_Component>
-        <name>$label.INSTRUMENT_ID.toLowerCase()</name>
+        <name>$label.INSTRUMENT_ID.toString().toLowerCase()</name>
         <type>Instrument</type>
       </Observing_System_Component>
     #end
     </Observing_System>
     <Target_Identification>
     #if ( $label.TARGET_NAME )
-      <name>$label.TARGET_NAME.toLowerCase()</name>
+      <name>$label.TARGET_NAME.toString().toLowerCase()</name>
       <type>Planet</type>
     #end
     </Target_Identification>
   </Observation_Area>
   #set( $objectNames = $label.getPDSObjectNames() )
+  ###<objectNames>$objectNames</objectNames>
  
   ## Support explicit FILE objects (PDS-539)
   #set ($filePtrObjectMap = {})
@@ -172,10 +173,13 @@
             #set ( $dataFileOffset = $Integer.parseInt($pointer[1].split(" ")[0].trim()) - 1 )
           #else
             #set( $Integer = 0 )
-            #set ( $offset = $Integer.parseInt($pointer[1].trim()) - 1 )        
+              ## why was this commented out??
+	          ##set ( $offset = 1 )
+	          #set ( $offset = $Integer.parseInt($pointer[1].trim()) - 1 )        
             ##PDS-541
             #if($label.RECORD_BYTES)
-              #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.trim()) )
+              ##<RECORD_BYTES_offset2>$label.RECORD_BYTES.toString().trim()   $offset</RECORD_BYTES_offset2>
+              #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.toString().trim()) )
             #else
               #set ( $dataFileOffset = $offset )
               $log.severe("Could not find RECORD_BYTES in the label, which is needed to calculate the actual byte location for ^$objectName, which has a record offset value.")
@@ -190,12 +194,13 @@
             #set( $Integer = 0 )
             #if ( $pointer[0].contains("BYTES") )
               #set( $Integer = 0 )
-              #set ( $dataFileOffset = $Integer.parseInt($pointer[1].split(" ")[0].trim()) - 1 )
+              #set ( $dataFileOffset = $Integer.parseInt($pointer[1].toString().split(" ")[0].trim()) - 1 )
             #else
-              #set ( $offset = $Integer.parseInt($pointer[0].trim()) - 1 )
+              #set ( $offset = $Integer.parseInt($pointer[0].toString().trim()) - 1 )
               ##PDS-541
               #if($label.RECORD_BYTES)
-                #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.trim()) )
+                ##<RECORD_BYTES_offset>$label.RECORD_BYTES.toString().trim()   $offset</RECORD_BYTES_offset>
+                #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.toString().trim()) )
               #else
                 #set ( $dataFileOffset = $offset )
                 $log.severe("Could not find RECORD_BYTES in the label, which is needed to calculate the actual byte location for ^$objectName, which has a record offset value.")
@@ -209,7 +214,7 @@
       #else   ## for explicit FILE objects (PDS-539)
         #set ( $object = $ptrObjectMap.get($key) ) 
       #end
-            
+      ##<dataFileOffset_calling_mapImage> $dataFileOffset </dataFileOffset_calling_mapImage>    
       #if ( $objectName.endsWith("IMAGE") )
         #mapImage($object $dataFileOffset)
       #elseif ( $objectName.endsWith("TABLE") || $objectName.endsWith("SERIES") )
@@ -667,12 +672,16 @@
 #end
 
 #macro( createPtrToObjectMap $objectNames $label $ptrObjectMap )
+  ##<createPtrToObjectMap>in the macro</createPtrToObjectMap>
   #set( $validTypes = ".*IMAGE|.*TABLE|.*SERIES|.*SPREADSHEET" )
   #foreach( $objectName in $objectNames )
+     ##<objectName>$objectName</objectName>
+     ##<objectName_toString>$objectName.toString()</objectName_toString>
     #if ( $objectName.matches($validTypes) && !$objectName.endsWith("PDS4_IMAGE") )
       #set ( $value = $label.get("PTR_$objectName").toString() )
       #set ( $value = $value.replaceAll("\[|\]|\(|\)","") )
       #set ( $pointer = [] )
+      ##<PTR_object>$value</PTR_object>
       #foreach ( $element in $value.split(",") )
         #if ($pointer.add($element))
         #end
@@ -685,8 +694,12 @@
           #set( $Integer = 0 )
           #set ( $offset = $Integer.parseInt($pointer[1].trim()) - 1 )
           ##PDS-541
+          ##<offset>$offset</offset>
+          ## test to change line number
           #if($label.RECORD_BYTES)
-            #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.trim()) )
+            ##<RECORD_BYTES_toString>$label.RECORD_BYTES.toString().trim()</RECORD_BYTES_toString>
+            #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.toString().trim()) )
+            ##<dataFileOffset>$dataFileOffset</dataFileOffset>
           #else
             #set ( $dataFileOffset = $offset )
             ##$log.severe("Could not find RECORD_BYTES in the label, which is needed to calculate the actual byte location for ^$objectName, which has a record offset value.")
@@ -706,7 +719,7 @@
             #set ( $offset = $Integer.parseInt($pointer[0].trim()) - 1 )
             ##PDS-541
             #if($label.RECORD_BYTES)
-              #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.trim()) )
+              #set ( $dataFileOffset = $offset * $Integer.parseInt($label.RECORD_BYTES.toString().trim()) )
             #else
               #set ( $dataFileOffset = $offset )
               ##$log.severe("Could not find RECORD_BYTES in the label, which is needed to calculate the actual byte location for ^$objectName, which has a record offset value.")          
@@ -726,6 +739,7 @@
       #end
     #end
   #end
+  ##<dataFileOffset>$dataFileOffset</dataFileOffset>
 #end
 
 #macro( createFilePtrToObjectMap $objectNames $label $ptrObjectMap )
@@ -740,8 +754,9 @@
     #end
   #else
     #set ( $files = [] )
-  #end  
-  
+  #end 
+  ##$log.severe("print $files") 
+  ###<createFilePtrToObjectMap_files>$files</createFilePtrToObjectMap_files>
   #set( $validTypes = ".*IMAGE|.*TABLE|.*SERIES|.*SPREADSHEET" )
   #set( $ptrObjNames = [ "IMAGE", "TABLE", "SERIES", "SPREADSHEET" ] )
   #foreach ( $file in $files ) 
