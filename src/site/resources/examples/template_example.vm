@@ -11,7 +11,7 @@
   
 	<!-- Scenario 2 - Base element	-->
 	<Subject_Area>
-  	<target_name>$label.TARGET_NAME.toString()</target_name>
+  	<target_name>$label.TARGET_NAME</target_name>
   </Subject_Area>
   
 	<!-- Scenario 3 - Sub-elements	-->
@@ -49,7 +49,7 @@
   
 	<!-- Scenario 6 - Units	-->
   <Geometry_Parameters>
-    <azimuth units="$label.getUnits('INST_AZIMUTH')">$label.INST_AZIMUTH.toString()</azimuth>
+    <azimuth units="$label.getUnits('INST_AZIMUTH')">$label.INST_AZIMUTH</azimuth>
   </Geometry_Parameters>
   
 	<!-- Scenario 7 - Generated Values	-->

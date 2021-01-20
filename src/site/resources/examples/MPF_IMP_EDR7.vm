@@ -8,14 +8,14 @@
     <logical_identifier>token</logical_identifier>
     <version_id>0.1</version_id>
     <product_class>Product_Array_2D_Image</product_class>
-    <title>$label.OBSERVATION_NAME.toString()</title>
-    <alternate_id>$label.PRODUCT_ID.toString()</alternate_id>
-    <alternate_id>$label.IMAGE_ID.toString()</alternate_id>
+    <title>$label.OBSERVATION_NAME</title>
+    <alternate_id>$label.PRODUCT_ID</alternate_id>
+    <alternate_id>$label.IMAGE_ID</alternate_id>
     <last_modification_date_time>last_modification_date_time</last_modification_date_time>
     <product_subclass>token</product_subclass>
     <type>token</type>
     <Subject_Area>
-      <target_name>$label.TARGET_NAME.toString()</target_name>
+      <target_name>$label.TARGET_NAME</target_name>
       <data_set_name>MPF LANDER MARS IMAGER FOR MARS PATHFINDER 2 EDR V1.0</data_set_name>
       <instrument_name>IMAGER FOR MARS PATHFINDER</instrument_name>
       <instrument_host_name>MARS PATHFINDER LANDER</instrument_host_name>
@@ -55,23 +55,23 @@
     </Reference_Entry_Product>
   </Cross_Reference_Area_Product>
   <Observation_Area>
-    <start_date_time>$label.IMAGE_TIME.toString()</start_date_time>
+    <start_date_time>$label.IMAGE_TIME</start_date_time>
     <stop_date_time>null</stop_date_time>
-    <local_true_solar_time>$label.MPF_LOCAL_TIME.toString()</local_true_solar_time>
-    <planet_day_number>$label.PLANET_DAY_NUMBER.toString()</planet_day_number>
-    <spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT.toString()</spacecraft_clock_start_count>
+    <local_true_solar_time>$label.MPF_LOCAL_TIME</local_true_solar_time>
+    <planet_day_number>$label.PLANET_DAY_NUMBER</planet_day_number>
+    <spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</spacecraft_clock_start_count>
     <Mission_Area/>
     <Node_Area/>
   </Observation_Area>
   <File_Area_Observational>
     <File>
       <local_identifier>FILE</local_identifier>
-      <creation_date_time>$label.PRODUCT_CREATION_TIME.toString()</creation_date_time>
+      <creation_date_time>$label.PRODUCT_CREATION_TIME</creation_date_time>
       <file_name>$generate.file_name</file_name>
       <file_size>$generate.file_size</file_size>
-      <max_record_bytes>$label.RECORD_BYTES.toString()</max_record_bytes>
+      <max_record_bytes>$label.RECORD_BYTES</max_record_bytes>
       <md5_checksum>$generate.md5_checksum</md5_checksum>
-      <records>$label.FILE_RECORDS.toString()</records>
+      <records>$label.FILE_RECORDS</records>
     </File>
     <Array_2D_Image base_class="Array_Base">
       <local_identifier>IMAGE</local_identifier>

@@ -133,7 +133,7 @@ TARGET_NAME		= "DEIMOS"
 				<b><u>Velocity</u></b>
 <source>
 &lt;Subject_Area&gt;
-  &lt;target_name&gt;$label.TARGET_NAME.toString()&lt;/target_name&gt;
+  &lt;target_name&gt;$label.TARGET_NAME&lt;/target_name&gt;
 &lt;/Subject_Area&gt;
 </source>
     	</subsection>
@@ -282,7 +282,7 @@ INST_AZIMUTH			= 114.0210 &lt;deg&gt;
 				<b><u>Velocity</u></b>
 <source>
 &lt;Geometry_Parameters&gt;
-  &lt;azimuth units="$label.getUnits('INST_AZIMUTH')"&gt;$label.INST_AZIMUTH.toString()&lt;/azimuth&gt;
+  &lt;azimuth units="$label.getUnits('INST_AZIMUTH')"&gt;$label.INST_AZIMUTH&lt;/azimuth&gt;
 &lt;/Geometry_Parameters&gt;
 </source>
     	</subsection>
