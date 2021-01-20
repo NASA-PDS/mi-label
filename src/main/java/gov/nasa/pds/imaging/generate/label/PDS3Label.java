@@ -163,7 +163,7 @@ public class PDS3Label implements PDSObject {
       } else if (node instanceof ItemNode) {
       	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node));
             
-        return (ItemNode) node;
+        return node;
       } else {
       	Debugger.debug("++ node(1) ------>\n" + node);
           return node;
