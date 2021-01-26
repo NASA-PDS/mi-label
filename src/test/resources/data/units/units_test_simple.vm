@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+###set ( $DEBUG = 1 )
+
+#set ($IDENT = $label)
+#if ( $label.IDENTIFICATION )
+    #set ($IDENT = $label.IDENTIFICATION )
+#end
+
+
+
+
+<units_test>
+ <geom:instrument_azimuth>$label.ROVER_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH</geom:instrument_azimuth>
+    <geom:instrument_azimuth>$label.get("ROVER_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH")</geom:instrument_azimuth>
+    <geom:instrument_azimuth_units>$label.getUnits("ROVER_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH")</geom:instrument_azimuth_units>
+    <geom:instrument_azimuth_units>$label.ROVER_DERIVED_GEOMETRY_PARMS.INSTRUMENT_AZIMUTH.getUnits()</geom:instrument_azimuth_units>
+  
+ #if ( $IDENT.MARS_HELIOCENTRIC_DISTANCE )
+    <geom:Derived_Geometry>
+      <geom:target_name>Mars</geom:target_name>
+
+      <geom:target_heliocentric_distance>$IDENT.MARS_HELIOCENTRIC_DISTANCE</geom:target_heliocentric_distance>
+
+       
+      <geom:target_heliocentric_distance>$label.MARS_HELIOCENTRIC_DISTANCE</geom:target_heliocentric_distance>
+      <geom:target_heliocentric_distance>$label.get("MARS_HELIOCENTRIC_DISTANCE")</geom:target_heliocentric_distance>
+      <geom:target_heliocentric_distance_units>$label.getUnits("MARS_HELIOCENTRIC_DISTANCE")</geom:target_heliocentric_distance_units>
+      <geom:target_heliocentric_distance_units>$label.MARS_HELIOCENTRIC_DISTANCE.getUnits().toString()</geom:target_heliocentric_distance_units>
+      <geom:target_heliocentric_distance_units>$label.MARS_HELIOCENTRIC_DISTANCE.getUnits()</geom:target_heliocentric_distance_units>
+      <geom:target_heliocentric_distance_units>$label.get("MARS_HELIOCENTRIC_DISTANCE").getUnits().toString()</geom:target_heliocentric_distance_units>
+      <geom:target_heliocentric_distance_units>$label.get("MARS_HELIOCENTRIC_DISTANCE").getUnits()</geom:target_heliocentric_distance_units>
+      </geom:Derived_Geometry>
+  #end
+  
+ 
+    
+</units_test>
