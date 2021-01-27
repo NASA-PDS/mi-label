@@ -161,10 +161,9 @@ public class PDS3Label implements PDSObject {
     	  Debugger.debug("++++ node(0.2) get("+key+") node is null  -->\n");
         return null;
       } else if (node instanceof ItemNode) {
-      	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node).toString());
-      	Debugger.debug("++++ node(2) ------>\n" + StringEscapeUtils.escapeXml(((ItemNode) node).toString()));
+      	Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node));
             
-          return StringEscapeUtils.escapeXml(((ItemNode) node).toString());
+        return node;
       } else {
       	Debugger.debug("++ node(1) ------>\n" + node);
           return node;

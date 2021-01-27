@@ -25,7 +25,7 @@
       <stop_date_time>1979-07-09T23:59:06.436Z</stop_date_time>
     </Time_Coordinates>
     <Investigation_Area>
-      <name>voyager 2 jupiter encounter</name>
+      <name>VOYAGER 2 JUPITER ENCOUNTER</name>
       <type>Mission</type>
       <Internal_Reference>
         <lid_reference>urn:nasa:pds:investigation.voyager.2.jupiter.encounter</lid_reference>
@@ -34,18 +34,18 @@
     </Investigation_Area>
     <Observing_System>
       <Observing_System_Component>
-        <name>plasma science experiment</name>
+        <name>PLASMA SCIENCE EXPERIMENT</name>
         <type>Instrument</type>
       </Observing_System_Component>
     </Observing_System>
     <Target_Identification>
-      <name>jupiter</name>
+      <name>JUPITER</name>
       <type>Planet</type>
     </Target_Identification>
   </Observation_Area>
   <File_Area_Observational>
     <File>
-      <file_name>ele_mom.tab</file_name>
+      <file_name>ELE_MOM.TAB</file_name>
     </File>
     <Table_Character>
       <offset unit="byte">0</offset>
@@ -58,7 +58,7 @@
         <Field_Character>
           <name>time</name>
           <field_location unit="byte">1</field_location>
-          <data_type>ASCII_Date_Time</data_type>
+          <data_type>ASCII_Date_Time_YMD_UTC</data_type>
           <field_length unit="byte">24</field_length>
         </Field_Character>
         <Field_Character>

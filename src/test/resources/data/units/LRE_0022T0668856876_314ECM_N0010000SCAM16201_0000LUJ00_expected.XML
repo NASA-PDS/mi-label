@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<units_test>
+  <geom:instrument_azimuth>188.24</geom:instrument_azimuth>
+  <geom:instrument_azimuth>188.24</geom:instrument_azimuth>
+  <geom:instrument_azimuth_units>deg</geom:instrument_azimuth_units>
+  <geom:instrument_azimuth_units>deg</geom:instrument_azimuth_units>
+  <geom:Derived_Geometry>
+    <geom:target_name>Mars</geom:target_name>
+    <geom:target_heliocentric_distance>2.38786e+08</geom:target_heliocentric_distance>
+    <geom:target_heliocentric_distance>2.38786e+08</geom:target_heliocentric_distance>
+    <geom:target_heliocentric_distance>2.38786e+08</geom:target_heliocentric_distance>
+    <geom:target_heliocentric_distance_units>km</geom:target_heliocentric_distance_units>
+    <geom:target_heliocentric_distance_units>km</geom:target_heliocentric_distance_units>
+    <geom:target_heliocentric_distance_units>km</geom:target_heliocentric_distance_units>
+    <geom:target_heliocentric_distance_units>km</geom:target_heliocentric_distance_units>
+    <geom:target_heliocentric_distance_units>km</geom:target_heliocentric_distance_units>
+  </geom:Derived_Geometry>
+</units_test>

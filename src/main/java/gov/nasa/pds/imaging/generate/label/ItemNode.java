@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class ItemNode extends ArrayList<String>{
 
     private String name;
@@ -119,7 +121,7 @@ public class ItemNode extends ArrayList<String>{
               out = out.substring(0, out.length()-1) + ")";
           }
         }
-        return out;
+        return StringEscapeUtils.escapeXml(out);
     }
 
 }
