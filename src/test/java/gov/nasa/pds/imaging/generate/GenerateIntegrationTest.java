@@ -326,7 +326,7 @@ public class GenerateIntegrationTest extends GenerateTest {
       String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
       System.out.println(testPath);
       String outFilePath = TestConstants.TEST_OUT_DIR;
-      File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.XML");
+      File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
       File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
 
         String[] args = {//"-d",
