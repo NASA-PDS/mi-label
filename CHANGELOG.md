@@ -1,16 +1,16 @@
 # Changelog
 
-## [v1.2.0](https://github.com/NASA-PDS/mi-label/tree/v1.2.0) (2021-01-27)
+## [v1.3.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/v1.3.0-SNAPSHOT) (2021-04-23)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/1.2.0-SNAPSHOT...v1.2.0)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.0...v1.3.0-SNAPSHOT)
 
-**Closed issues:**
+## [v1.2.0](https://github.com/NASA-PDS/mi-label/tree/v1.2.0) (2021-01-28)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/1.1.3...v1.2.0)
+
+**Improvements:**
 
 - Refactor itemNode to consistently return objects to enable units [\#15](https://github.com/NASA-PDS/mi-label/issues/15)
-
-## [1.2.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/1.2.0-SNAPSHOT) (2020-12-18)
-
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/1.1.3...1.2.0-SNAPSHOT)
 
 ## [1.1.3](https://github.com/NASA-PDS/mi-label/tree/1.1.3) (2020-12-11)
 
@@ -22,9 +22,9 @@
 
 **Defects:**
 
-- Windows version will not run because of error in generate.bat [\#10](https://github.com/NASA-PDS/mi-label/issues/10)
+- Windows version will not run because of error in generate.bat [\#10](https://github.com/NASA-PDS/mi-label/issues/10) [[s.high](https://github.com/NASA-PDS/mi-label/labels/s.high)]
 
-**Closed issues:**
+**Other closed issues:**
 
 - \[SECURITY\] Update Reference equality test on strings [\#8](https://github.com/NASA-PDS/mi-label/issues/8)
 
@@ -40,7 +40,7 @@
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.0.0...v1.1.0)
 
-**Closed issues:**
+**Improvements:**
 
 - Complete Generate rename to MILabel and open source [\#4](https://github.com/NASA-PDS/mi-label/issues/4)
 
