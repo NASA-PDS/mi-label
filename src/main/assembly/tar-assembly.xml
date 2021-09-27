@@ -99,7 +99,25 @@
 
   <files>
     <file>
-      <source>LICENSE.txt</source>
+      <source>LICENSE.md</source>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
+    </file>
+    <file>
+      <source>CHANGELOG.md</source>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
+    </file>
+    <file>
+      <source>NOTICE.txt</source>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
+    </file>
+    <file>
+      <source>README.md</source>
       <outputDirectory>/</outputDirectory>
       <fileMode>644</fileMode>
       <lineEnding>unix</lineEnding>
