@@ -105,16 +105,9 @@ public class GenerateIntegrationTest extends GenerateTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	public void setUp() throws Exception {
-//    super.setUp();
+
     System.setSecurityManager(new NoExitSecurityManager());
 
 	  // Generator(final PDSObject pdsObject, final File templateFile, final String filePath, final String confPath, final File outputFile)
@@ -166,9 +159,6 @@ public class GenerateIntegrationTest extends GenerateTest {
     	}
 	}
 
-    /**
-     *
-     */
     @Test
     public void testTransformCLI() {
     	try {
@@ -316,15 +306,10 @@ public class GenerateIntegrationTest extends GenerateTest {
     }
   }
 
-
-	/**
-   *
-   */
   @Test
   public void testUnits() {
     try {
       String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
-      System.out.println(testPath);
       String outFilePath = TestConstants.TEST_OUT_DIR;
       File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
       File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
@@ -356,14 +341,10 @@ public class GenerateIntegrationTest extends GenerateTest {
     }
   }
   
-	/**
-  *
-  */
  @Test
  public void testUnitsProductTools() {
    try {
      String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
-     System.out.println(testPath);
      String outFilePath = TestConstants.TEST_OUT_DIR;
      File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
      File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
