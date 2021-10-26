@@ -1,16 +1,12 @@
 # Changelog
 
-## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2021-10-26)
+## [v1.3.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/v1.3.0-SNAPSHOT) (2021-10-26)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0-SNAPSHOT...«unknown»)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.0...v1.3.0-SNAPSHOT)
 
 **Defects:**
 
 - Product-Tools parsing mode cannot parse units [\#21](https://github.com/NASA-PDS/mi-label/issues/21) [[s.medium](https://github.com/NASA-PDS/mi-label/labels/s.medium)]
-
-## [v1.3.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/v1.3.0-SNAPSHOT) (2021-09-27)
-
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.0...v1.3.0-SNAPSHOT)
 
 ## [v1.2.0](https://github.com/NASA-PDS/mi-label/tree/v1.2.0) (2021-01-28)
 
