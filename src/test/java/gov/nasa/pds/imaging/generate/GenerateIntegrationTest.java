@@ -38,11 +38,11 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.Utility;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Permission;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -227,6 +227,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
+    } catch (IOException e) {
+     	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -260,6 +262,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
+    } catch (IOException e) {
+     	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -297,6 +301,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
+    } catch (IOException e) {
+   	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -330,6 +336,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
+    } catch (IOException e) {
+   	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
   
@@ -365,6 +373,8 @@ public class GenerateIntegrationTest extends GenerateTest {
            FileUtils.contentEquals(expected, output));
    } catch (ExitException e) {
      assertEquals("Exit status", 0, e.status);
+   } catch (IOException e) {
+	 fail("Test Failed Due To Exception: " + e.getMessage());
    }
  }
 
