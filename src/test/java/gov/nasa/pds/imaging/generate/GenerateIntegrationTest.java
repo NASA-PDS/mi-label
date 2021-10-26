@@ -227,8 +227,6 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -262,8 +260,6 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -301,8 +297,6 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -336,8 +330,6 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
   
@@ -373,8 +365,6 @@ public class GenerateIntegrationTest extends GenerateTest {
            FileUtils.contentEquals(expected, output));
    } catch (ExitException e) {
      assertEquals("Exit status", 0, e.status);
-   } catch (Exception e) {
-     fail("Test Failed Due To Exception: " + e.getMessage());
    }
  }
 
