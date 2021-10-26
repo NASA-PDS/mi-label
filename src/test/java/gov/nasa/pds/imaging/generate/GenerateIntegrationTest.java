@@ -38,11 +38,11 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.Utility;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Permission;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -105,16 +105,9 @@ public class GenerateIntegrationTest extends GenerateTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	public void setUp() throws Exception {
-//    super.setUp();
+
     System.setSecurityManager(new NoExitSecurityManager());
 
 	  // Generator(final PDSObject pdsObject, final File templateFile, final String filePath, final String confPath, final File outputFile)
@@ -166,9 +159,6 @@ public class GenerateIntegrationTest extends GenerateTest {
     	}
 	}
 
-    /**
-     *
-     */
     @Test
     public void testTransformCLI() {
     	try {
@@ -237,8 +227,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
+    } catch (IOException e) {
+     	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -272,8 +262,8 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     }  catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
+    } catch (IOException e) {
+     	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -311,20 +301,15 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
+    } catch (IOException e) {
+   	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
-
-	/**
-   *
-   */
   @Test
   public void testUnits() {
     try {
       String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
-      System.out.println(testPath);
       String outFilePath = TestConstants.TEST_OUT_DIR;
       File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
       File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
@@ -351,10 +336,47 @@ public class GenerateIntegrationTest extends GenerateTest {
             FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
-    } catch (Exception e) {
-      fail("Test Failed Due To Exception: " + e.getMessage());
+    } catch (IOException e) {
+   	  fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
+  
+ @Test
+ public void testUnitsProductTools() {
+   try {
+     String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
+     String outFilePath = TestConstants.TEST_OUT_DIR;
+     File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
+     File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
+
+     System.setProperty("pds.generate.parser.type", "product-tools");
+     
+       String[] args = {//"-d",
+           "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG",
+           "-t", testPath + "/units_test_simple.vm",
+           "-o", outFilePath,
+           "-b", testPath
+           };
+
+       GenerateLauncher.main(args);
+
+       // Check expected file exists
+       assertTrue(expected.getAbsolutePath() + " does not exist.",
+           expected.exists());
+
+       // Check output was generated
+       assertTrue(output.getAbsolutePath() + " does not exist.",
+           output.exists());
+
+       // Check the files match
+       assertTrue(expected + " and " + output + " do not match.",
+           FileUtils.contentEquals(expected, output));
+   } catch (ExitException e) {
+     assertEquals("Exit status", 0, e.status);
+   } catch (IOException e) {
+	 fail("Test Failed Due To Exception: " + e.getMessage());
+   }
+ }
 
   // FIXME Under construction, this doesn't work
   @Test

@@ -101,7 +101,10 @@
           <field_location>1</field_location>
           <data_type>TIME</data_type>
           <field_length>24</field_length>
-          <description>Time column. This field contains time in PDS format yyyy-mm-ddThh:mm:ss.sssZ. The individual elements of the time field can be read using the format (i4,4(1x,i2),1x,f6.3) yr, mon, day, hr, min, sec.</description>
+          <description>Time column. This field contains time in PDS format                     
+      yyyy-mm-ddThh:mm:ss.sssZ. The individual elements of the                
+      time field can be read using the format                                 
+      (i4,4(1x,i2),1x,f6.3) yr, mon, day, hr, min, sec.</description>
         </Field_Character>
         <Field_Character>
           <name>ELE_DEN</name>
@@ -120,7 +123,8 @@
           <field_location>35</field_location>
           <data_type>ASCII_REAL</data_type>
           <field_length>10</field_length>
-          <description>Column contains total electron moment temperature in units of electron volts.</description>
+          <description>Column contains total electron moment temperature in units of           
+      electron volts.</description>
           <Special_Constants>
             <missing_constant>-9.99e+10</missing_constant>
           </Special_Constants>

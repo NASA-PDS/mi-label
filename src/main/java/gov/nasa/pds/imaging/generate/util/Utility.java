@@ -30,12 +30,11 @@
 
 package gov.nasa.pds.imaging.generate.util;
 
-import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
-
 import java.io.File;
+import java.io.IOException;
 
 public class Utility {
-	public static String getAbsolutePath(String path) throws Exception {
+	public static String getAbsolutePath(String path) throws IOException {
 		String finalPath = "";
 		File testFile = new File(path);
 		if (!testFile.isAbsolute()) {
@@ -45,7 +44,7 @@ public class Utility {
 		}
 		
 		if (!(new File(finalPath)).exists()) {
-			throw new Exception("Path does not exist: " + finalPath);
+			throw new IOException("Path does not exist: " + finalPath);
 		}
 		
 		return finalPath;
