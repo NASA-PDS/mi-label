@@ -355,6 +355,47 @@ public class GenerateIntegrationTest extends GenerateTest {
       fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
+  
+	/**
+  *
+  */
+ @Test
+ public void testUnitsProductTools() {
+   try {
+     String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
+     System.out.println(testPath);
+     String outFilePath = TestConstants.TEST_OUT_DIR;
+     File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
+     File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
+
+     System.setProperty("pds.generate.parser.type", "product-tools");
+     
+       String[] args = {//"-d",
+           "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG",
+           "-t", testPath + "/units_test_simple.vm",
+           "-o", outFilePath,
+           "-b", testPath
+           };
+
+       GenerateLauncher.main(args);
+
+       // Check expected file exists
+       assertTrue(expected.getAbsolutePath() + " does not exist.",
+           expected.exists());
+
+       // Check output was generated
+       assertTrue(output.getAbsolutePath() + " does not exist.",
+           output.exists());
+
+       // Check the files match
+       assertTrue(expected + " and " + output + " do not match.",
+           FileUtils.contentEquals(expected, output));
+   } catch (ExitException e) {
+     assertEquals("Exit status", 0, e.status);
+   } catch (Exception e) {
+     fail("Test Failed Due To Exception: " + e.getMessage());
+   }
+ }
 
   // FIXME Under construction, this doesn't work
   @Test

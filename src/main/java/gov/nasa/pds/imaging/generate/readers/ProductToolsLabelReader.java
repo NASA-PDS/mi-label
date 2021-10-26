@@ -131,6 +131,9 @@ public class ProductToolsLabelReader {
       Set values = (Set) attribute.getValue();
       for (Scalar value : values) {
         itemNode.addValue(value.toString());
+        if (value instanceof Numeric) {
+        	itemNode.setUnits(((Numeric) value).getUnits());
+        }
       }
     } else if (attribute.getValue() instanceof Sequence) {
       Sequence values = (Sequence) attribute.getValue();
@@ -138,7 +141,12 @@ public class ProductToolsLabelReader {
         itemNode.addValue(value.toString());
       }
     } else {
-      itemNode.addValue(attribute.getValue().toString());
+      Value value = attribute.getValue();
+      itemNode.addValue(value.toString());
+      
+      if (value instanceof Numeric) {
+      	itemNode.setUnits(((Numeric) value).getUnits());
+      }
     }
     
     Debugger.debug("2) PDS3LabelReader.handleItemNode nodeName "+ attribute.getClass().getName() + ", elementName "+elementName+" units "+units);
