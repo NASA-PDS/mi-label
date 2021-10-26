@@ -1,1 +1,1 @@
-/usr/local/Cellar/openjdk/15.0.1/bin/javadoc @options @packages
+/usr/lib/jvm/java-1.8-openjdk/jre/../bin/javadoc @options @packages
