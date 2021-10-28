@@ -55,7 +55,7 @@ POSSIBILITY OF SUCH DAMAGE.
   <url>https://nasa-pds.github.io/mi-label/</url>
   
   <scm>
-    <url>https://github.com/NASA-PDS/mi-label/tree/master</url>
+    <url>https://github.com/NASA-PDS/mi-label/tree/main</url>
     <connection>scm:git:git://github.com/NASA-PDS/mi-label.git</connection>
     <developerConnection>scm:git:ssh://github.com:NASA-PDS/mi-label.git</developerConnection>
   </scm>
