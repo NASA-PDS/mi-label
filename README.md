@@ -1,5 +1,7 @@
 # Metadata Injector for PDS Labels (MILabel)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5756402.svg)](https://doi.org/10.5281/zenodo.5756402)
+
 This is a software tool, formerly known as "Generate Tool", that provides a command-line interface for generating PDS4 Labels using a user-provided PDS4 XML template and input (source) data products to parse the metadata from the source and inject into the output PDS4 labels. The XML-like Templates use Apache Velocity variables and logic to enable the programmatic generation of the labels.
 
 
