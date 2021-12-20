@@ -115,11 +115,11 @@
         <source>
 Change the following line 
         
-"${JAVA_HOME}"/bin/java -jar ${MILABEL_JAR} "$@"
+${JAVA_CMD} -jar ${GENERATE_JAR} "$@"
 
 to
         
-"${JAVA_HOME}"/bin/java -Dpds.generate.parser.type=product-tools -jar ${MILABEL_JAR} "$@"                
+${JAVA_CMD} -Dpds.generate.parser.type=product-tools -jar ${GENERATE_JAR} "$@"                
         </source>
         
         <p><b><i>Windows Environmnet</i></b></p>
