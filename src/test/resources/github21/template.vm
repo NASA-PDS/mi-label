@@ -1,0 +1,4 @@
+The property with a unit:
+The unit: $label.getUnits('PROPERTY_WITH_UNIT')
+The value: $label.get('PROPERTY_WITH_UNIT')
+
