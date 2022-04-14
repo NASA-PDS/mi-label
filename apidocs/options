@@ -9,7 +9,7 @@
 '/github/workspace/src/main/java'
 -author
 -bottom
-'Copyright &#169; 2021. All rights reserved.'
+'Copyright &#169; 2022. All rights reserved.'
 -charset
 'UTF-8'
 -d
@@ -17,10 +17,10 @@
 -docencoding
 'UTF-8'
 -doctitle
-'gov.nasa.pds:mi-label 1.2.1 API'
+'gov.nasa.pds:mi-label 1.2.2 API'
 -linkoffline
 'https://docs.oracle.com/javase/8/docs/api' '/github/workspace/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
-'gov.nasa.pds:mi-label 1.2.1 API'
+'gov.nasa.pds:mi-label 1.2.2 API'
