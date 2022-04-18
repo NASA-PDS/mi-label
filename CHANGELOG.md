@@ -1,12 +1,12 @@
 # Changelog
 
+## [v1.3.0-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/v1.3.0-SNAPSHOT) (2022-04-14)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.2...v1.3.0-SNAPSHOT)
+
 ## [v1.2.2](https://github.com/NASA-PDS/mi-label/tree/v1.2.2) (2022-04-14)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.2-SNAPSHOT...v1.2.2)
-
-## [v1.2.2-SNAPSHOT](https://github.com/NASA-PDS/mi-label/tree/v1.2.2-SNAPSHOT) (2021-12-20)
-
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.1...v1.2.2-SNAPSHOT)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.1...v1.2.2)
 
 ## [v1.2.1](https://github.com/NASA-PDS/mi-label/tree/v1.2.1) (2021-10-26)
 
