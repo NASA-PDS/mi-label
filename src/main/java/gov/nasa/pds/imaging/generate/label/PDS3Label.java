@@ -36,6 +36,7 @@ import gov.nasa.pds.imaging.generate.context.ContextUtil;
 import gov.nasa.pds.imaging.generate.readers.PDS3LabelReader;
 import gov.nasa.pds.imaging.generate.readers.ParserType;
 import gov.nasa.pds.imaging.generate.readers.ProductToolsLabelReader;
+import gov.nasa.pds.imaging.generate.readers.VICARReaderException;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.tools.label.Label;
 
@@ -434,6 +435,9 @@ public class PDS3Label implements PDSObject {
         }
         	
         // start of traversal of DOM
+        if (this.vicarDocument == null) {
+        	throw new VICARReaderException("VICAR library unable to read document. Consider trying Product Tools library as an alternative reader. See Advanced Usage documentation for more details.");
+        }
         final Node root = this.vicarDocument.getDocumentElement();
   
         this.flatLabel = reader.traverseDOM(root);
