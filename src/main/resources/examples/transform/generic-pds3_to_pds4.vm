@@ -469,7 +469,7 @@
     <$fieldType>
       #set ( $bitColumns = false )
       #getBitColumns($column $fieldType $bitColumns)
-      <name>$column.NAME.toString()[0].toLowerCase()</name>
+      <name>$column.NAME[0].toString().toLowerCase()</name>
       <field_location unit="byte">1</field_location>
       #if ( $!{bitColumns} && $bitColumns.size() > 0 )
       <data_type>UnsignedBitString</data_type>
@@ -493,7 +493,7 @@
   <$fieldType>
     #set ( $bitColumns = false )
     #getBitColumns($column $fieldType $bitColumns)  
-    <name>$column.NAME.toString()[0].toLowerCase()</name>
+    <name>$column.NAME[0].toString().toLowerCase()</name>
     <field_location unit="byte">$column.START_BYTE</field_location>
     #if ( $!{bitColumns} && $bitColumns.size() > 0 )
     <data_type>UnsignedBitString</data_type>
@@ -645,7 +645,7 @@
 #macro( mapBitColumns $bitColumns $groupType)
   #foreach ( $bitColumn in $bitColumns )
   <Field_Bit>
-    <name>$bitColumn.NAME.toString()[0].toLowerCase()</name>
+    <name>$bitColumn.NAME[0].toString().toLowerCase()</name>
     <start_bit_location>$bitColumn.START_BIT</start_bit_location>
     #set( $Integer = 0 )
     #set ( $stopBit = $Integer.parseInt($bitColumn.START_BIT.toString()) + $Integer.parseInt($bitColumn.BITS.toString()) - 1 )
