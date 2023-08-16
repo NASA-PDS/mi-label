@@ -90,6 +90,14 @@
       <fileMode>644</fileMode>
     </fileSet>
     <fileSet>
+      <directory>src/main/resources/examples/transform</directory>
+      <outputDirectory>examples/transform</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+      <fileMode>644</fileMode>
+    </fileSet>
+    <fileSet>
       <directory>target/site</directory>
       <outputDirectory>doc</outputDirectory>
       <fileMode>644</fileMode>
