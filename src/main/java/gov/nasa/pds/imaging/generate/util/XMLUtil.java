@@ -30,20 +30,20 @@
 
 package gov.nasa.pds.imaging.generate.util;
 
-import gov.nasa.pds.imaging.generate.TemplateException;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import gov.nasa.pds.imaging.generate.TemplateException;
 
 /**
  * Utility class for reading XML files
@@ -53,17 +53,19 @@ import org.w3c.dom.NodeList;
  */
 public class XMLUtil {
     /**
-     * Static method that returns a list of Classes that will be extracted from
-     * the XML file for context mappings.
+     * Static method that returns a list of Classes that will be extracted from the XML file for
+     * context mappings.
      * 
      * @param file
      * @param tag
      * @return
      * @throws TemplateException
-     * @throws Exception
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     public static List<String> getClassList(final InputStream inputStream, final String tag)
-            throws TemplateException, Exception {
+        throws TemplateException, ParserConfigurationException, SAXException, IOException {
       try {
         final List<String> classList = new ArrayList<String>();
 
@@ -86,18 +88,20 @@ public class XMLUtil {
     }
 
     /**
-     * A static method that returns the mapping of String to Class for Generated
-     * Values found in the Velocity Template.
+     * A static method that returns the mapping of String to Class for Generated Values found in the
+     * Velocity Template.
      * 
      * @param file
      * @param key
      * @param value
      * @return
      * @throws TemplateException
+     * @throws IOException
+     * @throws SAXException
      * @throws Exception
      */
     public static Map<String, Class<?>> getGeneratedMappings(final InputStream inputStream,
-            final String key, final String value) throws TemplateException, Exception {
+        final String key, final String value) throws TemplateException, SAXException, IOException {
         final Map<String, Class<?>> map = new HashMap<String, Class<?>>();
         try {
           final DocumentBuilderFactory domFactory = DocumentBuilderFactory
@@ -116,8 +120,16 @@ public class XMLUtil {
           }
   
           return map;
+        } catch (SAXException sax) {
+          throw new TemplateException(
+              "Internal Error. Could not read config files: " + sax.getMessage());
+        } catch (ParserConfigurationException | ClassNotFoundException e) {
+          // We should never get this error, so if we do, let's just stacktrace it and crash
+          e.printStackTrace();
+          System.exit(1);
         } finally {
           IOUtils.closeQuietly(inputStream);
         }
+        return null;
     }
 }

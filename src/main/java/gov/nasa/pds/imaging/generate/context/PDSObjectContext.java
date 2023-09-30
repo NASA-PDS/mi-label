@@ -30,8 +30,10 @@
 
 package gov.nasa.pds.imaging.generate.context;
 
+import java.io.IOException;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.tools.LabelParserException;
 
 /**
  * Interface for the PDS Context to be used for extracting values for the
@@ -47,5 +49,5 @@ public interface PDSObjectContext extends PDSContext {
     
     public void setParameters(PDSObject pdsObject);
 
-    public void setMappings() throws Exception;
+    public void setMappings() throws TemplateException, LabelParserException, IOException;
 }

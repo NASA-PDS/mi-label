@@ -30,6 +30,14 @@
 
 package gov.nasa.pds.imaging.generate.readers;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.label.FlatLabel;
 import gov.nasa.pds.imaging.generate.label.ItemNode;
@@ -49,16 +57,6 @@ import gov.nasa.pds.tools.label.Statement;
 import gov.nasa.pds.tools.label.Value;
 import gov.nasa.pds.tools.label.parser.DefaultLabelParser;
 import gov.nasa.pds.tools.util.MessageUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -281,16 +279,17 @@ public class ProductToolsLabelReader {
    * 
    * PDSLabelToDom: Within the DOM returned the Elements are:
    * 
-   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All
-   * commented text in label is contained within these elements item - A data
-   * item at base level of label GROUP - A group of related elements
-   * containing a collection of items OBJECT - A group of related elements
+   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All commented text in label
+   * is contained within these elements item - A data item at base level of label GROUP - A group of
+   * related elements containing a collection of items OBJECT - A group of related elements
    * containing a collection of items
    * 
    * @param filePath
-   * @throws Exception 
+   * @throws LabelReaderException
+   * @throws LabelParserException
+   * @throws Exception
    */   
-  public Label parseLabel(final String filePath) throws Exception {
+  public Label parseLabel(final String filePath) throws LabelParserException {
     ManualPathResolver resolver = new ManualPathResolver();
     if (!includePaths.isEmpty()) {
       resolver.setIncludePaths(includePaths);
@@ -311,11 +310,10 @@ public class ProductToolsLabelReader {
         // be the key itself.
         message = lpe.getKey();
       }
-      throw new Exception ("Error occurred while trying to parse label '"
-          + filePath + "': " + message);
+      throw lpe;
     } catch (IOException io) {
-      throw new Exception ("Error occurred while trying to parse label '"
-          + filePath + "': " + io.getMessage());
+      throw new LabelParserException("IOException: Error reading file: " + io.getMessage(), null,
+          null);
     }      
   }
   

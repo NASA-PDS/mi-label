@@ -30,12 +30,15 @@
 
 package gov.nasa.pds.imaging.generate.context;
 
+import java.io.IOException;
+import java.util.HashMap;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.XMLUtil;
 import gov.nasa.pds.imaging.generate.util.Debugger;
-
-import java.util.HashMap;
+import gov.nasa.pds.imaging.generate.util.XMLUtil;
+import gov.nasa.pds.tools.LabelParserException;
 
 public class ContextMappings {
 
@@ -46,35 +49,56 @@ public class ContextMappings {
 
     public HashMap<String, PDSContext> contextMap = new HashMap<String, PDSContext>();
     
-    public ContextMappings() throws TemplateException, Exception {
-        for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME), XML_TAG)) {
-            final PDSContext context = (PDSContext) Class.forName(cl).newInstance();
-            this.contextMap.put(context.getContext(), context);
+    public ContextMappings() throws TemplateException, IOException {
+        try {
+          for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME), XML_TAG)) {
+              final PDSContext context = (PDSContext) Class.forName(cl).newInstance();
+              this.contextMap.put(context.getContext(), context);
+          }
+        } catch (SAXException sax) {
+          throw new TemplateException(
+              "Internal Error. Could not read config files: " + sax.getMessage());
+        } catch (IllegalAccessException | InstantiationException | ParserConfigurationException
+            | ClassNotFoundException e) {
+          // We should never get this error, so if we do, let's just stacktrace it and crash
+          e.printStackTrace();
+          System.exit(1);
         }
     }
 
     /**
-     * Populates the contextMap with those classes specified in the context
-     * mappings XML file.
+     * Populates the contextMap with those classes specified in the context mappings XML file.
      * 
      * @throws TemplateException
+     * @throws LabelParserException
+     * 
      * @throws Exception
      */
     public ContextMappings(final PDSObject pdsObject)
-            throws TemplateException, Exception {
+        throws TemplateException, IOException, LabelParserException {
     	Debugger.debug("Generator.ContextMappings()");
-        for (final String cl : XMLUtil.getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME),
-                XML_TAG)) {
-        	Object instance = Class.forName(cl).newInstance();
-        	if (instance instanceof PDSObjectContext) {
-	            final PDSObjectContext context = (PDSObjectContext) instance;
-	            context.setParameters(pdsObject);
-	            context.setMappings();
-	            this.contextMap.put(context.getContext(), context);
-        	} else if (instance instanceof PDSContext) {
-	            final PDSContext context = (PDSContext) instance;
-	            this.contextMap.put(context.getContext(), context);
-        	}
+        try {
+          for (final String cl : XMLUtil
+              .getClassList(ContextMappings.class.getResourceAsStream(XML_FILENAME), XML_TAG)) {
+            Object instance = Class.forName(cl).newInstance();
+            if (instance instanceof PDSObjectContext) {
+              final PDSObjectContext context = (PDSObjectContext) instance;
+              context.setParameters(pdsObject);
+              context.setMappings();
+              this.contextMap.put(context.getContext(), context);
+            } else if (instance instanceof PDSContext) {
+              final PDSContext context = (PDSContext) instance;
+              this.contextMap.put(context.getContext(), context);
+            }
+          }
+        } catch (SAXException sax) {
+          throw new TemplateException(
+              "Internal Error. Could not read config files: " + sax.getMessage());
+        } catch (IllegalAccessException | InstantiationException | ParserConfigurationException
+            | ClassNotFoundException e) {
+          // We should never get this error, so if we do, let's just stacktrace it and crash
+          e.printStackTrace();
+          System.exit(1);
         }
     }
 

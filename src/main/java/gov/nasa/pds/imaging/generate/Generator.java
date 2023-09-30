@@ -32,6 +32,7 @@ package gov.nasa.pds.imaging.generate;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -100,7 +101,7 @@ public class Generator {
     // this allows the OutputStream to be passed in from the caller (jConvertIIO)
     // Then all writers work in a consistent way. Also allows writing to a URL (webdav)
 
-    public Generator() throws Exception {
+    public Generator() throws TemplateException, IOException {
         this.context = null;
         this.templatePath = "";
         this.inputFilePath = "";
@@ -498,11 +499,12 @@ public class Generator {
      * Functionality to generate the PDS4 Label from the Velocity Template
      *
      * @param toStdOut - Determines whether the output should be to a file or System.out
+     * @throws FileNotFoundException
      *
      * @throws Exception - when output file does not exist, or error close String writer
      * @throws TemplateException - when output is null - reason needs to be found
      */
-    public void generate(final boolean toStdOut) throws Exception {
+    public void generate(final boolean toStdOut) throws FileNotFoundException, TemplateException {
         final StringWriter sw = new StringWriter();
         PrintWriter out = null;
 
@@ -545,7 +547,8 @@ public class Generator {
             String output = clean(sw);
 
             if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
-                throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
+              throw new TemplateException(
+                  "Unknown error generating PDS4 Label. No output found. Verify input files are valid.");
             } else {
                 if (toStdOut) {
                     System.out.println(output);
@@ -560,11 +563,15 @@ public class Generator {
                 }
             }
         } finally {
-            sw.close();
             try {
-                out.close();
-            } catch (final NullPointerException e) {
+              sw.close();
+            } catch (IOException e) {
+              e.printStackTrace();
             }
+
+            if (out != null) {
+                out.close();
+              }
         }
     }
 
@@ -710,7 +717,7 @@ public class Generator {
      * @throws TemplateException
      * @throws Exception
      */
-    public void setContext() throws TemplateException, Exception {
+    public void setContext() throws TemplateException {
         addToolManager();
         
         if (noContext == true) {

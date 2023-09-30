@@ -30,6 +30,17 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.imageio.stream.ImageInputStream;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
@@ -38,21 +49,8 @@ import gov.nasa.pds.imaging.generate.readers.ParserType;
 import gov.nasa.pds.imaging.generate.readers.ProductToolsLabelReader;
 import gov.nasa.pds.imaging.generate.readers.VICARReaderException;
 import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.tools.LabelParserException;
 import gov.nasa.pds.tools.label.Label;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.imageio.stream.ImageInputStream;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 /**
  * Represents PDS3 Label object to provide the necessary functionality to
@@ -413,7 +411,7 @@ public class PDS3Label implements PDSObject {
   }
 
   @Override
-  public void setMappings() {
+  public void setMappings() throws TemplateException, LabelParserException {
 	  Debugger.debug("PDS3Label.setMapping parserType = "+this.parserType);
     if (this.parserType.equals(ParserType.VICAR)) {
       Debugger.debug("+++++++++++++++++++++++++++\n"
@@ -474,12 +472,11 @@ public class PDS3Label implements PDSObject {
         this.flatLabel = reader.traverseDOM(this.labelDocument);
         this.pdsObjectNames = reader.getPDSObjectNames();
         this.pdsSimpleItemNames = reader.getPDSSimpleItemNames();
-      } catch (final FileNotFoundException fnfe) {
-        // TODO - create a logger
-        fnfe.printStackTrace();
-      } catch (Exception e) {
+      } catch (MalformedURLException e) {
         e.printStackTrace();
-      }      
+        throw new TemplateException(
+            "Template includes are invalid or cannot be found:" + e.getMessage());
+      }
     }
     
     
