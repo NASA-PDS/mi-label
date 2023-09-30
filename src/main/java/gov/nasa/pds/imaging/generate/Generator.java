@@ -30,19 +30,14 @@
 
 package gov.nasa.pds.imaging.generate;
 
-import gov.nasa.pds.imaging.generate.context.ContextMappings;
-import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.imageio.stream.ImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,7 +51,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
@@ -75,8 +69,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import java.io.OutputStream;
+import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
+import gov.nasa.pds.imaging.generate.context.ContextMappings;
+import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class Generator {
 
@@ -555,7 +551,8 @@ public class Generator {
 
             String output = clean(sw);
 
-            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+            // TODO Need to validate products prior to this step to find WHY output == null
+            if (output.equals("null")) {
                 throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
                 if (toStdOut) {
