@@ -1,5 +1,9 @@
 # Changelog
 
+## [release/1.3.0](https://github.com/NASA-PDS/mi-label/tree/release/1.3.0) (2023-09-30)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.2...release/1.3.0)
+
 ## [v1.2.2](https://github.com/NASA-PDS/mi-label/tree/v1.2.2) (2022-04-14)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.1...v1.2.2)
