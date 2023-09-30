@@ -69,7 +69,6 @@ POSSIBILITY OF SUCH DAMAGE.
   
   <properties>
     <pds3-product-tools-version>4.3.0</pds3-product-tools-version>
-    <vicario-version>48.0.3-SNAPSHOT</vicario-version>
   </properties>
 
   <build>
@@ -226,9 +225,10 @@ POSSIBILITY OF SUCH DAMAGE.
       <version>2.12.6.1</version>
     </dependency>
     <dependency>
-      <groupId>gov.nasa.jpl.ammos.ids.vicario</groupId>
+      <groupId>gov.nasa.pds</groupId>
       <artifactId>vicario</artifactId>
-      <version>${vicario-version}</version>
+      <version>48.0.3-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>gov.nasa.pds</groupId>
