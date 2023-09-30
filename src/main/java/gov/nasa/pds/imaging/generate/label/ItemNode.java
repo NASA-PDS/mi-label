@@ -31,9 +31,7 @@
 package gov.nasa.pds.imaging.generate.label;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.lang.StringEscapeUtils;
 
 public class ItemNode extends ArrayList<String> {

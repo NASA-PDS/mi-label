@@ -49,10 +49,10 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 import jpl.mipl.io.plugins.PDSLabelToDOM;
 
 /**
- * 
+ *
  * @author jpadams
  * @author slevoe
- * 
+ *
  */
 public class PDS3LabelReader {
 
@@ -66,7 +66,7 @@ public class PDS3LabelReader {
   public PDS3LabelReader() {
 
     // from PDS3 Label
-    this.pdsObjectTypes = new ArrayList<String>();
+    this.pdsObjectTypes = new ArrayList<>();
     this.pdsObjectTypes.add(FlatLabel.GROUP_TYPE);
     this.pdsObjectTypes.add(FlatLabel.OBJECT_TYPE);
     // from VICAR_LABEL
@@ -74,17 +74,17 @@ public class PDS3LabelReader {
     this.pdsObjectTypes.add(FlatLabel.PROPERTY_TYPE);
     this.pdsObjectTypes.add(FlatLabel.TASK_TYPE);
 
-    this.pdsObjectNames = new ArrayList<String>();
+    this.pdsObjectNames = new ArrayList<>();
 
     // from VICAR_LABEL
-    this.vicarTaskNames = new ArrayList<String>();
+    this.vicarTaskNames = new ArrayList<>();
 
     // all items not in a GROUP or OBJECT
-    this.pdsSimpleItemNames = new ArrayList<String>();
+    this.pdsSimpleItemNames = new ArrayList<>();
   }
 
   private Map<String, String> getAttributes(final Node node) {
-    final Map<String, String> attributes = new HashMap<String, String>();
+    final Map<String, String> attributes = new HashMap<>();
 
     // Get any possible attributes of this element
     final NamedNodeMap attrs = node.getAttributes();
@@ -98,9 +98,9 @@ public class PDS3LabelReader {
 
   /**
    * Handles the items created for each node that contain explicit information about the node
-   * 
+   *
    * i.e. quoted, units, etc.
-   * 
+   *
    * @param item
    * @param container
    */
@@ -174,9 +174,9 @@ public class PDS3LabelReader {
 
   /**
    * Handles the items created for each node that contain explicit information about the node
-   * 
+   *
    * i.e. quoted, units, etc.
-   * 
+   *
    * @param item
    * @param container
    */
@@ -245,14 +245,14 @@ public class PDS3LabelReader {
 
   /**
    * Used to recursively loop through the TaskObjects until a leaf item is found
-   * 
+   *
    * container may become a List The Map objects are used for everything may need to use another
    * List to hold all the arguments so we can #foreach thru them * TASK is a List in each list is a
    * Map the map contains specific items we always see TASK, USER, DAT-TIM There will also be a List
    * which contains all the items
-   * 
+   *
    * check the toString to be sure we can handle it all
-   * 
+   *
    * @param node
    * @param container
    */
@@ -324,7 +324,7 @@ public class PDS3LabelReader {
 
   /**
    * Used to recursively loop through the PDSObjects until a leaf item is found
-   * 
+   *
    * @param node
    * @param container
    */
@@ -405,14 +405,14 @@ public class PDS3LabelReader {
 
   /**
    * Parse the label and create a XML DOM representation.
-   * 
+   *
    * PDSLabelToDom: Within the DOM returned the Elements are:
-   * 
+   *
    * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All commented text in label
    * is contained within these elements item - A data item at base level of label GROUP - A group of
    * related elements containing a collection of items OBJECT - A group of related elements
    * containing a collection of items
-   * 
+   *
    * @param filePath
    * @throws IOException
    */
@@ -451,7 +451,7 @@ public class PDS3LabelReader {
 
   /**
    * Traverses the DOM returned by the PDSLabelToDom object.
-   * 
+   *
    * @param root
    */
   public Map<String, Map> traverseDOM(final Node root) {
@@ -479,7 +479,7 @@ public class PDS3LabelReader {
         } else if (labelItem.getNodeName().equalsIgnoreCase("PDS3")) { // PDS3
           // -
           // Version_id
-          final Map<String, String> map = new HashMap<String, String>();
+          final Map<String, String> map = new HashMap<>();
           map.put("units", "null"); // To ensure all labelItems have
           // the proper combination of units
           // and values
@@ -487,7 +487,7 @@ public class PDS3LabelReader {
           flatLabel.put(labelItem.getNodeName(), map);
         } else if (labelItem.getNodeName().equalsIgnoreCase("PDS4")) { // PDS4
 
-          final Map<String, String> map = new HashMap<String, String>();
+          final Map<String, String> map = new HashMap<>();
           map.put("units", "null"); // To ensure all labelItems have
           // the proper combination of units
           // and values
@@ -497,7 +497,7 @@ public class PDS3LabelReader {
           // -
           // Version_id
           // add PDS4 and VICAR
-          final Map<String, String> map = new HashMap<String, String>();
+          final Map<String, String> map = new HashMap<>();
           map.put("units", "null"); // To ensure all labelItems have
           // the proper combination of units
           // and values

@@ -30,13 +30,11 @@
 
 package gov.nasa.pds.imaging.generate.automatic.elements;
 
-import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.stream.ImageInputStream;
+import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class FileSize implements Element {
 

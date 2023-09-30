@@ -30,12 +30,11 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
-import gov.nasa.pds.imaging.generate.util.Debugger;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class FlatLabel implements LabelObject {
   // For PDS3 Label
@@ -67,12 +66,14 @@ public class FlatLabel implements LabelObject {
     return this._flatLabel.get(key);
   }
 
+  @Override
   public String getName() {
     return this._name;
   }
 
+  @Override
   public List<Object> getChildObjects() {
-    List<Object> objects = new ArrayList<Object>();
+    List<Object> objects = new ArrayList<>();
     for (final Iterator iterator = this._flatLabel.keySet().iterator(); iterator.hasNext();) {
       Object object = this._flatLabel.get(iterator.next());
       if (object instanceof ItemNode) {

@@ -30,21 +30,17 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
+import static org.junit.Assert.fail;
 import java.util.HashMap;
-
-import gov.nasa.pds.imaging.generate.constants.TestConstants;
-import gov.nasa.pds.imaging.generate.test.GenerateTest;
-import gov.nasa.pds.imaging.generate.test.GenerateTest.SingleTestRule;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.imaging.generate.util.Utility;
-import static org.junit.Assert.*;
-
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import gov.nasa.pds.imaging.generate.constants.TestConstants;
+import gov.nasa.pds.imaging.generate.test.GenerateTest;
+import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.util.Utility;
 
 @RunWith(JUnit4.class)
 public class PDS3LabelTest extends GenerateTest {
@@ -79,7 +75,7 @@ public class PDS3LabelTest extends GenerateTest {
           Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259/gen_ELE_MOM.LBL"));
       label.setMappings();
 
-      HashMap<String, String> keyValueMap = new HashMap<String, String>();
+      HashMap<String, String> keyValueMap = new HashMap<>();
       keyValueMap.put("PROCESSING_HISTORY_TEXT",
           "CODMAC LEVEL 1 TO LEVEL 2 CONVERSION VIA     JPL/MIPL MPFTELEMPROC");
       keyValueMap.put("INST_CMPRS_NAME",

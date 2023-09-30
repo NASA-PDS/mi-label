@@ -30,6 +30,17 @@
 
 package gov.nasa.pds.imaging.generate;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.ParseException;
 import gov.nasa.pds.imaging.generate.cli.options.Flag;
 import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
 import gov.nasa.pds.imaging.generate.label.PDS3Label;
@@ -39,25 +50,12 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.imaging.generate.util.ToolInfo;
 import gov.nasa.pds.imaging.generate.util.Utility;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.ParseException;
-
 /**
  * Class used as Command-line interface endpoint. Parses command-line arguments and sends workflow
  * onto the Generator object.
- * 
+ *
  * @author jpadams
- * 
+ *
  */
 public class GenerateLauncher {
 
@@ -78,17 +76,17 @@ public class GenerateLauncher {
 
   public GenerateLauncher() {
     this.basePath = null;
-    this.generatorList = new ArrayList<Generator>();
-    this.lblList = new ArrayList<String>();
+    this.generatorList = new ArrayList<>();
+    this.lblList = new ArrayList<>();
     this.outputPath = null;
     this.templateFile = null;
     this.isXML = true;
-    this.includePaths = new ArrayList<String>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
    * Displays tool usage.
-   * 
+   *
    */
   public final void displayHelp() {
     final int maxWidth = 80;
@@ -98,7 +96,7 @@ public class GenerateLauncher {
 
   /**
    * Displays the current version and disclaimer notice.
-   * 
+   *
    */
   public final void displayVersion() {
     System.err.println("\n" + ToolInfo.getName());
@@ -124,10 +122,10 @@ public class GenerateLauncher {
 
   /**
    * A method to parse the command-line arguments.
-   * 
+   *
    * @param args The command-line arguments
    * @return A class representation of the command-line arguments
-   * 
+   *
    * @throws ParseException If there was an error during parsing.
    */
   public final CommandLine parse(final String[] args) throws ParseException {
@@ -138,9 +136,9 @@ public class GenerateLauncher {
   /**
    * Examines the command-line arguments passed into the Harvest Tool and takes the appropriate
    * action based on what flags were set.
-   * 
+   *
    * @param line A class representation of the command-line arguments.
-   * 
+   *
    * @throws Exception If there was an error while querying the options that were set on the
    *         command-line.
    */
@@ -155,8 +153,8 @@ public class GenerateLauncher {
         displayVersion();
         System.exit(0);
       } else if (o.getOpt().equals(Flag.PDS3.getShortName())) {
-        this.lblList = new ArrayList<String>();
-        for (String path : (List<String>) o.getValuesList()) {
+        this.lblList = new ArrayList<>();
+        for (String path : o.getValuesList()) {
           Debugger.debug(Utility.getAbsolutePath(path));
           this.lblList.add(Utility.getAbsolutePath(path));
         }
@@ -265,11 +263,11 @@ public class GenerateLauncher {
    * <p>
    * Default is to always look first in the same directory as the label, then search specified
    * directories.
-   * 
+   *
    * @param i List of paths
    */
   public void setIncludePaths(List<String> i) {
-    this.includePaths = new ArrayList<String>(i);
+    this.includePaths = new ArrayList<>(i);
     while (this.includePaths.remove(""));
   }
 

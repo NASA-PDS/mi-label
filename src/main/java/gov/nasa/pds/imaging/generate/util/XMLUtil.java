@@ -30,32 +30,29 @@
 
 package gov.nasa.pds.imaging.generate.util;
 
-import gov.nasa.pds.imaging.generate.TemplateException;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import gov.nasa.pds.imaging.generate.TemplateException;
 
 /**
  * Utility class for reading XML files
- * 
+ *
  * @author jpadams
- * 
+ *
  */
 public class XMLUtil {
   /**
    * Static method that returns a list of Classes that will be extracted from the XML file for
    * context mappings.
-   * 
+   *
    * @param file
    * @param tag
    * @return
@@ -65,7 +62,7 @@ public class XMLUtil {
   public static List<String> getClassList(final InputStream inputStream, final String tag)
       throws TemplateException, Exception {
     try {
-      final List<String> classList = new ArrayList<String>();
+      final List<String> classList = new ArrayList<>();
 
       final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
       domFactory.setNamespaceAware(true);
@@ -87,7 +84,7 @@ public class XMLUtil {
   /**
    * A static method that returns the mapping of String to Class for Generated Values found in the
    * Velocity Template.
-   * 
+   *
    * @param file
    * @param key
    * @param value
@@ -97,7 +94,7 @@ public class XMLUtil {
    */
   public static Map<String, Class<?>> getGeneratedMappings(final InputStream inputStream,
       final String key, final String value) throws TemplateException, Exception {
-    final Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+    final Map<String, Class<?>> map = new HashMap<>();
     try {
       final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
       domFactory.setNamespaceAware(true);

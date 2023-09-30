@@ -41,9 +41,9 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
 /**
- * 
+ *
  * @author jpadams
- * 
+ *
  */
 @RunWith(JUnit4.class)
 @Ignore
@@ -57,6 +57,7 @@ public class GenerateTest {
    */
   @Rule
   public MethodRule watchman = new TestWatchman() {
+    @Override
     public void starting(FrameworkMethod method) {
       log.info("------------ Testing: " + method.getName() + " ------------");
     }
@@ -64,9 +65,9 @@ public class GenerateTest {
 
   /**
    * Custom rule to allow for performing one unit test at a time. Helpful when a test is failing.
-   * 
+   *
    * @author jpadams
-   * 
+   *
    */
   public class SingleTestRule implements MethodRule {
     private String applyMethod;

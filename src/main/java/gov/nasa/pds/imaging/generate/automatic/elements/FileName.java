@@ -30,13 +30,9 @@
 
 package gov.nasa.pds.imaging.generate.automatic.elements;
 
-import gov.nasa.pds.imaging.generate.TemplateException;
+import java.io.File;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.Debugger;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class FileName implements Element {
 

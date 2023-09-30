@@ -32,10 +32,10 @@ package gov.nasa.pds.imaging.generate.cli.options;
 
 /**
  * Exception class that is called upon errors found during command-line option processing.
- * 
- * 
+ *
+ *
  * @author jpadams
- * 
+ *
  */
 public class InvalidOptionException extends Exception {
 
@@ -46,7 +46,7 @@ public class InvalidOptionException extends Exception {
 
   /**
    * Constructor.
-   * 
+   *
    * @param msg An exception message.
    */
   public InvalidOptionException(final String msg) {

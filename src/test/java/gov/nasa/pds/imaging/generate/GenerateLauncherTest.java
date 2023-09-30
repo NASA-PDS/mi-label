@@ -30,19 +30,11 @@
 
 package gov.nasa.pds.imaging.generate;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import gov.nasa.pds.imaging.generate.GenerateLauncher;
-import gov.nasa.pds.imaging.generate.cli.options.InvalidOptionException;
-import gov.nasa.pds.imaging.generate.constants.TestConstants;
-import gov.nasa.pds.imaging.generate.test.GenerateTest;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.imaging.generate.util.Utility;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -50,6 +42,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import gov.nasa.pds.imaging.generate.constants.TestConstants;
+import gov.nasa.pds.imaging.generate.test.GenerateTest;
+import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.util.Utility;
 
 @RunWith(JUnit4.class)
 public class GenerateLauncherTest extends GenerateTest {
@@ -156,7 +152,7 @@ public class GenerateLauncherTest extends GenerateTest {
       String testOut = Utility.getAbsolutePath(TestConstants.TEST_OUT_DIR);
       String dataPath = Utility.getAbsolutePath(TestConstants.EXAMPLE_DIR + "/mpf_example/");
 
-      List<String> filebases = new ArrayList<String>();
+      List<String> filebases = new ArrayList<>();
       filebases.add("i646954r");
       filebases.add("i985135l");
       filebases.add("i455934l");

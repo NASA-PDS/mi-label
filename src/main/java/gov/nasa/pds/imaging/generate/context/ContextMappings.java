@@ -30,12 +30,11 @@
 
 package gov.nasa.pds.imaging.generate.context;
 
+import java.util.HashMap;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.XMLUtil;
 import gov.nasa.pds.imaging.generate.util.Debugger;
-
-import java.util.HashMap;
+import gov.nasa.pds.imaging.generate.util.XMLUtil;
 
 public class ContextMappings {
 
@@ -44,7 +43,7 @@ public class ContextMappings {
   /** XML element name holding the key value **/
   public static final String XML_TAG = "class";
 
-  public HashMap<String, PDSContext> contextMap = new HashMap<String, PDSContext>();
+  public HashMap<String, PDSContext> contextMap = new HashMap<>();
 
   public ContextMappings() throws TemplateException, Exception {
     for (final String cl : XMLUtil
@@ -56,7 +55,7 @@ public class ContextMappings {
 
   /**
    * Populates the contextMap with those classes specified in the context mappings XML file.
-   * 
+   *
    * @throws TemplateException
    * @throws Exception
    */

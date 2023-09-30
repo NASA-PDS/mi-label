@@ -56,7 +56,7 @@ public class Md5Checksum implements Element {
 
   /**
    * createChecksum
-   * 
+   *
    * @return if this.file is empty then try ImageInputStream The value must be supplied from the
    *         constructor of the PDSObject
    */
@@ -149,8 +149,8 @@ public class Md5Checksum implements Element {
   public String getValue() {
     final byte[] b = createChecksum();
     String checksum = "";
-    for (int i = 0; i < b.length; i++) {
-      checksum += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+    for (byte element : b) {
+      checksum += Integer.toString((element & 0xff) + 0x100, 16).substring(1);
     }
     return checksum;
   }

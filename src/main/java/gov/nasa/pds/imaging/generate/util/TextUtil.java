@@ -31,12 +31,12 @@
 package gov.nasa.pds.imaging.generate.util;
 
 import org.apache.commons.lang.WordUtils;
-
 import gov.nasa.pds.imaging.generate.context.PDSContext;
 
 public class TextUtil extends WordUtils implements PDSContext {
   public static final String CONTEXT = "text";
 
+  @Override
   public String getContext() {
     return CONTEXT;
   }
@@ -44,7 +44,7 @@ public class TextUtil extends WordUtils implements PDSContext {
   /**
    * Utility method used to transform the str into the applicable PDS title-case format for
    * enumerated values.
-   * 
+   *
    * @param str
    * @return
    */
@@ -60,7 +60,7 @@ public class TextUtil extends WordUtils implements PDSContext {
   /**
    * Utility method used to transform the object into the applicable PDS title-case format for
    * enumerated values.
-   * 
+   *
    * @param obj
    * @return
    */

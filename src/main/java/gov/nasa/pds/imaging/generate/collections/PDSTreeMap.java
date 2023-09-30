@@ -39,12 +39,12 @@ public class PDSTreeMap extends LinkedHashMap {
   private static final long serialVersionUID = 4089687747792708305L;
 
   /**
-   * 
+   *
    */
   @Override
   public Object put(Object key, Object value) {
     if (super.containsKey(key)) {
-      List<Object> valueList = new ArrayList<Object>();
+      List<Object> valueList = new ArrayList<>();
       if (super.get(key) instanceof List) {
         valueList.addAll((List<Object>) super.get(key));
       } else {

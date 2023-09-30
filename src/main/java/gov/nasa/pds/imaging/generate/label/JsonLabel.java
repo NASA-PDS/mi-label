@@ -100,15 +100,15 @@ public class JsonLabel implements PDSObject {
     this.jsonNode = null;
     this.flatLabel = new PDSTreeMap();
     this.parserType = ParserType.JSON;
-    this.includePaths = new ArrayList<String>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
    * Constructor
-   * 
+   *
    * Construct the Jsonlabel using a DOM object from somewhere else the JsonNode was created
    * smewhere else
-   * 
+   *
    * @param JsonNode
    */
   public JsonLabel(JsonNode jsonNode) {
@@ -117,14 +117,14 @@ public class JsonLabel implements PDSObject {
     this.jsonNode = jsonNode;
     this.parserType = ParserType.JSON;
     this.flatLabel = new PDSTreeMap();
-    this.includePaths = new ArrayList<String>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
    * Constructor
    *
    ** the filePath will read and parsed as json
-   * 
+   *
    * @param filePath
    */
   public JsonLabel(final String filePath) {
@@ -132,8 +132,8 @@ public class JsonLabel implements PDSObject {
     this.jsonNode = null;
     this.flatLabel = new PDSTreeMap();
     this.parserType = ParserType.JSON;
-    this.pdsObjectNames = new ArrayList<String>();
-    this.includePaths = new ArrayList<String>();
+    this.pdsObjectNames = new ArrayList<>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
@@ -249,8 +249,7 @@ public class JsonLabel implements PDSObject {
       Pattern keyP = Pattern.compile(key);
       Matcher keyMatcher;
 
-      for (int i = 0; i < this.pdsObjectNames.size(); i++) {
-        String name = this.pdsObjectNames.get(i);
+      for (String name : this.pdsObjectNames) {
         if (debug)
           System.out.printf("this.pdsObjectNames: %s \n", name);
         keyMatcher = keyP.matcher(name);
@@ -389,15 +388,18 @@ public class JsonLabel implements PDSObject {
     // imageInputStream = iis;
   }
 
+  @Override
   public ImageInputStream getImageInputStream() {
     // return imageInputStream ;
     return null;
   }
 
+  @Override
   public void setReaderFormat(String format) {
     this.readerFormat = format;
   }
 
+  @Override
   public String getReaderFormat() {
     return this.readerFormat;
   }
@@ -468,7 +470,7 @@ public class JsonLabel implements PDSObject {
   /**
    * Added per request from mcayanan in order to be able to loop through the PDS Objects that can be
    * found in the label
-   * 
+   *
    * @return
    */
   public final List<String> getPDSObjectNames() {
@@ -504,11 +506,11 @@ public class JsonLabel implements PDSObject {
    * <p>
    * Default is to always look first in the same directory as the label, then search specified
    * directories.
-   * 
+   *
    * @param i List of paths
    */
   public void setIncludePaths(List<String> i) {
-    this.includePaths = new ArrayList<String>(i);
+    this.includePaths = new ArrayList<>(i);
     while (this.includePaths.remove(""));
   }
 
@@ -516,7 +518,7 @@ public class JsonLabel implements PDSObject {
    * parseJson Parse a json String and load it into the flatLabel. The contents of the json will be
    * used in exactly the same way as a PDS or vicar label When this JsonLabel is set into the
    * context the velocity template prefix associated with it is set
-   * 
+   *
    * @param jsonString
    */
   public void parseJson(String jsonString) {
@@ -532,7 +534,7 @@ public class JsonLabel implements PDSObject {
       return;
     }
 
-    this.pdsObjectNames = new ArrayList<String>(); // list of all parents
+    this.pdsObjectNames = new ArrayList<>(); // list of all parents
     // Map<String, String> jsonLabel = new HashMap<String, String>();
     // private Map<String, Map> flatLabel;
     Map aFlatLabel = new PDSTreeMap();
@@ -578,7 +580,7 @@ public class JsonLabel implements PDSObject {
           nodeValue = aNode.asText();
           if (debug)
             System.out.printf("#### %s%s = %s \n", parentStr, nodeName, nodeValue);
-          final Map<String, String> map = new HashMap<String, String>();
+          final Map<String, String> map = new HashMap<>();
           map.put("units", "null"); // To ensure all labelItems have the proper combination of units
                                     // and values
           map.put("values", nodeValue);
@@ -602,7 +604,7 @@ public class JsonLabel implements PDSObject {
 
   /**
    * handleJsonArray
-   * 
+   *
    * @param aNode
    * @param nodeName
    * @param parentStr
@@ -651,7 +653,7 @@ public class JsonLabel implements PDSObject {
     if (debug)
       System.out.printf("#### %s%s = %s \n", parentStr, nodeName, nodeValueStr);
 
-    final Map<String, String> map = new HashMap<String, String>();
+    final Map<String, String> map = new HashMap<>();
     map.put("units", "null"); // To ensure all labelItems have the proper combination of units and
                               // values
     map.put("values", nodeValueStr);
@@ -663,7 +665,7 @@ public class JsonLabel implements PDSObject {
 
   /**
    * handleJasonObject
-   * 
+   *
    * @param aNode
    * @param nodeName
    * @param parentStr
@@ -710,7 +712,7 @@ public class JsonLabel implements PDSObject {
           System.out.printf("#### %s%s = %s \n", parentStr, nodeName2, nodeValue);
         }
 
-        final Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
         map.put("units", "null"); // To ensure all labelItems have the proper combination of units
                                   // and values
         map.put("values", nodeValue);

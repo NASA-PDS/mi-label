@@ -124,7 +124,7 @@ public class Generator {
 
   /**
    * Initialize Generator object with a PDSObject. Defaults as XML output.
-   * 
+   *
    * @param pdsObject
    * @param templateFile
    * @param outputFile
@@ -137,7 +137,7 @@ public class Generator {
 
   /**
    * Initialize Generator object with a PDSObject. Defaults as XML output.
-   * 
+   *
    * @param pdsObject
    * @param templateFile
    * @param outputFile
@@ -151,7 +151,7 @@ public class Generator {
 
   /**
    * Initialize Generator object with a PDSObject. Defaults as XML output.
-   * 
+   *
    * @param pdsObject
    * @param templateFile
    * @param outputFile
@@ -166,7 +166,7 @@ public class Generator {
   /**
    * Generator constructor class.
    *
-   * 
+   *
    * @param pdsObject pds object, i.e. PDS3 label
    * @param templateFile velocity template file path
    * @param outputFile path to output file. can be null in cases where we output to streams
@@ -283,7 +283,7 @@ public class Generator {
    * format the XML by normalizing the spacing and recursively visiting each node a remove if empty.
    * will repeat the method if any nodes (or attributes) were removed in case that now leaves
    * another node (or class) empty .
-   * 
+   *
    * @param document
    * @throws Exception
    */
@@ -316,7 +316,7 @@ public class Generator {
   /**
    * method to recursively check a node and it's children for those that have no attributes and are
    * empty
-   * 
+   *
    * @param node
    * @param stop
    */
@@ -343,10 +343,10 @@ public class Generator {
 
   /**
    * Functionality to generate the PDS4 Label from the Velocity Template
-   * 
+   *
    * @param ImageOutputStream - ImageOutputStream write to ImageOutputStream and OutputStream are
    *        NOT related so we must use one or the other no casting allowed
-   * 
+   *
    * @throws Exception - when output file does not exist, or error close String writer
    * @throws TemplateException - when output is null - reason needs to be found * may be able to
    *         merge the 2 generate()s together since we actually write to a PrintWriter which can
@@ -436,9 +436,9 @@ public class Generator {
 
   /**
    * Functionality to generate the PDS4 Label from the Velocity Template
-   * 
+   *
    * @param OutputStream - OutputStream write to
-   * 
+   *
    * @throws Exception - when output file does not exist, or error close String writer
    * @throws TemplateException - when output is null - reason needs to be found * may be able to
    *         merge the 2 generate()s together since we actually write to a PrintWriter which can
@@ -632,13 +632,13 @@ public class Generator {
 
 
   /**
-   * 
+   *
    * addPdsObject
-   * 
+   *
    * add an additional PDSObject The contextStr is the variable prefix used in a velocity template *
    * $extra.SOMETHING if contextStr is "extra" The pdsObject.getContext() value should be this same
    * String * it is used by getPdsObject
-   * 
+   *
    * @param extraLabel
    * @param contextStr
    * @throws TemplateException
@@ -654,7 +654,7 @@ public class Generator {
       String context_label = pdsObject.getContext();
       Debugger.debug("addPdsObject " + contextStr + "  " + context_label + " ");
       this.pdsObjects.put(contextStr, pdsObject);
-      if (noContext == true) {
+      if (noContext) {
         Debugger.debug("addPdsObject  noContext is true. Not adding " + contextStr + " ");
       } else {
         this.context.put(contextStr, pdsObject);
@@ -680,7 +680,7 @@ public class Generator {
       Debugger.debug("Generator.setContext()  " + context_label + " ");
 
       this.pdsObjects.put(context_label, pdsObject);
-      if (noContext == true) {
+      if (noContext) {
         Debugger.debug("addPdsObject  noContext is true. Not adding ");
       } else {
         this.context.put(context_label, pdsObject);
@@ -695,7 +695,7 @@ public class Generator {
 
   /**
    * getPdsObject
-   * 
+   *
    * @return
    */
   public PDSObject getPdsObject(String context_label) {
@@ -717,7 +717,7 @@ public class Generator {
   public void setContext() throws TemplateException, Exception {
     addToolManager();
 
-    if (noContext == true) {
+    if (noContext) {
       Debugger.debug("setContext() not setting context ");
       return;
     }

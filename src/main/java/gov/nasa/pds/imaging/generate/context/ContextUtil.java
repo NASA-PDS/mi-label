@@ -30,13 +30,12 @@
 
 package gov.nasa.pds.imaging.generate.context;
 
-import gov.nasa.pds.imaging.generate.TemplateException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import gov.nasa.pds.imaging.generate.TemplateException;
 
 public class ContextUtil {
 
@@ -45,8 +44,8 @@ public class ContextUtil {
   private int elCnt;
 
   public ContextUtil() {
-    this.objectList = new ArrayList<Map<String, String>>();
-    this.elMap = new HashMap<String, List<String>>();
+    this.objectList = new ArrayList<>();
+    this.elMap = new HashMap<>();
     this.elCnt = -1;
   }
 
@@ -74,7 +73,7 @@ public class ContextUtil {
     Map<String, String> map;
     final Set<String> keyList = this.elMap.keySet();
     for (int i = 0; i < this.elCnt; i++) {
-      map = new HashMap<String, String>();
+      map = new HashMap<>();
       for (final String key : keyList) {
         map.put(key, this.elMap.get(key).get(i).trim());
       }

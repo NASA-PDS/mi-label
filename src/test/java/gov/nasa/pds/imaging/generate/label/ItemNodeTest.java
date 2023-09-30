@@ -30,13 +30,11 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -65,7 +63,7 @@ public class ItemNodeTest {
   public final void testGetValueList() {
     this.node.addValue("val2");
 
-    List<String> expected = new ArrayList<String>();
+    List<String> expected = new ArrayList<>();
     expected.add("val1");
     expected.add("val2");
     assertTrue(this.node.getValue() instanceof List);

@@ -30,6 +30,16 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.imageio.stream.ImageInputStream;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
@@ -39,20 +49,6 @@ import gov.nasa.pds.imaging.generate.readers.ProductToolsLabelReader;
 import gov.nasa.pds.imaging.generate.readers.VICARReaderException;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 import gov.nasa.pds.tools.label.Label;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.imageio.stream.ImageInputStream;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 /**
  * Represents PDS3 Label object to provide the necessary functionality to
@@ -109,14 +105,14 @@ public class PDS3Label implements PDSObject {
     this.filePath = null;
     this.flatLabel = new PDSTreeMap();
     this.parserType = ParserType.VICAR;
-    this.includePaths = new ArrayList<String>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
    * Constructor
-   * 
+   *
    * Construct the PDS3label using a DOM object from somewhere else
-   * 
+   *
    * @param document
    */
   public PDS3Label(Document document) {
@@ -126,7 +122,7 @@ public class PDS3Label implements PDSObject {
     this.vicarDocument = document;
     this.parserType = ParserType.VICAR;
     this.flatLabel = new PDSTreeMap();
-    this.includePaths = new ArrayList<String>();
+    this.includePaths = new ArrayList<>();
   }
 
   /**
@@ -138,10 +134,10 @@ public class PDS3Label implements PDSObject {
     this.filePath = filePath;
     this.flatLabel = new PDSTreeMap();
     this.parserType = ParserType.VICAR;
-    this.pdsObjectNames = new ArrayList<String>();
-    this.includePaths = new ArrayList<String>();
+    this.pdsObjectNames = new ArrayList<>();
+    this.includePaths = new ArrayList<>();
 
-    this.pdsSimpleItemNames = new ArrayList<String>();
+    this.pdsSimpleItemNames = new ArrayList<>();
   }
 
   /**
@@ -162,7 +158,7 @@ public class PDS3Label implements PDSObject {
       Debugger.debug("++++ node(0.2) get(" + key + ") node is null  -->\n");
       return null;
     } else if (node instanceof ItemNode) {
-      Debugger.debug("++++ node(2) ------>\n" + ((ItemNode) node));
+      Debugger.debug("++++ node(2) ------>\n" + (node));
 
       return node;
     } else {
@@ -241,8 +237,7 @@ public class PDS3Label implements PDSObject {
       Pattern keyP = Pattern.compile(key);
       Matcher keyMatcher;
 
-      for (int i = 0; i < this.pdsObjectNames.size(); i++) {
-        String name = this.pdsObjectNames.get(i);
+      for (String name : this.pdsObjectNames) {
         Debugger.debug("this.pdsObjectNames: " + name + " \n");
         keyMatcher = keyP.matcher(name);
         if (keyMatcher.find()) {
@@ -254,8 +249,7 @@ public class PDS3Label implements PDSObject {
         return matches;
       }
 
-      for (int i = 0; i < this.pdsSimpleItemNames.size(); i++) {
-        String name = this.pdsSimpleItemNames.get(i);
+      for (String name : this.pdsSimpleItemNames) {
         Debugger.debug("this.pdsSimpleItemNames: " + name + " \n");
         keyMatcher = keyP.matcher(name);
         if (keyMatcher.find()) {
@@ -393,14 +387,17 @@ public class PDS3Label implements PDSObject {
     imageInputStream = iis;
   }
 
+  @Override
   public ImageInputStream getImageInputStream() {
     return imageInputStream;
   }
 
+  @Override
   public void setReaderFormat(String format) {
     this.readerFormat = format;
   }
 
+  @Override
   public String getReaderFormat() {
     return this.readerFormat;
   }
@@ -487,7 +484,7 @@ public class PDS3Label implements PDSObject {
   /**
    * Added per request from mcayanan in order to be able to loop through the PDS Objects that can be
    * found in the label
-   * 
+   *
    * @return
    */
   public final List<String> getPDSObjectNames() {
@@ -514,11 +511,11 @@ public class PDS3Label implements PDSObject {
    * <p>
    * Default is to always look first in the same directory as the label, then search specified
    * directories.
-   * 
+   *
    * @param i List of paths
    */
   public void setIncludePaths(List<String> i) {
-    this.includePaths = new ArrayList<String>(i);
+    this.includePaths = new ArrayList<>(i);
     while (this.includePaths.remove(""));
   }
 

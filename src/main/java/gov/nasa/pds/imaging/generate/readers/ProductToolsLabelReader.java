@@ -30,6 +30,14 @@
 
 package gov.nasa.pds.imaging.generate.readers;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.label.FlatLabel;
 import gov.nasa.pds.imaging.generate.label.ItemNode;
@@ -50,20 +58,10 @@ import gov.nasa.pds.tools.label.Value;
 import gov.nasa.pds.tools.label.parser.DefaultLabelParser;
 import gov.nasa.pds.tools.util.MessageUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * 
+ *
  * @author mcayanan
- * 
+ *
  */
 public class ProductToolsLabelReader {
 
@@ -78,23 +76,23 @@ public class ProductToolsLabelReader {
   public ProductToolsLabelReader() {
 
     // from PDS3 Label
-    this.pdsObjectTypes = new ArrayList<String>();
+    this.pdsObjectTypes = new ArrayList<>();
     this.pdsObjectTypes.add(FlatLabel.GROUP_TYPE);
     this.pdsObjectTypes.add(FlatLabel.OBJECT_TYPE);
 
-    this.pdsObjectNames = new ArrayList<String>();
+    this.pdsObjectNames = new ArrayList<>();
 
     // all items not in a GROUP or OBJECT
-    this.pdsSimpleItemNames = new ArrayList<String>();
-    this.includePaths = new ArrayList<URL>();
+    this.pdsSimpleItemNames = new ArrayList<>();
+    this.includePaths = new ArrayList<>();
 
   }
 
   /**
    * Handles the items created for each node that contain explicit information about the node
-   * 
+   *
    * i.e. quoted, units, etc.
-   * 
+   *
    * @param item
    * @param container
    */
@@ -186,8 +184,8 @@ public class ProductToolsLabelReader {
     // have a #text child or subitem children
     if (pointer.getValue() instanceof Sequence) {
       Sequence s = (Sequence) pointer.getValue();
-      for (int i = 0; i < s.size(); i++) {
-        itemNode.addValue(s.get(i).toString());
+      for (Object element : s) {
+        itemNode.addValue(element.toString());
       }
     } else {
       itemNode.addValue(pointer.getValue().toString());
@@ -204,7 +202,7 @@ public class ProductToolsLabelReader {
 
   /**
    * Used to recursively loop through the PDSObjects until a leaf item is found
-   * 
+   *
    * @param node
    * @param container
    */
@@ -285,14 +283,14 @@ public class ProductToolsLabelReader {
 
   /**
    * Parse the label and create a XML DOM representation.
-   * 
+   *
    * PDSLabelToDom: Within the DOM returned the Elements are:
-   * 
+   *
    * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All commented text in label
    * is contained within these elements item - A data item at base level of label GROUP - A group of
    * related elements containing a collection of items OBJECT - A group of related elements
    * containing a collection of items
-   * 
+   *
    * @param filePath
    * @throws Exception
    */
@@ -327,7 +325,7 @@ public class ProductToolsLabelReader {
 
   /**
    * Traverses the DOM returned by the PDSLabelToDom object.
-   * 
+   *
    * @param root
    */
   public Map<String, Map> traverseDOM(final Label label) {
@@ -349,7 +347,7 @@ public class ProductToolsLabelReader {
         AttributeStatement attribute = (AttributeStatement) statement;
         if (attribute.getIdentifier().getId().equals("PDS_VERSION_ID")
             && attribute.getValue().toString().equals("PDS3")) {
-          final Map<String, String> map = new LinkedHashMap<String, String>();
+          final Map<String, String> map = new LinkedHashMap<>();
           map.put("units", "null"); // To ensure all labelItems have
                                     // the proper combination of units
                                     // and values
@@ -391,7 +389,7 @@ public class ProductToolsLabelReader {
    * <p>
    * Default is to always look first in the same directory as the label, then search specified
    * directories.
-   * 
+   *
    * @param i List of paths
    * @throws MalformedURLException
    */

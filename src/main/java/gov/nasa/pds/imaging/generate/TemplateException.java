@@ -34,7 +34,7 @@ package gov.nasa.pds.imaging.generate;
 public class TemplateException extends Exception {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -1400769888676548343L;
 

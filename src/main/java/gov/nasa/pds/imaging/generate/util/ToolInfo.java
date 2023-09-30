@@ -37,9 +37,9 @@ import java.util.Properties;
 
 /**
  * Class to get tool release information.
- * 
+ *
  * @author jpadams
- * 
+ *
  */
 public class ToolInfo {
   public static final String FILE = "generate.properties";
@@ -68,7 +68,7 @@ public class ToolInfo {
 
   /**
    * Get copyright information.
-   * 
+   *
    * @return The copyright info.
    */
   public static String getCopyright() {
@@ -77,7 +77,7 @@ public class ToolInfo {
 
   /**
    * Get the name of the tool.
-   * 
+   *
    * @return The tool name.
    */
   public static String getName() {
@@ -86,7 +86,7 @@ public class ToolInfo {
 
   /**
    * Get the release date.
-   * 
+   *
    * @return The tool release date.
    */
   public static String getReleaseDate() {
@@ -95,7 +95,7 @@ public class ToolInfo {
 
   /**
    * Get the version.
-   * 
+   *
    * @return The tool version.
    */
   public static String getVersion() {

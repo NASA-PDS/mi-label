@@ -37,7 +37,7 @@ public interface LabelObject {
 
   /**
    * Retrieves the value of this object's element as identified by key.
-   * 
+   *
    * @param key
    * @return
    */
@@ -45,21 +45,21 @@ public interface LabelObject {
 
   /**
    * Retrieves the child objects.
-   * 
+   *
    * @return
    */
   public List<Object> getChildObjects();
 
   /**
    * Retrieves the name.
-   * 
+   *
    * @return
    */
   public String getName();
 
   /**
    * Set the elements of this object
-   * 
+   *
    * @param elements
    */
   public void setElements(Map elements);

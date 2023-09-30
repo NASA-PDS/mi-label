@@ -38,7 +38,7 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
  * Generated value class that will generate an MD5 checksum for an object within a file. This is
  * specifically for attached labels or files with headers. This class will truncate the header from
  * the object and take the checksum of the object itself.
- * 
+ *
  * @author jpadams
  * @author srlevoe
  *

@@ -32,12 +32,12 @@ package gov.nasa.pds.imaging.generate.automatic.elements;
 
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.ToolInfo;
 import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.util.ToolInfo;
 
 /**
  * Class that can be used by a Velocity template to get the data model version.
- * 
+ *
  * @author mcayanan
  *
  */

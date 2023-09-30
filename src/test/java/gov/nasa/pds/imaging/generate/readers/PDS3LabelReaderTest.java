@@ -30,25 +30,19 @@
 
 package gov.nasa.pds.imaging.generate.readers;
 
+import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.HashMap;
-
-import jpl.mipl.io.plugins.PDSLabelToDOM;
-import gov.nasa.pds.imaging.generate.constants.TestConstants;
-import gov.nasa.pds.imaging.generate.test.GenerateTest;
-import gov.nasa.pds.imaging.generate.test.GenerateTest.SingleTestRule;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.imaging.generate.util.Utility;
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import gov.nasa.pds.imaging.generate.constants.TestConstants;
+import gov.nasa.pds.imaging.generate.test.GenerateTest;
+import gov.nasa.pds.imaging.generate.util.Debugger;
+import gov.nasa.pds.imaging.generate.util.Utility;
+import jpl.mipl.io.plugins.PDSLabelToDOM;
 
 @RunWith(JUnit4.class)
 public class PDS3LabelReaderTest extends GenerateTest {

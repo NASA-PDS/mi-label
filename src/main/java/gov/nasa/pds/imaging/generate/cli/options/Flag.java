@@ -108,7 +108,7 @@ public enum Flag {
 
   /**
    * Get the command-line options.
-   * 
+   *
    * @return A class representation of the command-line options.
    */
   public static Options getOptions() {
@@ -117,7 +117,7 @@ public enum Flag {
 
   /**
    * Constructor.
-   * 
+   *
    * @param shortName The short name.
    * @param longName The long name.
    * @param description A description of the flag.
@@ -128,7 +128,7 @@ public enum Flag {
 
   /**
    * Constructor for flags that can take arguments.
-   * 
+   *
    * @param shortName The short name.
    * @param longName The long name.
    * @param argName The argument name.
@@ -148,7 +148,7 @@ public enum Flag {
 
   /**
    * Constructor for flags that can take arguments.
-   * 
+   *
    * @param shortName The short name.
    * @param longName The long name.
    * @param argName The argument name.
@@ -162,7 +162,7 @@ public enum Flag {
 
   /**
    * Find out if the flag can handle multiple arguments.
-   * 
+   *
    * @return 'true' if yes.
    */
   public boolean allowsMultipleArgs() {
@@ -171,7 +171,7 @@ public enum Flag {
 
   /**
    * Get the argument name of the flag.
-   * 
+   *
    * @return The argument name.
    */
   public String getArgName() {
@@ -180,7 +180,7 @@ public enum Flag {
 
   /**
    * Get the argument type of the flag.
-   * 
+   *
    * @return The argument type.
    */
   public Object getArgType() {
@@ -189,7 +189,7 @@ public enum Flag {
 
   /**
    * Get the flag description.
-   * 
+   *
    * @return The description.
    */
   public String getDescription() {
@@ -198,7 +198,7 @@ public enum Flag {
 
   /**
    * Get the long name of the flag.
-   * 
+   *
    * @return The long name.
    */
   public String getLongName() {
@@ -207,7 +207,7 @@ public enum Flag {
 
   /**
    * Get the short name of the flag.
-   * 
+   *
    * @return The short name.
    */
   public String getShortName() {
