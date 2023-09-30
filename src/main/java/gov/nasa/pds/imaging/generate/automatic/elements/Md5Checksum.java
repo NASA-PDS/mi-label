@@ -30,19 +30,16 @@
 
 package gov.nasa.pds.imaging.generate.automatic.elements;
 
-import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.imageio.stream.ImageInputStream;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.imageio.stream.ImageInputStream;
+import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class Md5Checksum implements Element {
 
@@ -69,7 +66,7 @@ public class Md5Checksum implements Element {
     MessageDigest complete = null;
     Debugger.debug("createChecksum() this.file >"+this.file+"< XXX"); 
 
-    if (this.file == null || this.file.toString().equals("")) {
+    if (this.file == null || this.file.toString().isEmpty()) {
       Debugger.debug("NULL createChecksum() this.file "+this.file);
       // see below for the work to get the md5sum
       // I need to file input stream from the reader

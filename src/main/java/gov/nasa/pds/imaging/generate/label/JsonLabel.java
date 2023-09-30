@@ -378,14 +378,14 @@ public class JsonLabel implements PDSObject {
 	   
 		// assume we will always use the JSON parser ???
 	    if (this.parserType.equals(ParserType.JSON)) {
-		    if (!this.jsonString.equals("")) {
+          if (!this.jsonString.isEmpty()) {
 		    	// code from TreeModelParser1, convert TreeModal to Map
 		    	// parse the string create the flatLabel
 		    	if (debug) System.out.println("jsonString = "+this.jsonString);
 		    	parseJson(this.jsonString);
-		    }
+              }
 		    
-		    if (!this.jsonFilename.equals("")) {
+            if (!this.jsonFilename.isEmpty()) {
 		    	
 		    	if (debug) System.out.println("JsonLabel.setMappings() jsonFilename = "+this.jsonFilename);
                 FileInputStream fis = null;
