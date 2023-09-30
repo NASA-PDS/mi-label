@@ -70,9 +70,9 @@ public class ProductToolsLabelReader {
   // TODO Refactor this into a java object
   private final List<String> pdsObjectTypes;
   private final List<String> pdsObjectNames;
-  
+
   private List<URL> includePaths;
-  
+
   private final List<String> pdsSimpleItemNames;
 
   public ProductToolsLabelReader() {
@@ -81,18 +81,17 @@ public class ProductToolsLabelReader {
     this.pdsObjectTypes = new ArrayList<String>();
     this.pdsObjectTypes.add(FlatLabel.GROUP_TYPE);
     this.pdsObjectTypes.add(FlatLabel.OBJECT_TYPE);
-    
+
     this.pdsObjectNames = new ArrayList<String>();
-    
+
     // all items not in a GROUP or OBJECT
     this.pdsSimpleItemNames = new ArrayList<String>();
     this.includePaths = new ArrayList<URL>();
-    
+
   }
 
   /**
-   * Handles the items created for each node that contain explicit information
-   * about the node
+   * Handles the items created for each node that contain explicit information about the node
    * 
    * i.e. quoted, units, etc.
    * 
@@ -102,7 +101,7 @@ public class ProductToolsLabelReader {
   private void handleItemNode(final AttributeStatement attribute, final Map container) {
     String elementName = attribute.getIdentifier().getId();
     String units = null;
-      
+
     ItemNode itemNode;
     // If elementName is null, try to get it as a name
     if (elementName == null) {
@@ -113,13 +112,14 @@ public class ProductToolsLabelReader {
     // If elementName is still null, then let's get out of here.
     if (elementName == null) {
       // print something??
-      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleItemNode nodeName "+ attribute.getClass().getName() + ", elementName "+elementName);
+      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleItemNode nodeName "
+          + attribute.getClass().getName() + ", elementName " + elementName);
       return;
     }
-      
+
     // Check is the units is null
     // (jp) This doesn't make sense. We want to grab the units from
-    //      the node...
+    // the node...
     if (units == null) {
       units = "none"; // ""
     }
@@ -132,7 +132,7 @@ public class ProductToolsLabelReader {
       for (Scalar value : values) {
         itemNode.addValue(value.toString());
         if (value instanceof Numeric) {
-        	itemNode.setUnits(((Numeric) value).getUnits());
+          itemNode.setUnits(((Numeric) value).getUnits());
         }
       }
     } else if (attribute.getValue() instanceof Sequence) {
@@ -143,25 +143,26 @@ public class ProductToolsLabelReader {
     } else {
       Value value = attribute.getValue();
       itemNode.addValue(value.toString());
-      
+
       if (value instanceof Numeric) {
-      	itemNode.setUnits(((Numeric) value).getUnits());
+        itemNode.setUnits(((Numeric) value).getUnits());
       }
     }
-    
-    Debugger.debug("2) PDS3LabelReader.handleItemNode nodeName "+ attribute.getClass().getName() + ", elementName "+elementName+" units "+units);
-    Debugger.debug("2) itemNode "+itemNode);
+
+    Debugger.debug("2) PDS3LabelReader.handleItemNode nodeName " + attribute.getClass().getName()
+        + ", elementName " + elementName + " units " + units);
+    Debugger.debug("2) itemNode " + itemNode);
 
     container.put(elementName, itemNode);
   }
-    
+
   private void handlePointerNode(final PointerStatement pointer, final Map container) {
     String elementName = pointer.getIdentifier().getId();
     String units = null;
-    
+
     ItemNode itemNode;
     elementName = "PTR_" + elementName; // could also be "HAT_"
-    
+
     // Check is the units is null
     if (pointer.getValue() instanceof Sequence) {
       Sequence s = (Sequence) pointer.getValue();
@@ -191,27 +192,28 @@ public class ProductToolsLabelReader {
     } else {
       itemNode.addValue(pointer.getValue().toString());
     }
-    
-    
-    Debugger.debug("2) PDS3LabelReader.handlePointerNode nodeName "+ pointer.getClass().getName() + ", elementName "+elementName+" units "+units);
-    Debugger.debug("2) itemNode "+itemNode);
+
+
+    Debugger.debug("2) PDS3LabelReader.handlePointerNode nodeName " + pointer.getClass().getName()
+        + ", elementName " + elementName + " units " + units);
+    Debugger.debug("2) itemNode " + itemNode);
 
     container.put(elementName, itemNode);
   }
 
-  
+
   /**
-   * Used to recursively loop through the PDSObjects until a leaf item is
-   * found
+   * Used to recursively loop through the PDSObjects until a leaf item is found
    * 
    * @param node
    * @param container
    */
   private void handlePDSObjectNode(final ObjectStatement objectStatement, final Map container) {
     String elementName = objectStatement.getIdentifier().getId();
-      
-    Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName "+ objectStatement.getClass().getName() + " elementName "+elementName);
-   
+
+    Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName "
+        + objectStatement.getClass().getName() + " elementName " + elementName);
+
 
     final FlatLabel object = new FlatLabel(elementName, "OBJECT");
 
@@ -219,33 +221,36 @@ public class ProductToolsLabelReader {
     // So let's add it to object names to keep track
     // of all the groupings in the input object
     this.pdsObjectNames.add(elementName);
-    
+
     final Map labels = new PDSTreeMap();
 
     for (Statement childStatement : objectStatement.getStatements()) {
-      if (childStatement instanceof ObjectStatement ) { // Handles all items nested in groups
+      if (childStatement instanceof ObjectStatement) { // Handles all items nested in groups
         handlePDSObjectNode((ObjectStatement) childStatement, labels);
       } else if (childStatement instanceof GroupStatement) {
         handlePDSGroupNode((GroupStatement) childStatement, labels);
-      } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level of label
-        handleItemNode((AttributeStatement) childStatement, labels); 
+      } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level
+                                                                 // of label
+        handleItemNode((AttributeStatement) childStatement, labels);
       } else if (childStatement instanceof PointerStatement) {
-      	handlePointerNode((PointerStatement) childStatement, labels);
+        handlePointerNode((PointerStatement) childStatement, labels);
       }
     }
-    
-    Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode nodeName "+ objectStatement.getClass().getName() + " elementName "+elementName);
-    Debugger.debug("2)  labels "+labels);
-    
+
+    Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode nodeName "
+        + objectStatement.getClass().getName() + " elementName " + elementName);
+    Debugger.debug("2)  labels " + labels);
+
     object.setElements(labels);
     container.put(elementName, object);
   }
-  
+
   private void handlePDSGroupNode(final GroupStatement groupStatement, final Map container) {
     String elementName = groupStatement.getIdentifier().getId();
-      
-    Debugger.debug("1) PDS3LabelReader.handlePDSGroupNode nodeName "+ groupStatement.getClass().getName() + " elementName "+elementName);
-   
+
+    Debugger.debug("1) PDS3LabelReader.handlePDSGroupNode nodeName "
+        + groupStatement.getClass().getName() + " elementName " + elementName);
+
 
     final FlatLabel object = new FlatLabel(elementName, "OBJECT");
 
@@ -253,43 +258,44 @@ public class ProductToolsLabelReader {
     // So let's add it to object names to keep track
     // of all the groupings in the input object
     this.pdsObjectNames.add(elementName);
-    
+
     final Map labels = new PDSTreeMap();
 
     for (Statement childStatement : groupStatement.getStatements()) {
-      if (childStatement instanceof ObjectStatement ) { // Handles all items nested in groups
+      if (childStatement instanceof ObjectStatement) { // Handles all items nested in groups
         handlePDSObjectNode((ObjectStatement) childStatement, labels);
       } else if (childStatement instanceof GroupStatement) {
         handlePDSGroupNode((GroupStatement) childStatement, labels);
-      } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level of label
+      } else if (childStatement instanceof AttributeStatement) { // Handles all items at base level
+                                                                 // of label
         handleItemNode((AttributeStatement) childStatement, labels);
       } else if (childStatement instanceof PointerStatement) {
-      	handlePointerNode((PointerStatement) childStatement, labels);
+        handlePointerNode((PointerStatement) childStatement, labels);
       }
     }
-    
-    Debugger.debug("2) PDS3LabelReader.handlePDSGroupNode nodeName "+ groupStatement.getClass().getName() + " elementName "+elementName);
-    Debugger.debug("2)  labels "+labels);
-    
+
+    Debugger.debug("2) PDS3LabelReader.handlePDSGroupNode nodeName "
+        + groupStatement.getClass().getName() + " elementName " + elementName);
+    Debugger.debug("2)  labels " + labels);
+
     object.setElements(labels);
     container.put(elementName, object);
   }
-  
+
 
   /**
    * Parse the label and create a XML DOM representation.
    * 
    * PDSLabelToDom: Within the DOM returned the Elements are:
    * 
-   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All
-   * commented text in label is contained within these elements item - A data
-   * item at base level of label GROUP - A group of related elements
-   * containing a collection of items OBJECT - A group of related elements
+   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All commented text in label
+   * is contained within these elements item - A data item at base level of label GROUP - A group of
+   * related elements containing a collection of items OBJECT - A group of related elements
    * containing a collection of items
    * 
    * @param filePath
-   * @throws Exception 
-   */   
+   * @throws Exception
+   */
   public Label parseLabel(final String filePath) throws Exception {
     ManualPathResolver resolver = new ManualPathResolver();
     if (!includePaths.isEmpty()) {
@@ -311,40 +317,42 @@ public class ProductToolsLabelReader {
         // be the key itself.
         message = lpe.getKey();
       }
-      throw new Exception ("Error occurred while trying to parse label '"
-          + filePath + "': " + message);
+      throw new Exception(
+          "Error occurred while trying to parse label '" + filePath + "': " + message);
     } catch (IOException io) {
-      throw new Exception ("Error occurred while trying to parse label '"
-          + filePath + "': " + io.getMessage());
-    }      
+      throw new Exception(
+          "Error occurred while trying to parse label '" + filePath + "': " + io.getMessage());
+    }
   }
-  
+
   /**
    * Traverses the DOM returned by the PDSLabelToDom object.
    * 
    * @param root
-   */    
+   */
   public Map<String, Map> traverseDOM(final Label label) {
     Debugger.debug("PDS3LabelReader.traverseDOM ***************************** ");
-  
+
     // iterate through each label element and process
     final Map flatLabel = new PDSTreeMap();
     for (Statement statement : label.getStatements()) {
       // Check if this element node is one of:
       // GROUP, OBJECT, item, sub-item
-      Debugger.debug("PDS3LabelReader.traverseDOM nodeName "+ statement.getIdentifier().getId() + " ");
+      Debugger
+          .debug("PDS3LabelReader.traverseDOM nodeName " + statement.getIdentifier().getId() + " ");
       if (statement instanceof ObjectStatement) { // Handles all items nested in groups
         handlePDSObjectNode((ObjectStatement) statement, flatLabel);
       } else if (statement instanceof GroupStatement) {
         handlePDSGroupNode((GroupStatement) statement, flatLabel);
-      } else if (statement instanceof AttributeStatement) { // Handles all items at base level of label
+      } else if (statement instanceof AttributeStatement) { // Handles all items at base level of
+                                                            // label
         AttributeStatement attribute = (AttributeStatement) statement;
-        if (attribute.getIdentifier().getId().equals("PDS_VERSION_ID") 
+        if (attribute.getIdentifier().getId().equals("PDS_VERSION_ID")
             && attribute.getValue().toString().equals("PDS3")) {
           final Map<String, String> map = new LinkedHashMap<String, String>();
           map.put("units", "null"); // To ensure all labelItems have
                                     // the proper combination of units
-                                   // and values
+                                    // and values
           map.put("values", attribute.getIdentifier().getId());
           flatLabel.put("PDS3", map);
         } else {
@@ -352,43 +360,43 @@ public class ProductToolsLabelReader {
           this.pdsSimpleItemNames.add(attribute.getElementIdentifier());
         }
       } else if (statement instanceof PointerStatement) {
-    	PointerStatement ps = (PointerStatement) statement;
+        PointerStatement ps = (PointerStatement) statement;
         handlePointerNode((PointerStatement) statement, flatLabel);
         this.pdsSimpleItemNames.add("PTR_" + ps.getIdentifier().getId());
       }
     }
-  //  FlatLabel table = (FlatLabel) flatLabel.get("AFM_F_ERROR_TABLE");
-  //  List<Object> subObjects = table.getSubObjects();
-  //  for (Object subObject : subObjects) {
-  //    FlatLabel child = (FlatLabel) subObject;
-  //    System.out.println("Get child");
-  //  }
- //   Object colObject = table.get("COLUMN");
- //   Object contObject = table.get("CONTAINER");
-    
-    
+    // FlatLabel table = (FlatLabel) flatLabel.get("AFM_F_ERROR_TABLE");
+    // List<Object> subObjects = table.getSubObjects();
+    // for (Object subObject : subObjects) {
+    // FlatLabel child = (FlatLabel) subObject;
+    // System.out.println("Get child");
+    // }
+    // Object colObject = table.get("COLUMN");
+    // Object contObject = table.get("CONTAINER");
+
+
     return flatLabel;
   }
-    
+
   public List<String> getPDSObjectNames() {
     return this.pdsObjectNames;
   }
-  
+
   public List<String> getPDSSimpleItemNames() {
-	return this.pdsSimpleItemNames;
+    return this.pdsSimpleItemNames;
   }
-  
+
   /**
    * Set the paths to search for files referenced by pointers.
    * <p>
-   * Default is to always look first in the same directory
-   * as the label, then search specified directories.
+   * Default is to always look first in the same directory as the label, then search specified
+   * directories.
+   * 
    * @param i List of paths
-   * @throws MalformedURLException 
+   * @throws MalformedURLException
    */
-  public void setIncludePaths(List<String> paths)
-      throws MalformedURLException {
-    while(paths.remove(""));
+  public void setIncludePaths(List<String> paths) throws MalformedURLException {
+    while (paths.remove(""));
     for (String path : paths) {
       URL url = null;
       try {

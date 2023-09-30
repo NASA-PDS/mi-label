@@ -97,8 +97,7 @@ public class PDS3LabelReader {
   }
 
   /**
-   * Handles the items created for each node that contain explicit information
-   * about the node
+   * Handles the items created for each node that contain explicit information about the node
    * 
    * i.e. quoted, units, etc.
    * 
@@ -120,7 +119,8 @@ public class PDS3LabelReader {
     // If elementName is still null, then let's get out of here.
     if (elementName == null) {
       // print something??
-      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleItemNode nodeName "+item.getNodeName() + ", elementName "+elementName);
+      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleItemNode nodeName " + item.getNodeName()
+          + ", elementName " + elementName);
       return;
     } else {
       elementName = elementName.replace("^", "PTR_"); // could also be "HAT_"
@@ -128,7 +128,7 @@ public class PDS3LabelReader {
 
     // Check is the units is null
     // (jp) This doesn't make sense. We want to grab the units from
-    //      the node...
+    // the node...
     if (units == null) {
       units = "none"; // ""
     }
@@ -155,23 +155,25 @@ public class PDS3LabelReader {
       }
     }
 
-    Debugger.debug("2) PDS3LabelReader.handleItemNode nodeName "+item.getNodeName() + ", elementName "+elementName+" units "+units);
-    Debugger.debug("2) itemNode "+itemNode);
+    Debugger.debug("2) PDS3LabelReader.handleItemNode nodeName " + item.getNodeName()
+        + ", elementName " + elementName + " units " + units);
+    Debugger.debug("2) itemNode " + itemNode);
 
     Node parent = item.getParentNode();
     String parentName = parent.getNodeName();
-    Debugger.debug("   PDS3LabelReader.handleItemNode parent nodeName "+parent.getNodeName() + ", parent nodeType "+parent.getNodeType());
+    Debugger.debug("   PDS3LabelReader.handleItemNode parent nodeName " + parent.getNodeName()
+        + ", parent nodeType " + parent.getNodeType());
     if (!parentName.equalsIgnoreCase("OBJECT") && !parentName.equalsIgnoreCase("GROUP")) {
       this.pdsSimpleItemNames.add(elementName);
-      Debugger.debug("    PDS3LabelReader.handleItemNode KEEPING parent nodeName "+parent.getNodeName() + " elementName "+elementName+" ");
+      Debugger.debug("    PDS3LabelReader.handleItemNode KEEPING parent nodeName "
+          + parent.getNodeName() + " elementName " + elementName + " ");
     }
 
     container.put(elementName, itemNode);
   }
 
   /**
-   * Handles the items created for each node that contain explicit information
-   * about the node
+   * Handles the items created for each node that contain explicit information about the node
    * 
    * i.e. quoted, units, etc.
    * 
@@ -184,8 +186,8 @@ public class PDS3LabelReader {
     String elementName = attributes.get("key");
     String units = attributes.get("units");
 
-    //ItemNode itemNode = new ItemNode(attributes.get("key"),
-    //        attributes.get("units"));
+    // ItemNode itemNode = new ItemNode(attributes.get("key"),
+    // attributes.get("units"));
 
     ItemNode itemNode;
     // If elementName is null, try to get it as a name
@@ -197,7 +199,8 @@ public class PDS3LabelReader {
     // If elementName is still null, then let's get out of here.
     if (elementName == null) {
       // print something??
-      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleTaskItemNode nodeName "+item.getNodeName() + ", elementName "+elementName);
+      Debugger.debug("1x) Return XXXX PDS3LabelReader.handleTaskItemNode nodeName "
+          + item.getNodeName() + ", elementName " + elementName);
       return;
     } else {
       elementName = elementName.replace("^", "PTR_"); // could also be "HAT_"
@@ -205,7 +208,7 @@ public class PDS3LabelReader {
 
     // Check is the units is null
     // (jp) This doesn't make sense. We want to grab the units from
-    //      the node...
+    // the node...
     if (units == null) {
       units = "none"; // ""
     }
@@ -231,8 +234,9 @@ public class PDS3LabelReader {
       }
     }
 
-    Debugger.debug("2) PDS3LabelReader.handleTaskItemNode nodeName "+item.getNodeName() + ", elementName "+elementName+" units "+units);
-    Debugger.debug("2) itemNode "+itemNode);
+    Debugger.debug("2) PDS3LabelReader.handleTaskItemNode nodeName " + item.getNodeName()
+        + ", elementName " + elementName + " units " + units);
+    Debugger.debug("2) itemNode " + itemNode);
 
 
     container.put(elementName, itemNode);
@@ -240,18 +244,14 @@ public class PDS3LabelReader {
   }
 
   /**
-   * Used to recursively loop through the TaskObjects until a leaf item is
-   * found
+   * Used to recursively loop through the TaskObjects until a leaf item is found
    * 
-   * container may become a List
-   * The Map objects are used for everything
-   * may need to use another List to hold all the arguments so we can #foreach thru them
-   * * TASK is a List
-   *     in each list is a Map 
-   *        the map contains specific items we always see TASK, USER, DAT-TIM
-   *        There will also be a List which contains all the items
-   *        
-   *        check the toString to be sure we can handle it all
+   * container may become a List The Map objects are used for everything may need to use another
+   * List to hold all the arguments so we can #foreach thru them * TASK is a List in each list is a
+   * Map the map contains specific items we always see TASK, USER, DAT-TIM There will also be a List
+   * which contains all the items
+   * 
+   * check the toString to be sure we can handle it all
    * 
    * @param node
    * @param container
@@ -265,7 +265,7 @@ public class PDS3LabelReader {
       elementName = node.getNodeName();
     }
 
-    // this container is an array. add a new object to the array       
+    // this container is an array. add a new object to the array
     final FlatLabel taskObject = new FlatLabel(elementName, node.getNodeName());
 
     // We now know this element is an object/group
@@ -275,10 +275,14 @@ public class PDS3LabelReader {
 
     final Map labels = new PDSTreeMap();
     int size = taskList.size();
-    Debugger.debug("1) *********************************************************************************\n");
-    Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode ********************************************\n");
-    Debugger.debug("1) *********************************************************************************");
-    Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " elementName "+elementName+" taskList.size "+size);
+    Debugger.debug(
+        "1) *********************************************************************************\n");
+    Debugger.debug(
+        "1) PDS3LabelReader.handleTaskObjectNode ********************************************\n");
+    Debugger.debug(
+        "1) *********************************************************************************");
+    Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName " + node.getNodeName()
+        + " elementName " + elementName + " taskList.size " + size);
 
     final ArrayList args_list = new ArrayList();
     // container.put(elementName, task);
@@ -294,9 +298,9 @@ public class PDS3LabelReader {
 
         // Check if this element node is one of:
         // GROUP, OBJECT, item, sub-item
-        if (this.pdsObjectTypes.contains(labelItem.getNodeName()
-            .toUpperCase())) {
-          Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " CALLING  handlePDSObjectNode(labelItem, labels)"); 
+        if (this.pdsObjectTypes.contains(labelItem.getNodeName().toUpperCase())) {
+          Debugger.debug("1) PDS3LabelReader.handleTaskObjectNode nodeName " + node.getNodeName()
+              + " CALLING  handlePDSObjectNode(labelItem, labels)");
           // SHOULD NEVER GET HERE. we should be below this level now
           handlePDSObjectNode(labelItem, labels);
         } else if (labelItem.getNodeName().equalsIgnoreCase("item")) {
@@ -309,8 +313,9 @@ public class PDS3LabelReader {
       }
     }
 
-    Debugger.debug("2) PDS3LabelReader.handleTaskObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
-    Debugger.debug("2)  labels "+labels);
+    Debugger.debug("2) PDS3LabelReader.handleTaskObjectNode nodeName " + node.getNodeName()
+        + " elementName " + elementName);
+    Debugger.debug("2)  labels " + labels);
 
 
     taskObject.setElements(labels);
@@ -318,8 +323,7 @@ public class PDS3LabelReader {
   }
 
   /**
-   * Used to recursively loop through the PDSObjects until a leaf item is
-   * found
+   * Used to recursively loop through the PDSObjects until a leaf item is found
    * 
    * @param node
    * @param container
@@ -333,10 +337,12 @@ public class PDS3LabelReader {
       elementName = node.getNodeName();
     }
 
-    Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
+    Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode nodeName " + node.getNodeName()
+        + " elementName " + elementName);
     // if (node.getNodeName().equals("TASK") && elementName.equals("TASK")) {
-    if (node.getNodeName().equals("TASK") ) {
-      Debugger.debug("1) PDS3LabelReader.handlePDSObjectNode  TASK *************************************************");
+    if (node.getNodeName().equals("TASK")) {
+      Debugger.debug(
+          "1) PDS3LabelReader.handlePDSObjectNode  TASK *************************************************");
 
       // check if we already have a "TASK" object, use it or create a new one
       // should this be a List instead??
@@ -345,8 +351,8 @@ public class PDS3LabelReader {
       if (container.containsKey("TASK_LIST")) {
         Debugger.debug("container.containsKey('TASK_LIST') is TRUE \n");
         // check if the Object is an ArrayList ???
-        ArrayList task_list = (ArrayList) container.get("TASK_LIST");				
-        handleTaskObjectNode(node, task_list);				
+        ArrayList task_list = (ArrayList) container.get("TASK_LIST");
+        handleTaskObjectNode(node, task_list);
       } else {
         // final Map labels = new PDSTreeMap();
         // add task to container
@@ -355,7 +361,8 @@ public class PDS3LabelReader {
         container.put("TASK_LIST", task_list);
         handleTaskObjectNode(node, task_list);
       }
-      Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode  after TASK *************************************************\n");
+      Debugger.debug(
+          "2) PDS3LabelReader.handlePDSObjectNode  after TASK *************************************************\n");
     }
 
 
@@ -378,8 +385,7 @@ public class PDS3LabelReader {
 
         // Check if this element node is one of:
         // GROUP, OBJECT, item, sub-item
-        if (this.pdsObjectTypes.contains(labelItem.getNodeName()
-            .toUpperCase())) {
+        if (this.pdsObjectTypes.contains(labelItem.getNodeName().toUpperCase())) {
           handlePDSObjectNode(labelItem, labels);
         } else if (labelItem.getNodeName().equalsIgnoreCase("item")) {
           handleItemNode(labelItem, labels);
@@ -388,8 +394,9 @@ public class PDS3LabelReader {
       }
     }
 
-    Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode nodeName "+node.getNodeName() + " elementName "+elementName);
-    Debugger.debug("2)  labels "+labels);
+    Debugger.debug("2) PDS3LabelReader.handlePDSObjectNode nodeName " + node.getNodeName()
+        + " elementName " + elementName);
+    Debugger.debug("2)  labels " + labels);
 
 
     object.setElements(labels);
@@ -461,11 +468,13 @@ public class PDS3LabelReader {
 
         // Check if this element node is one of:
         // GROUP, OBJECT, item, sub-item
-        Debugger.debug("PDS3LabelReader.traverseDOM nodeName "+labelItem.getNodeName() + " ");
-        if (this.pdsObjectTypes.contains(labelItem.getNodeName()
-            .toUpperCase())) { // Handles all items nested in groups
+        Debugger.debug("PDS3LabelReader.traverseDOM nodeName " + labelItem.getNodeName() + " ");
+        if (this.pdsObjectTypes.contains(labelItem.getNodeName().toUpperCase())) { // Handles all
+                                                                                   // items nested
+                                                                                   // in groups
           handlePDSObjectNode(labelItem, flatLabel);
-        } else if (labelItem.getNodeName().equalsIgnoreCase("item")) { // Handles all items at base level of label
+        } else if (labelItem.getNodeName().equalsIgnoreCase("item")) { // Handles all items at base
+                                                                       // level of label
           handleItemNode(labelItem, flatLabel);
         } else if (labelItem.getNodeName().equalsIgnoreCase("PDS3")) { // PDS3
           // -
@@ -494,7 +503,7 @@ public class PDS3LabelReader {
           // and values
           map.put("values", labelItem.getFirstChild().getNodeValue());
           flatLabel.put(labelItem.getNodeName(), map);
-        } 
+        }
 
       }
     }

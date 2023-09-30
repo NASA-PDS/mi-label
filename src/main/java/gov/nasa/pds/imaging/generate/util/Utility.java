@@ -34,19 +34,19 @@ import java.io.File;
 import java.io.IOException;
 
 public class Utility {
-	public static String getAbsolutePath(String path) throws IOException {
-		String finalPath = "";
-		File testFile = new File(path);
-		if (!testFile.isAbsolute()) {
-			finalPath = System.getProperty("user.dir") + "/" + path;
-		} else {
-			finalPath = path;
-		}
-		
-		if (!(new File(finalPath)).exists()) {
-			throw new IOException("Path does not exist: " + finalPath);
-		}
-		
-		return finalPath;
-	}
+  public static String getAbsolutePath(String path) throws IOException {
+    String finalPath = "";
+    File testFile = new File(path);
+    if (!testFile.isAbsolute()) {
+      finalPath = System.getProperty("user.dir") + "/" + path;
+    } else {
+      finalPath = path;
+    }
+
+    if (!(new File(finalPath)).exists()) {
+      throw new IOException("Path does not exist: " + finalPath);
+    }
+
+    return finalPath;
+  }
 }

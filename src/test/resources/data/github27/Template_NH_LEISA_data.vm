@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1G00.sch"        schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1G00_1500.sch"      schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1G00_1860.sch"   schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1G00_1930.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="/n/newsbndev4/pds4_migration/newhorizons/Dictionary/PDS4_SPACECRAFT_1H00_1000.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Observational 
+    xmlns="http://pds.nasa.gov/pds4/pds/v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:disp="http://pds.nasa.gov/pds4/disp/v1"
+    xmlns:img="http://pds.nasa.gov/pds4/img/v1"
+    xmlns:geom="http://pds.nasa.gov/pds4/geom/v1"
+    xmlns:navcam="http://pds.nasa.gov/pds4/navcam/v1"
+    xmlns:spacecraft="http://pds.nasa.gov/pds4/mission/spacecraft/v1"
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1   http://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1G00.xsd
+    http://pds.nasa.gov/pds4/disp/v1  http://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1G00_1500.xsd
+    http://pds.nasa.gov/pds4/img/v1   http://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1G00_1860.xsd
+    http://pds.nasa.gov/pds4/geom/v1  http://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1G00_1930.xsd
+    http://pds.nasa.gov/pds4/mission/spacecraft/v1     file:/n/newsbndev4/pds4_migration/newhorizons/Dictionary/PDS4_SPACECRAFT_1H00_1000.xsd
+    ">
+    
+    <Identification_Area>
+        <logical_identifier>urn:nasa:pds:nh_leisa:kem1_cal:$label.PRODUCT_ID[0].toLowerCase()</logical_identifier>
+        <version_id>1.0</version_id>
+        <title>LEISA 3 KEM1</title>
+        <information_model_version>1.16.0.0</information_model_version>
+        <product_class>Product_Observational</product_class>
+        <Modification_History>
+      		<Modification_Detail>
+        		<modification_date>2022</modification_date>
+        		<version_id>1.0</version_id>
+        		<description>Migration from PDS3 (A. Gicquel)</description>
+      		</Modification_Detail>
+    	</Modification_History>
+    </Identification_Area>
+    
+    
+    <Observation_Area>
+        <Time_Coordinates>
+            <start_date_time>${label.START_TIME}Z</start_date_time> 
+            <stop_date_time>${label.STOP_TIME}Z</stop_date_time>
+        </Time_Coordinates>
+        
+        
+        <Investigation_Area>
+            <name>New Horizons Kuiper Belt Extended Mission</name>
+            <type>Mission</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:investigation:mission.new_horizons</lid_reference>
+                <reference_type>data_to_investigation</reference_type>
+            </Internal_Reference>
+        </Investigation_Area>
+        
+        
+        <Observing_System>
+            <Observing_System_Component>
+                <name>New Horizon</name>
+                <type>Host</type>
+                <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.nh</lid_reference>
+                <reference_type>is_instrument_host</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+                      
+            <Observing_System_Component>
+                <name>Leisa</name>
+                <type>Instrument</type>
+                <description>Linear Etalon Imaging Spectral Array</description>
+                <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:instrument:leisa.nh</lid_reference>
+                <reference_type>is_instrument</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+            
+        </Observing_System>
+        
+        <Target_Identification>
+        	
+        	#set ($foo14MU69 = "ASTEROID 486958 (2014 MU69)")
+        	#set ($foocal = "CALIBRATION")
+        	#set ($foodustname = "DUST")
+        	#set ($foosolarwind = "SOLAR WIND")
+        	#set ($foosun = "SUN")
+        	#set ($foona = "N/A")
+
+        	
+        	#if ($label.TARGET_NAME == $foocal)
+        	<name>$label.TARGET_NAME</name>
+        	 <type>Calibration Field</type>
+        	            
+            #elseif ($label.TARGET_NAME == $foo14MU69)
+            <name>2014 (MU69)</name>
+            <type>Asteroid</type>
+            
+            #elseif ($label.TARGET_NAME == $foodustname)
+            <name>Dust</name>
+            <type>Dust</type>
+            
+            #elseif ($label.TARGET_NAME == $foosun)
+            <name>Sun</name>
+            <type>Star</type>
+            
+            #elseif ($label.TARGET_NAME == $foona)
+            <name>N/A</name>
+            <type>N/A</type>
+            
+            #else
+            <name>$label.TARGET_NAME</name>
+            <type>Star</type>
+            #end   
+            
+             
+        </Target_Identification>
+        
+    	<Mission_Area>
+      		<spacecraft:Spacecraft_Dictionary_Parameters>
+        		<spacecraft:Mission_Parameters>
+          			<spacecraft:mission_phase_name>$label.MISSION_PHASE_NAME</spacecraft:mission_phase_name>
+          			<spacecraft:sequence_id>$label.get("NEWHORIZONS:SEQUENCE_ID")</spacecraft:sequence_id>
+          			<spacecraft:observation_description>$label.get("NEWHORIZONS:OBSERVATION_DESC")</spacecraft:observation_description>
+          			#if ($label.EQUINOX_EPOCH)
+        			<spacecraft:equinox_epoch>$label.EQUINOX_EPOCH</spacecraft:equinox_epoch>
+        			#else
+        			#end
+        			#if ($label.get("NEWHORIZONS:APPROX_TARGET_NAME"))
+          			<spacecraft:approx_target_name>$label.get("NEWHORIZONS:APPROX_TARGET_NAME")</spacecraft:approx_target_name>
+          			#else
+        			#end
+        			#if ($label.get("NEWHORIZONS:APPROX_TARGET_LINE"))
+          			<spacecraft:approx_target_line>$label.get("NEWHORIZONS:APPROX_TARGET_LINE")</spacecraft:approx_target_line>
+          			#else
+        			#end
+        			#if ($label.get("NEWHORIZONS:APPROX_TARGET_SAMPLE"))
+          			<spacecraft:approx_target_sample>$label.get("NEWHORIZONS:APPROX_TARGET_SAMPLE")</spacecraft:approx_target_sample>
+          			#else
+        			#end
+        		</spacecraft:Mission_Parameters>
+        		<spacecraft:Spacecraft_Parameters>
+          			<spacecraft:spacecraft_clock_cnt_partition>$label.SPACECRAFT_CLOCK_CNT_PARTITION</spacecraft:spacecraft_clock_cnt_partition>
+          			<spacecraft:spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</spacecraft:spacecraft_clock_start_count>
+          			<spacecraft:spacecraft_clock_stop_count>$label.SPACECRAFT_CLOCK_STOP_COUNT</spacecraft:spacecraft_clock_stop_count>
+          			#if ($label.PROCESSING_HISTORY_TEXT)
+          			<spacecraft:processing_history_text>$label.PROCESSING_HISTORY_TEXT</spacecraft:processing_history_text>
+          			#else
+        			#end
+        		</spacecraft:Spacecraft_Parameters>
+        		<spacecraft:Instrument_Parameters>
+          			<spacecraft:telemetry_application_id>$label.TELEMETRY_APPLICATION_ID</spacecraft:telemetry_application_id>
+          			<spacecraft:detector_type>$label.DETECTOR_TYPE</spacecraft:detector_type>
+          			#if ($label.DETECTOR_ID)
+          			<spacecraft:detector_id><$label.DETECTOR_ID/spacecraft:detector_id>
+          			#else
+        			#end
+          			<spacecraft:instrument_compression_type>$label.INST_CMPRS_TYPE</spacecraft:instrument_compression_type>
+          			#if ($label.RECEIVED_POLARIZATION_TYPE)
+          			<spacecraft:received_polarization_type>$label.RECEIVED_POLARIZATION_TYPE</spacecraft:received_polarization_type>
+          			#else
+        			#end
+        			#if ($label.FILTER_NAME)
+          			<spacecraft:filter_name>$label.FILTER_NAME</spacecraft:filter_name>
+          			#else
+        			#end
+        			#if ($label.INSTRUMENT_MODE_DESC)
+          			<spacecraft:instrument_mode_description>$label.INSTRUMENT_MODE_DESC</spacecraft:instrument_mode_description>    
+          			#else
+        			#end
+        		</spacecraft:Instrument_Parameters>
+      		</spacecraft:Spacecraft_Dictionary_Parameters>
+    	</Mission_Area>
+
+        
+
+        <Discipline_Area>
+            <disp:Display_Settings>
+                <Local_Internal_Reference>
+                    <local_identifier_reference>Image</local_identifier_reference>
+                    <local_reference_type>display_settings_to_array</local_reference_type>
+                </Local_Internal_Reference>
+                
+                <disp:Display_Direction>
+                    <disp:horizontal_display_axis>Sample</disp:horizontal_display_axis>
+                    #set($foosaright = "RIGHT")
+                    #set($foosleft = "LEFT")
+                    #set($foolup = "UP")
+                    #set($fooldown= "DOWN")
+                    
+                    #if ($label.IMAGE.SAMPLE_DISPLAY_DIRECTION == $foosaright)
+                    <disp:horizontal_display_direction>Left to Right</disp:horizontal_display_direction>
+                    #elseif ($label.IMAGE.SAMPLE_DISPLAY_DIRECTION == $foosleft)
+                    <disp:horizontal_display_direction>Right to Left</disp:horizontal_display_direction>
+                    #end
+                    <disp:vertical_display_axis>Line</disp:vertical_display_axis>
+                    
+                    #if ($label.IMAGE.LINE_DISPLAY_DIRECTION == $foolup)
+                    <disp:vertical_display_direction>Bottom to Top</disp:vertical_display_direction>
+                    #elseif ($label.IMAGE.LINE_DISPLAY_DIRECTION == $fooldown)
+                    <disp:vertical_display_direction>Top to Bottom</disp:vertical_display_direction>
+                    #end
+                </disp:Display_Direction> 
+            </disp:Display_Settings>
+            
+                      
+            <img:Imaging>
+                
+                <Local_Internal_Reference>
+                    <local_identifier_reference>Image</local_identifier_reference>
+                    <local_reference_type>imaging_parameters_to_image_object</local_reference_type>
+                </Local_Internal_Reference>       
+                
+                <img:Exposure>
+                    <img:exposure_duration unit="$label.getUnits('EXPOSURE_DURATION')">$label.EXPOSURE_DURATION</img:exposure_duration>
+                </img:Exposure>    
+            
+            </img:Imaging>
+        
+        
+        
+            <geom:Geometry>
+            #set ($foona = "N/A")
+            
+            #if ($label.SPICE_FILE_NAME)
+             	<geom:SPICE_Kernel_Files>
+        		    #set($flagr = $label.get("SPICE_FILE_NAME")[0])
+                   	#set($flagr = $flagr.split(','))
+                    #foreach ($item in $flagr)
+          			<geom:SPICE_Kernel_Identification>
+                    	<geom:spice_kernel_file_name>$flagr.get($foreach.index)</geom:spice_kernel_file_name>
+          			</geom:SPICE_Kernel_Identification>
+          			#end
+        		</geom:SPICE_Kernel_Files>
+        		#else
+        		#end
+        		
+                <geom:Image_Display_Geometry>
+                    
+                    <geom:Display_Direction>
+                        <geom:horizontal_display_axis>Sample</geom:horizontal_display_axis>
+                        <geom:horizontal_display_direction>Left to Right</geom:horizontal_display_direction>
+                        <geom:vertical_display_axis>Line</geom:vertical_display_axis>
+                        <geom:vertical_display_direction>Bottom to Top</geom:vertical_display_direction>
+                    </geom:Display_Direction>
+                          
+                    <geom:Object_Orientation_RA_Dec>
+                    	
+                        <geom:right_ascension_angle unit="deg">$label.RIGHT_ASCENSION</geom:right_ascension_angle>
+                        <geom:declination_angle unit="deg">$label.DECLINATION</geom:declination_angle>
+                        <geom:celestial_north_clock_angle unit="deg">$label.CELESTIAL_NORTH_CLOCK_ANGLE</geom:celestial_north_clock_angle>
+                        <geom:Reference_Frame_Identification>
+                            <geom:name>$label.COORDINATE_SYSTEM_ID</geom:name>
+                        </geom:Reference_Frame_Identification>
+
+                    </geom:Object_Orientation_RA_Dec>
+                    #if ($label.BODY_POLE_CLOCK_ANGLE && $label.BODY_POLE_CLOCK_ANGLE != $foona)
+					<geom:Object_Orientation_Clock_Angles>
+            			<geom:target_north_pole_clock_angle unit="$label.getUnits('BODY_POLE_CLOCK_ANGLE').substring(0,3).toLowerCase()">$label.BODY_POLE_CLOCK_ANGLE</geom:target_north_pole_clock_angle>
+          			</geom:Object_Orientation_Clock_Angles>
+          			#else
+          			#end
+
+          			<geom:Quaternion_Plus_To_From>
+            			<geom:qcos>$label.QUATERNION.get(0)</geom:qcos>
+            			<geom:qsin1>$label.QUATERNION.get(1)</geom:qsin1>
+            			<geom:qsin2>$label.QUATERNION.get(2)</geom:qsin2>
+            			<geom:qsin3>$label.QUATERNION.get(3)</geom:qsin3>
+            			<geom:Rotate_From>
+              				<geom:name>ALICE Coordinate System</geom:name>
+            			</geom:Rotate_From>
+            			<geom:Rotate_To>
+              				<geom:name>J200</geom:name>
+            			</geom:Rotate_To>
+          			</geom:Quaternion_Plus_To_From>
+          
+                </geom:Image_Display_Geometry>            
+            
+        		#if ($label.TARGET_CENTER_DISTANCE || $label.SC_GEOCENTRIC_DISTANCE || $label.SPACECRAFT_SOLAR_DISTANCE || $label.SOLAR_DISTANCE ||
+        		$label.SUB_SOLAR_LATITUDE || $label.SUB_SOLAR_LONGITUDE || $label.SUB_SPACECRAFT_LATITUDE || $label.SUB_SPACECRAFT_LONGITUDE || 
+        		$label.SOLAR_ELONGATION || $label.PHASE_ANGLE || 
+        		$label.SC_SUN_POSITION_VECTOR || $label.SC_TARGET_POSITION_VECTOR || $label.TARGET_SUN_POSITION_VECTOR || $label.SC_EARTH_POSITION_VECTOR || 
+        		$label.SC_TARGET_VELOCITY_VECTOR || $label.TARGET_SUN_VELOCITY_VECTOR || $label.SC_SUN_VELOCITY_VECTOR)
+                <geom:Geometry_Orbiter>
+                    <geom:geometry_reference_time_utc>${label.START_TIME}Z</geom:geometry_reference_time_utc>
+                	
+                	#if ($label.TARGET_CENTER_DISTANCE && $label.TARGET_CENTER_DISTANCE != $foona || $label.SC_GEOCENTRIC_DISTANCE && $label.SC_GEOCENTRIC_DISTANCE != $foona || $label.SPACECRAFT_SOLAR_DISTANCE && $label.SPACECRAFT_SOLAR_DISTANCE != $foona || $label.SOLAR_DISTANCE && $label.SOLAR_DISTANCE != $foona)
+                    <geom:Distances>
+                        <geom:Distances_Specific>
+                        	#if ($label.TARGET_CENTER_DISTANCE && $label.TARGET_CENTER_DISTANCE != $foona)
+                            <geom:spacecraft_target_center_distance unit="$label.getUnits('TARGET_CENTER_DISTANCE')">$label.TARGET_CENTER_DISTANCE</geom:spacecraft_target_center_distance>
+                            #else
+                            #end
+                            #if ($label.SC_GEOCENTRIC_DISTANCE && $label.SC_GEOCENTRIC_DISTANCE != $foona)
+                            <geom:spacecraft_geocentric_distance unit="$label.getUnits('SC_GEOCENTRIC_DISTANCE')">$label.SC_GEOCENTRIC_DISTANCE</geom:spacecraft_geocentric_distance>
+              				#else
+              				#end
+              				#if ($label.SPACECRAFT_SOLAR_DISTANCE && $label.SPACECRAFT_SOLAR_DISTANCE != $foona)
+              				<geom:spacecraft_heliocentric_distance unit="$label.getUnits('SPACECRAFT_SOLAR_DISTANCE')">$label.SPACECRAFT_SOLAR_DISTANCE</geom:spacecraft_heliocentric_distance>
+              				#else
+              				#end
+              				#if ($label.SOLAR_DISTANCE && $label.SOLAR_DISTANCE != $foona)
+              				<geom:target_heliocentric_distance unit="$label.getUnits('SOLAR_DISTANCE')">$label.SOLAR_DISTANCE</geom:target_heliocentric_distance>
+              				#else
+              				#end
+                        </geom:Distances_Specific>                        
+                    </geom:Distances>
+                    #else
+                    #end
+
+        			#if ($label.SUB_SOLAR_LATITUDE && $label.SUB_SOLAR_LATITUDE != $foona || $label.SUB_SOLAR_LONGITUDE && $label.SUB_SOLAR_LONGITUDE != $foona || $label.SUB_SPACECRAFT_LATITUDE && $label.SUB_SPACECRAFT_LATITUDE != $foona || $label.SUB_SPACECRAFT_LONGITUDE && $label.SUB_SPACECRAFT_LONGITUDE != $foona)
+                    <geom:Surface_Geometry>
+
+                   
+                        <geom:Surface_Geometry_Specific>
+                        	#if ($label.SUB_SOLAR_LATITUDE  && $label.SUB_SOLAR_LATITUDE != $foona)
+                            <geom:subsolar_latitude unit="$label.getUnits('SUB_SOLAR_LATITUDE').substring(0,3).toLowerCase()">$label.SUB_SOLAR_LATITUDE</geom:subsolar_latitude>
+                            #else
+       						#end
+                            
+                            #if ($label.SUB_SOLAR_LONGITUDE && $label.SUB_SOLAR_LONGITUDE != $foona)
+                            #if ($label.SUB_SOLAR_LONGITUDE[0].contains("-"))
+              				<geom:subsolar_longitude unit="$label.getUnits('SUB_SOLAR_LONGITUDE').substring(0,3).toLowerCase()">$math.add(360,$label.SUB_SOLAR_LONGITUDE)</geom:subsolar_longitude>
+                        	#else
+                        	<geom:subsolar_longitude unit="$label.getUnits('SUB_SOLAR_LONGITUDE').substring(0,3).toLowerCase()">$label.SUB_SOLAR_LONGITUDE</geom:subsolar_longitude>
+                        	#end
+                        	#else
+                            #end
+                        
+                        	#if ($label.SUB_SPACECRAFT_LATITUDE  && $label.SUB_SPACECRAFT_LATITUDE != $foona)
+                            <geom:subspacecraft_latitude unit="$label.getUnits('SUB_SPACECRAFT_LATITUDE').substring(0,3).toLowerCase()">$label.SUB_SPACECRAFT_LATITUDE</geom:subspacecraft_latitude>
+       						#else
+       						#end
+       						
+       						#if ($label.SUB_SPACECRAFT_LONGITUDE && $label.SUB_SPACECRAFT_LONGITUDE != $foona)
+                            #if ($label.SUB_SPACECRAFT_LONGITUDE[0].contains("-"))
+                            <geom:subspacecraft_longitude unit="$label.getUnits('SUB_SPACECRAFT_LONGITUDE').substring(0,3).toLowerCase()">$math.add(360,$label.SUB_SPACECRAFT_LONGITUDE)</geom:subspacecraft_longitude>
+                            #else
+                            <geom:subspacecraft_longitude unit="$label.getUnits('SUB_SPACECRAFT_LONGITUDE').substring(0,3).toLowerCase()">$label.SUB_SPACECRAFT_LONGITUDE</geom:subspacecraft_longitude>
+                            #end
+                            #else
+                            #end
+                        </geom:Surface_Geometry_Specific>
+                    </geom:Surface_Geometry>
+                    #else
+                    #end
+                    
+                    #if ($label.SOLAR_ELONGATION && $label.SOLAR_ELONGATION != $foona || $label.PHASE_ANGLE && $label.PHASE_ANGLE != $foona)
+                    <geom:Illumination_Geometry>
+                        <geom:Illumination_Specific>
+                            <geom:reference_location>Target Center</geom:reference_location>
+                            <geom:solar_elongation unit="$label.getUnits('SOLAR_ELONGATION').substring(0,3).toLowerCase()">$label.SOLAR_ELONGATION</geom:solar_elongation>
+                            <geom:phase_angle unit="$label.getUnits('PHASE_ANGLE').substring(0,3).toLowerCase()">$label.PHASE_ANGLE</geom:phase_angle>
+                        </geom:Illumination_Specific>
+                    </geom:Illumination_Geometry>
+                    #else
+                    #end
+                    
+                	<geom:Vectors>
+                	 
+                        <geom:Vectors_Cartesian_Specific>
+                        #set ($fookm = "km")
+                        #set ($fookms = "km/s")
+                        	#if ($label.SC_SUN_POSITION_VECTOR && $label.SC_SUN_POSITION_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Position_Sun_To_Spacecraft>
+                                <geom:x_position unit="$fookm">$math.mul($label.SC_SUN_POSITION_VECTOR.get(0),-1)</geom:x_position>
+                                <geom:y_position unit="$fookm">$math.mul($label.SC_SUN_POSITION_VECTOR.get(1),-1)</geom:y_position>
+                                <geom:z_position unit="$fookm">$math.mul($label.SC_SUN_POSITION_VECTOR.get(2),-1)</geom:z_position>
+                                <geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+                            </geom:Vector_Cartesian_Position_Sun_To_Spacecraft>
+                            #else
+                            #end
+                            
+                            #if ($label.SC_TARGET_POSITION_VECTOR && $label.SC_TARGET_POSITION_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Position_Spacecraft_To_Target>
+                                <geom:x_position unit="$fookm">$label.SC_TARGET_POSITION_VECTOR.get(0)</geom:x_position>
+                                <geom:y_position unit="$fookm">$label.SC_TARGET_POSITION_VECTOR.get(1)</geom:y_position>
+                                <geom:z_position unit="$fookm">$label.SC_TARGET_POSITION_VECTOR.get(2)</geom:z_position>
+                                <geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+                            </geom:Vector_Cartesian_Position_Spacecraft_To_Target>
+                            #else
+                            #end
+                            
+                            #if ($label.TARGET_SUN_POSITION_VECTOR && $label.TARGET_SUN_POSITION_VECTOR.get(0) != $foona)
+                             <geom:Vector_Cartesian_Position_Sun_To_Target>
+                				<geom:x_position unit="$fookm">$math.mul($label.TARGET_SUN_POSITION_VECTOR.get(0),-1)</geom:x_position>
+                				<geom:y_position unit="$fookm">$math.mul($label.TARGET_SUN_POSITION_VECTOR.get(1),-1)</geom:y_position>
+                				<geom:z_position unit="$fookm">$math.mul($label.TARGET_SUN_POSITION_VECTOR.get(2),-1)</geom:z_position>
+                				 <geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+             	 			</geom:Vector_Cartesian_Position_Sun_To_Target>
+             	 			#else
+                            #end
+                            
+                            #if ($label.SC_EARTH_POSITION_VECTOR && $label.SC_EARTH_POSITION_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Position_Earth_To_Spacecraft>
+                				<geom:x_position unit="$fookm">$math.mul($label.SC_EARTH_POSITION_VECTOR.get(0),-1)</geom:x_position>
+                				<geom:y_position unit="$fookm">$math.mul($label.SC_EARTH_POSITION_VECTOR.get(1),-1)</geom:y_position>
+                				<geom:z_position unit="$fookm">$math.mul($label.SC_EARTH_POSITION_VECTOR.get(2),-1)</geom:z_position>
+                				<geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+              				</geom:Vector_Cartesian_Position_Earth_To_Spacecraft>
+              				#else
+                            #end
+                        	
+                        	#if ($label.SC_TARGET_VELOCITY_VECTOR && $label.SC_TARGET_VELOCITY_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Velocity_Spacecraft_Relative_To_Target>
+                                <geom:x_velocity unit="$fookms">$label.SC_TARGET_VELOCITY_VECTOR.get(0)</geom:x_velocity>
+                                <geom:y_velocity unit="$fookms">$label.SC_TARGET_VELOCITY_VECTOR.get(1)</geom:y_velocity>
+                                <geom:z_velocity unit="$fookms">$label.SC_TARGET_VELOCITY_VECTOR.get(2)</geom:z_velocity>
+                                <geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+                            </geom:Vector_Cartesian_Velocity_Spacecraft_Relative_To_Target>
+                            #else
+                            #end
+                            
+                            #if ($label.TARGET_SUN_VELOCITY_VECTOR && $label.TARGET_SUN_VELOCITY_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Velocity_Target_Relative_To_Sun>
+                				<geom:x_velocity unit="$fookms">$label.TARGET_SUN_VELOCITY_VECTOR.get(0)</geom:x_velocity>
+                				<geom:y_velocity unit="$fookms">$label.TARGET_SUN_VELOCITY_VECTOR.get(1)</geom:y_velocity>
+                				<geom:z_velocity unit="$fookms">$label.TARGET_SUN_VELOCITY_VECTOR.get(2)</geom:z_velocity>
+                				<geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+              				</geom:Vector_Cartesian_Velocity_Target_Relative_To_Sun>
+              				#else
+                            #end
+                            
+                            #if ($label.SC_SUN_VELOCITY_VECTOR && $label.SC_SUN_VELOCITY_VECTOR.get(0) != $foona)
+                            <geom:Vector_Cartesian_Velocity_Spacecraft_Relative_To_Sun>
+                				<geom:x_velocity unit="$fookms">$label.SC_SUN_VELOCITY_VECTOR.get(0)</geom:x_velocity>
+                				<geom:y_velocity unit="$fookms">$label.SC_SUN_VELOCITY_VECTOR.get(1)</geom:y_velocity>
+                				<geom:z_velocity unit="$fookms">$label.SC_SUN_VELOCITY_VECTOR.get(2)</geom:z_velocity>
+                				<geom:light_time_correction_applied>None</geom:light_time_correction_applied>
+              				</geom:Vector_Cartesian_Velocity_Spacecraft_Relative_To_Sun>
+              				#else
+                            #end
+                            
+
+              				
+                        </geom:Vectors_Cartesian_Specific>
+                    </geom:Vectors>
+                    
+                
+                </geom:Geometry_Orbiter>
+                #else
+				#end
+            </geom:Geometry>
+        </Discipline_Area>
+
+
+        
+    </Observation_Area>	
+
+        
+    <File_Area_Observational>
+    	#set ($fooLSBUnsigned = "LSB_UNSIGNED_INTEGER")
+    	#set ($fooMSBinteger = "MSB_INTEGER")
+    	#set ($fooPCReal = "PC_REAL")
+    	#set ($fooIEEEReal = "IEEE_REAL")
+    	
+    	#set ($foobit1 = "1")
+    	#set ($foobit2 = "2")
+    	#set ($foobit4 = "4")
+    	#set ($foobit8 = "8")
+    	#set ($foobit16 = "16")
+    	#set ($foobit32 = "32")
+    	#set ($foobit64 = "64")  	
+    
+        #if ($label.PTR_IMAGE.get(0))
+        <File> 
+            <file_name>$label.PTR_IMAGE.get(0).toLowerCase()</file_name>
+        </File>      
+        #else
+                <File> 
+            <file_name>$label.PTR_IMAGE[0].toLowerCase()</file_name>
+        </File>   
+        #end
+        
+        #if ($label.PTR_HEADER.get(0))
+    	<Header>
+    		#if ($label.HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+        
+    	#if ($label.PTR_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>Image</local_identifier>
+            #if ($label.IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				#end
+				
+                #if ($label.IMAGE.UNIT)
+                <unit>$label.IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.IMAGE.DERIVED_MAXIMUM  || $label.IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+        
+        
+        #if ($label.PTR_EXTENSION_CTR_WL_WIDTH_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_CTR_WL_WIDTH_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_CTR_WL_WIDTH_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_CTR_WL_WIDTH_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_CTR_WL_WIDTH_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+        
+        
+        #if ($label.PTR_EXTENSION_CTR_WL_WIDTH_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>WidthImage</local_identifier>
+            #if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_CTR_WL_WIDTH_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_CTR_WL_WIDTH_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				#end
+				
+                #if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.UNIT)
+                <unit>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_CTR_WL_WIDTH_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+
+
+
+        #if ($label.PTR_EXTENSION_POINTING_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_POINTING_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_POINTING_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_POINTING_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_POINTING_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_POINTING_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>PointingImage</local_identifier>
+            #if ($label.EXTENSION_POINTING_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_POINTING_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_POINTING_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				
+				#elseif ($label.EXTENSION_POINTING_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_POINTING_IMAGE.SAMPLE_BITS == $foobit64)
+				<data_type>IEEE754MSBDouble</data_type>
+				#end
+				
+                #if ($label.EXTENSION_POINTING_IMAGE.UNIT)
+                <unit>$label.EXTENSION_POINTING_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_POINTING_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_POINTING_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_POINTING_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_POINTING_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_POINTING_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_POINTING_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_POINTING_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_POINTING_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_POINTING_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_POINTING_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+
+
+        #if ($label.PTR_EXTENSION_FLATFIELD_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_FLATFIELD_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_FLATFIELD_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_FLATFIELD_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_FLATFIELD_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_FLATFIELD_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>FlatfieldImage</local_identifier>
+            #if ($label.EXTENSION_FLATFIELD_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_FLATFIELD_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_FLATFIELD_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				
+				#elseif ($label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_FLATFIELD_IMAGE.SAMPLE_BITS == $foobit64)
+				<data_type>IEEE754MSBDouble</data_type>
+				#end
+				
+                #if ($label.EXTENSION_FLATFIELD_IMAGE.UNIT)
+                <unit>$label.EXTENSION_FLATFIELD_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_FLATFIELD_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_FLATFIELD_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_FLATFIELD_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_FLATFIELD_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_FLATFIELD_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+	
+	    #if ($label.PTR_EXTENSION_GAIN_OFFSET_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_GAIN_OFFSET_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_GAIN_OFFSET_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_GAIN_OFFSET_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_GAIN_OFFSET_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_GAIN_OFFSET_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>GainOffsetImage</local_identifier>
+            #if ($label.EXTENSION_GAIN_OFFSET_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_GAIN_OFFSET_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_GAIN_OFFSET_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				
+				#elseif ($label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_GAIN_OFFSET_IMAGE.SAMPLE_BITS == $foobit64)
+				<data_type>IEEE754MSBDouble</data_type>
+				#end
+				
+                #if ($label.EXTENSION_GAIN_OFFSET_IMAGE.UNIT)
+                <unit>$label.EXTENSION_GAIN_OFFSET_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_GAIN_OFFSET_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_GAIN_OFFSET_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_GAIN_OFFSET_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_GAIN_OFFSET_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_GAIN_OFFSET_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_ERROR_ESIMATE_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_ERROR_ESIMATE_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_ERROR_ESIMATE_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_ERROR_ESIMATE_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_ERROR_ESIMATE_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_ERROR_ESIMATE_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>ErrorEstimateImage</local_identifier>
+            #if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_ERROR_ESIMATE_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_ERROR_ESIMATE_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				
+				#elseif ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_ERROR_ESIMATE_IMAGE.SAMPLE_BITS == $foobit64)
+				<data_type>IEEE754MSBDouble</data_type>
+				#end
+				
+                #if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.UNIT)
+                <unit>$label.EXTENSION_ERROR_ESIMATE_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_ERROR_ESIMATE_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_ERROR_ESIMATE_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_ERROR_ESIMATE_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_ERROR_ESIMATE_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+        
+        
+        #if ($label.PTR_EXTENSION_QUALITY_FLAG_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_QUALITY_FLAG_HEADER.OFFSET)
+      		<offset unit="byte">$math.round($label.EXTENSION_QUALITY_FLAG_HEADER.OFFSET)</offset>
+      		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_QUALITY_FLAG_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_QUALITY_FLAG_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+
+
+        #if ($label.PTR_EXTENSION_QUALITY_FLAG_IMAGE)
+        <Array_2D_Image>
+            <local_identifier>QualityFlagImage</local_identifier>
+            #if ($label.EXTENSION_QUALITY_FLAG_IMAGE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_QUALITY_FLAG_IMAGE.OFFSET)</offset>
+            #else
+            <offset unit="byte">0</offset>
+            #end
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>$label.EXTENSION_QUALITY_FLAG_IMAGE.DESCRIPTION</description>
+            <Element_Array>           
+            	#if ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit8)
+                <data_type>UnsignedByte</data_type>
+                #elseif ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooLSBUnsigned && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>UnsignedLSB2</data_type>
+				#elseif ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit16)
+				<data_type>SignedMSB2</data_type>
+				
+				
+				#elseif( $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooPCReal  && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754LSBSingle</data_type>
+				#elseif ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit32)
+				<data_type>IEEE754MSBSingle</data_type>
+				#elseif ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooMSBinteger && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit32)
+                <data_type>SignedMSB8</data_type>
+				
+				#elseif ($label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_TYPE == $fooIEEEReal  && $label.EXTENSION_QUALITY_FLAG_IMAGE.SAMPLE_BITS == $foobit64)
+				<data_type>IEEE754MSBDouble</data_type>
+				#end
+				
+                #if ($label.EXTENSION_QUALITY_FLAG_IMAGE.UNIT)
+                <unit>$label.EXTENSION_QUALITY_FLAG_IMAGE.UNIT</unit>
+                #else
+                #end
+                
+                #if ($label.EXTENSION_QUALITY_FLAG_IMAGE.SCALING_FACTOR)
+           	 	<scaling_factor>$label.EXTENSION_QUALITY_FLAG_IMAGE.SCALING_FACTOR</scaling_factor>
+            	#else
+            	#end
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>$label.EXTENSION_QUALITY_FLAG_IMAGE.LINES</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>$label.EXTENSION_QUALITY_FLAG_IMAGE.LINE_SAMPLES</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+            
+            #if ($label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MAXIMUM  || $label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MINIMUM)
+            <Object_Statistics>
+            	#if ($label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MAXIMUM)
+                <maximum_scaled_value>$label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MAXIMUM</maximum_scaled_value>
+                #else
+                #end
+                #if ($label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MINIMUM)
+                <minimum_scaled_value>$label.EXTENSION_QUALITY_FLAG_IMAGE.DERIVED_MINIMUM</minimum_scaled_value>
+                #else
+                #end
+            </Object_Statistics>
+            #else
+            #end
+        </Array_2D_Image>
+        #else
+        #end
+
+        
+        #if ($label.PTR_EXTENSION_ET_QUATERNION_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_ET_QUATERNION_HEADER.OFFSET)
+    		<offset unit="byte">$math.round($label.EXTENSION_ET_QUATERNION_HEADER.OFFSET)</offset>
+    		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_ET_QUATERNION_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_ET_QUATERNION_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+        
+        
+        
+        #if (($label.PTR_EXTENSION_ET_QUATERNION_TABLE.get(0)))
+        <Table_Binary>
+        #set ($foobyte = "byte")
+            #if ($label.EXTENSION_ET_QUATERNION_TABLE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_ET_QUATERNION_TABLE.OFFSET)</offset>
+    		#else
+    		<offset unit="byte">$math.add($label.HEADER.BYTES, $label.EXTENSION_CTR_WL_WIDTH_HEADER.BYTES, $label.EXTENSION_POINTING_HEADER.BYTES, $label.EXTENSION_FLATFIELD_HEADER.BYTES, $label.EXTENSION_GAIN_OFFSET_HEADER.BYTES, $label.EXTENSION_ERROR_ESIMATE_HEADER.BYTES, $label.EXTENSION_QUALITY_FLAG_HEADER.BYTES, $label.EXTENSION_ET_QUATERNION_HEADER.BYTES, $label.EXTENSION_RALPH_HK_HEADER.BYTES)</offset>
+      		#end
+            <records>$label.EXTENSION_ET_QUATERNION_TABLE.ROWS</records>
+            <description>$label.EXTENSION_ET_QUATERNION_TABLE.DESCRIPTION</description>
+            <Record_Binary>
+            	<fields>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMNS</fields>
+        		<groups>0</groups>
+       			 <record_length unit="byte">$label.EXTENSION_ET_QUATERNION_TABLE.ROW_BYTES</record_length>
+       			 
+       			#foreach ( $c in $label.EXTENSION_ET_QUATERNION_TABLE.COLUMN )
+        		<Field_Binary>
+          		<name>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).NAME</name>
+          		<field_number>$math.add($foreach.index,1)</field_number>
+          		<field_location unit="byte">$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).START_BYTE</field_location>
+          		#set ($footime = "TIME")
+         		 #set ($footcha = "CHARACTER")
+         		 #set ($footreal = "ASCII_REAL")
+         		 #set ($footint = "ASCII_INTEGER")
+         		 #set ($footmsbunsint = "MSB_UNSIGNED_INTEGER")
+          		#if ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footime)
+          		<data_type>ASCII_Date_Time_YMD</data_type>
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footcha)
+          		<data_type>ASCII_String</data_type>
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footreal)
+          		<data_type>ASCII_Real</data_type>
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footint)
+          		<data_type>ASCII_Integer</data_type>
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooMSBinteger && $label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).BYTES == $foobit2)
+         	 	<data_type>SignedMSB2</data_type>
+         		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooMSBinteger && $label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).BYTES == $foobit4)
+         	 	<data_type>SignedMSB4</data_type>
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footmsbunsint && $label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).BYTES == $foobit1)
+          		<data_type>UnsignedByte</data_type>
+          		
+          		
+          		#elseif ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooIEEEReal   && $label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).BYTES == $foobit8)
+				<data_type>IEEE754MSBDouble</data_type>
+          		
+          #else
+          #end
+
+          <field_length unit="byte">$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).BYTES</field_length>
+        
+          #if ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).UNIT)
+          	<unit>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).UNIT</unit>
+          #else
+          #end
+          
+        #if ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).SCALING_FACTOR)
+          <scaling_factor>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).SCALING_FACTOR</scaling_factor>
+          #else
+          #end
+          
+          #if ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).OFFSET)
+          <value_offset>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).OFFSET</value_offset>
+          #else
+          #end
+
+          <description>$esc.xml($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).DESCRIPTION.toString())</description>
+        
+          #if ($label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).MISSING_CONSTANT)
+         	<Special_Constants>
+                    <missing_constant>$label.EXTENSION_ET_QUATERNION_TABLE.COLUMN.get($foreach.index).MISSING_CONSTANT</missing_constant>
+         	</Special_Constants>
+          #else
+          #end
+        
+        	</Field_Binary>
+		#end
+        </Record_Binary>
+        </Table_Binary>
+        #else
+        #end
+        
+        
+        
+        #if ($label.PTR_EXTENSION_RALPH_HK_HEADER.get(0))
+    	<Header>
+    		#if ($label.EXTENSION_RALPH_HK_HEADER.OFFSET)
+    		<offset unit="byte">$math.round($label.EXTENSION_RALPH_HK_HEADER.OFFSET)</offset>
+    		#else
+      		<offset unit="byte">0</offset>
+      		#end
+      		<object_length unit="byte">$label.EXTENSION_RALPH_HK_HEADER.BYTES</object_length>
+      		<parsing_standard_id>FITS 3.0</parsing_standard_id>
+            <description>$label.EXTENSION_RALPH_HK_HEADER.DESCRIPTION</description>
+    	</Header>
+        #else
+        #end
+        
+        
+        
+        #if (($label.PTR_EXTENSION_RALPH_HK_TABLE.get(0)))
+        <Table_Binary>
+        #set ($foobyte = "byte")
+            #if ($label.EXTENSION_RALPH_HK_TABLE.OFFSET)
+            <offset unit="byte">$math.round($label.EXTENSION_RALPH_HK_TABLE.OFFSET)</offset>
+    		#else
+    		<offset unit="byte">$math.add($label.HEADER.BYTES, $label.EXTENSION_CTR_WL_WIDTH_HEADER.BYTES, $label.EXTENSION_POINTING_HEADER.BYTES, $label.EXTENSION_FLATFIELD_HEADER.BYTES, $label.EXTENSION_GAIN_OFFSET_HEADER.BYTES, $label.EXTENSION_ERROR_ESIMATE_HEADER.BYTES, $label.EXTENSION_QUALITY_FLAG_HEADER.BYTES, $label.EXTENSION_ET_QUATERNION_HEADER.BYTES, $label.EXTENSION_RALPH_HK_HEADER.BYTES)</offset>
+      		#end
+            <records>$label.EXTENSION_RALPH_HK_TABLE.ROWS</records>
+            <description>$label.EXTENSION_RALPH_HK_TABLE.DESCRIPTION</description>
+            <Record_Binary>
+            	<fields>$label.EXTENSION_RALPH_HK_TABLE.COLUMNS</fields>
+        		<groups>0</groups>
+       			 <record_length unit="byte">$label.EXTENSION_RALPH_HK_TABLE.ROW_BYTES</record_length>
+       			 
+       			#foreach ( $c in $label.EXTENSION_RALPH_HK_TABLE.COLUMN )
+        		<Field_Binary>
+          		<name>$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).NAME</name>
+          		<field_number>$math.add($foreach.index,1)</field_number>
+          		<field_location unit="byte">$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).START_BYTE</field_location>
+          		#set ($footime = "TIME")
+         		 #set ($footcha = "CHARACTER")
+         		 #set ($footreal = "ASCII_REAL")
+         		 #set ($footint = "ASCII_INTEGER")
+         		 #set ($footmsbunsint = "MSB_UNSIGNED_INTEGER")
+          		#if ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footime)
+          		<data_type>ASCII_Date_Time_YMD</data_type>
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footcha)
+          		<data_type>ASCII_String</data_type>
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footreal)
+          		<data_type>ASCII_Real</data_type>
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footint)
+          		<data_type>ASCII_Integer</data_type>
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooMSBinteger && $label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).BYTES == $foobit2)
+         	 	<data_type>SignedMSB2</data_type>
+         		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooMSBinteger && $label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).BYTES == $foobit4)
+         	 	<data_type>SignedMSB4</data_type>
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $footmsbunsint && $label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).BYTES == $foobit1)
+          		<data_type>UnsignedByte</data_type>
+          		
+          		
+          		#elseif ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DATA_TYPE == $fooIEEEReal   && $label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).BYTES == $foobit8)
+				<data_type>IEEE754MSBDouble</data_type>
+          		
+          #else
+          #end
+
+          <field_length unit="byte">$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).BYTES</field_length>
+        
+          #if ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).UNIT)
+          	<unit>$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).UNIT</unit>
+          #else
+          #end
+          
+        #if ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).SCALING_FACTOR)
+          <scaling_factor>$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).SCALING_FACTOR</scaling_factor>
+          #else
+          #end
+          
+          #if ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).OFFSET)
+          <value_offset>$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).OFFSET</value_offset>
+          #else
+          #end
+
+          <description>$esc.xml($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).DESCRIPTION.toString())</description>
+        
+          #if ($label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).MISSING_CONSTANT)
+         	<Special_Constants>
+                    <missing_constant>$label.EXTENSION_RALPH_HK_TABLE.COLUMN.get($foreach.index).MISSING_CONSTANT</missing_constant>
+         	</Special_Constants>
+          #else
+          #end
+        
+        	</Field_Binary>
+		#end
+        </Record_Binary>
+        </Table_Binary>
+        #else
+        #end
+
+        
+        </File_Area_Observational> 
+
+
+        <File_Area_Observational>
+    		<File>
+      			<file_name>${label.PRODUCT_ID[0].toLowerCase()}.lbl</file_name>
+    		</File>
+    		<Stream_Text>
+      			<offset unit="byte">0</offset>
+      			<parsing_standard_id>PDS3</parsing_standard_id>
+      			<description>Copy of the PDS3 label for the corresponding browse product.</description>
+      			<record_delimiter>Carriage-Return Line-Feed</record_delimiter>
+    		</Stream_Text>
+  		</File_Area_Observational> 
+    
+</Product_Observational>

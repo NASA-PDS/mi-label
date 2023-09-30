@@ -31,23 +31,24 @@
 package gov.nasa.pds.imaging.generate.util;
 
 /**
- * Debug class that shows a ton of debug messages. Messages
- * are way too much for even logger DEBUG level.
+ * Debug class that shows a ton of debug messages. Messages are way too much for even logger DEBUG
+ * level.
  * 
  * @author jpadams
  *
  */
 public class Debugger {
 
-	public static boolean debugFlag = false;
-	
-	/** Simple output method
-	 * 
-	 *  @param msg
-	 */
-	public static void debug(String msg) {
-		if (debugFlag) {
-			System.out.println(msg);
-		}
-	}
+  public static boolean debugFlag = false;
+
+  /**
+   * Simple output method
+   * 
+   * @param msg
+   */
+  public static void debug(String msg) {
+    if (debugFlag) {
+      System.out.println(msg);
+    }
+  }
 }

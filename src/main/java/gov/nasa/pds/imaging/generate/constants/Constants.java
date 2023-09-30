@@ -1,4 +1,4 @@
-//*********************************************************************************/
+// *********************************************************************************/
 // Copyright 2020, California Institute of Technology ("Caltech").
 // U.S. Government sponsorship acknowledged.
 //
@@ -32,7 +32,7 @@
 package gov.nasa.pds.imaging.generate.constants;
 
 public class Constants {
-    // TODO Use properties file to specify namespaces/prefixes dynamically
-    public static final String PDS_NAMESPACE = "http://pds.nasa.gov/schema/pds4/generic/common";
-    public static final String PDS_NS_PREFIX = "pds";
+  // TODO Use properties file to specify namespaces/prefixes dynamically
+  public static final String PDS_NAMESPACE = "http://pds.nasa.gov/schema/pds4/generic/common";
+  public static final String PDS_NS_PREFIX = "pds";
 }

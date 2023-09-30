@@ -40,27 +40,27 @@ import java.util.Date;
 
 public class ReaderFormat implements Element {
 
-    private File file;
-    private String readerFormat = "";
+  private File file;
+  private String readerFormat = "";
 
-    @Override
-    public String getUnits() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+  @Override
+  public String getUnits() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-    @Override
-    public String getValue() {
-  		System.out.printf("ReaderFormat.getValue(1) readerFormat=%s\n", readerFormat);
-  
-      return readerFormat;
-    }
-    
-    
-    @Override
-    public void setParameters(final PDSObject pdsObject) {
-    	this.readerFormat = pdsObject.getReaderFormat();
-    	if (Debugger.debugFlag)  
-    	  System.out.printf("ReaderFormat.setParameters >%s<\n", readerFormat);
-    }
+  @Override
+  public String getValue() {
+    System.out.printf("ReaderFormat.getValue(1) readerFormat=%s\n", readerFormat);
+
+    return readerFormat;
+  }
+
+
+  @Override
+  public void setParameters(final PDSObject pdsObject) {
+    this.readerFormat = pdsObject.getReaderFormat();
+    if (Debugger.debugFlag)
+      System.out.printf("ReaderFormat.setParameters >%s<\n", readerFormat);
+  }
 }

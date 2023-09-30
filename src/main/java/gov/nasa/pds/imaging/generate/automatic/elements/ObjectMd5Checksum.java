@@ -35,10 +35,9 @@ import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 /**
- * Generated value class that will generate an MD5 checksum for an object
- * within a file. This is specifically for attached labels or files with headers.
- * This class will truncate the header from the object and take the checksum of the
- * object itself.
+ * Generated value class that will generate an MD5 checksum for an object within a file. This is
+ * specifically for attached labels or files with headers. This class will truncate the header from
+ * the object and take the checksum of the object itself.
  * 
  * @author jpadams
  * @author srlevoe
@@ -49,7 +48,7 @@ public class ObjectMd5Checksum implements Element {
   private PDSObject pdsObj;
   public long offset = 0;
 
-  public ObjectMd5Checksum() { }
+  public ObjectMd5Checksum() {}
 
   @Override
   public String getUnits() {
@@ -64,12 +63,14 @@ public class ObjectMd5Checksum implements Element {
       // value to skip to data. We need a flag passed in via the PDSImageWriteParam
       // to decide if we checksum the entire image or only the data portion (excluding labels)
       // from a PDS3 input file
-      // vicar files could have an End of file label, requires extra work to calculate the start of the EOL.
-      String recbytes = (String)this.pdsObj.get("RECORD_BYTES");
-      String recs = (String)this.pdsObj.get("LABEL_RECORDS");
+      // vicar files could have an End of file label, requires extra work to calculate the start of
+      // the EOL.
+      String recbytes = (String) this.pdsObj.get("RECORD_BYTES");
+      String recs = (String) this.pdsObj.get("LABEL_RECORDS");
       // from a vicar input file
-      String lblsize = (String)this.pdsObj.get("SYSTEM.LBLSIZE");
-      Debugger.debug("ObjectMd5Checksum.getValue() recbytes "+recbytes+", recs "+recs+" lblsize "+lblsize+" XXX");
+      String lblsize = (String) this.pdsObj.get("SYSTEM.LBLSIZE");
+      Debugger.debug("ObjectMd5Checksum.getValue() recbytes " + recbytes + ", recs " + recs
+          + " lblsize " + lblsize + " XXX");
       Long recbytes_Long = 0L;
       Long recs_Long = 0L;
       Long lblsize_Long = 0L;
@@ -84,24 +85,25 @@ public class ObjectMd5Checksum implements Element {
       }
       if (recs != null) {
         recs_Long = Long.valueOf(recs);
-      } 
+      }
       if (lblsize != null) {
         lblsize_Long = Long.valueOf(lblsize);
-      } 
+      }
       // just use lblsize_long ??
-      this.offset = recbytes_Long * recs_Long ;
-      Debugger.debug("offset "+this.offset+"   lblsize_Long "+lblsize_Long+"  image_start_byte "+image_start_byte);
+      this.offset = recbytes_Long * recs_Long;
+      Debugger.debug("offset " + this.offset + "   lblsize_Long " + lblsize_Long
+          + "  image_start_byte " + image_start_byte);
 
       checksum = new Md5Checksum(this.pdsObj, this.offset);
-      Debugger.debug("ObjectMd5Checksum.getValue() checksum "+checksum.getValue()+"  XXX");
+      Debugger.debug("ObjectMd5Checksum.getValue() checksum " + checksum.getValue() + "  XXX");
       return checksum.getValue();
     } catch (TemplateException e) {
-      System.err.println("ERROR: RECORD_BYTES and/or LABEL_RECORDS keywords not found" +
-          " These are required to generate a partial checksum.");
+      System.err.println("ERROR: RECORD_BYTES and/or LABEL_RECORDS keywords not found"
+          + " These are required to generate a partial checksum.");
     } catch (java.lang.NumberFormatException nfe) {
-      System.err.println("ERROR: java.lang.NumberFormatException " +
-          " RECORD_BYTES and/or LABEL_RECORDS keywords not found" +
-          " These are required to generate a partial checksum.");
+      System.err.println("ERROR: java.lang.NumberFormatException "
+          + " RECORD_BYTES and/or LABEL_RECORDS keywords not found"
+          + " These are required to generate a partial checksum.");
     }
     return "Object Not Found";
   }

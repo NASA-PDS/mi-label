@@ -1,4 +1,4 @@
-//*********************************************************************************/
+// *********************************************************************************/
 // Copyright 2020, California Institute of Technology ("Caltech").
 // U.S. Government sponsorship acknowledged.
 //
@@ -33,13 +33,13 @@ package gov.nasa.pds.imaging.generate;
 
 public class TemplateException extends Exception {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -1400769888676548343L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1400769888676548343L;
 
-    public TemplateException(final String message) {
-        super(message);
-    }
+  public TemplateException(final String message) {
+    super(message);
+  }
 
 }

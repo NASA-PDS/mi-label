@@ -39,5 +39,5 @@ import gov.nasa.pds.imaging.generate.context.PDSObjectContext;
  * 
  */
 public interface NodeContext extends PDSObjectContext {
-    public String getNode();
+  public String getNode();
 }

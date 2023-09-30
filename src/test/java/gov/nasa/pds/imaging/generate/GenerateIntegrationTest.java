@@ -58,141 +58,133 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class GenerateIntegrationTest extends GenerateTest {
 
-	private Generator generator;
+  private Generator generator;
 
-  protected static class ExitException extends SecurityException
-  {
-      public final int status;
-      public ExitException(int status)
-      {
-          super("There is no escape!");
-          this.status = status;
-      }
+  protected static class ExitException extends SecurityException {
+    public final int status;
+
+    public ExitException(int status) {
+      super("There is no escape!");
+      this.status = status;
+    }
   }
 
-  private static class NoExitSecurityManager extends SecurityManager
-  {
-      @Override
-      public void checkPermission(Permission perm)
-      {
-          // allow anything.
-      }
-      @Override
-      public void checkPermission(Permission perm, Object context)
-      {
-          // allow anything.
-      }
-      @Override
-      public void checkExit(int status)
-      {
-          super.checkExit(status);
-          throw new ExitException(status);
-      }
+  private static class NoExitSecurityManager extends SecurityManager {
+    @Override
+    public void checkPermission(Permission perm) {
+      // allow anything.
+    }
+
+    @Override
+    public void checkPermission(Permission perm, Object context) {
+      // allow anything.
+    }
+
+    @Override
+    public void checkExit(int status) {
+      super.checkExit(status);
+      throw new ExitException(status);
+    }
   }
 
-	@Rule
-	public SingleTestRule test = new SingleTestRule("");
+  @Rule
+  public SingleTestRule test = new SingleTestRule("");
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		Debugger.debugFlag = true;
-		FileUtils.forceMkdir(new File(System.getProperty("user.dir") + "/" + TestConstants.TEST_OUT_DIR));
-	}
+  /**
+   * @throws java.lang.Exception
+   */
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {
+    Debugger.debugFlag = true;
+    FileUtils
+        .forceMkdir(new File(System.getProperty("user.dir") + "/" + TestConstants.TEST_OUT_DIR));
+  }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
+  /**
+   * @throws java.lang.Exception
+   */
+  @Before
+  public void setUp() throws Exception {
 
     System.setSecurityManager(new NoExitSecurityManager());
 
-	  // Generator(final PDSObject pdsObject, final File templateFile, final String filePath, final String confPath, final File outputFile)
-		this.generator = new Generator();
-	}
+    // Generator(final PDSObject pdsObject, final File templateFile, final String filePath, final
+    // String confPath, final File outputFile)
+    this.generator = new Generator();
+  }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	  System.setSecurityManager(null);
-	}
+  /**
+   * @throws java.lang.Exception
+   */
+  @After
+  public void tearDown() throws Exception {
+    System.setSecurityManager(null);
+  }
 
-	/**
-	 * Test CLI end-to-end with rchen test data per PDS-259 bug
-	 */
-	@Test
-	public void testPDS259() {
-    	try {
-    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259");
-    		String outFilePath = TestConstants.TEST_OUT_DIR;
-    		File output = new File(outFilePath + "/gen_ELE_MOM.xml");
-    		File expected = new File(testPath + "/gen_ELE_MOM_expected.xml");
+  /**
+   * Test CLI end-to-end with rchen test data per PDS-259 bug
+   */
+  @Test
+  public void testPDS259() {
+    try {
+      String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/PDS-259");
+      String outFilePath = TestConstants.TEST_OUT_DIR;
+      File output = new File(outFilePath + "/gen_ELE_MOM.xml");
+      File expected = new File(testPath + "/gen_ELE_MOM_expected.xml");
 
-	        String[] args = {//"-d",
-	        		"-p", testPath + "/gen_ELE_MOM.LBL",
-	        		"-t", testPath + "/gen_data.vm",
-	        		"-o", outFilePath,
-	        		"-b", testPath};
-	        GenerateLauncher.main(args);
+      String[] args = {// "-d",
+          "-p", testPath + "/gen_ELE_MOM.LBL", "-t", testPath + "/gen_data.vm", "-o", outFilePath,
+          "-b", testPath};
+      GenerateLauncher.main(args);
 
-	        // Check expected file exists
-	        assertTrue(expected.getAbsolutePath() + " does not exist.",
-	        		expected.exists());
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
 
-	        // Check output was generated
-	        assertTrue(output.getAbsolutePath() + " does not exist.",
-	        		output.exists());
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
 
-	        // Check the files match
-	        assertTrue(expected + " and " + output + " do not match.",
-	            FileUtils.contentEquals(expected, output));
-    	} catch (ExitException e) {
-        assertEquals("Exit status", 0, e.status);
-    	} catch (Exception e) {
-//    		e.printStackTrace();
-    		fail("Test Failed Due To Exception: " + e.getMessage());
-    	}
-	}
-
-    @Test
-    public void testTransformCLI() {
-    	try {
-    		String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_transform-0.2.2");
-    		System.out.println(testPath);
-    		String outFilePath = TestConstants.TEST_OUT_DIR;
-    		File output = new File(outFilePath + "/ELE_MOM.xml");
-    		File expected = new File(testPath + "/ELE_MOM_expected.xml");
-
-	        String[] args = {//"-d",
-	        		"-p", testPath + "/ELE_MOM.LBL",
-	        		"-t", testPath + "/generic-pds3_to_pds4.vm",
-	        		"-o", outFilePath,
-	        		"-b", testPath};
-	        GenerateLauncher.main(args);
-
-	        // Check expected file exists
-	        assertTrue(expected.getAbsolutePath() + " does not exist.",
-	        		expected.exists());
-
-	        // Check output was generated
-	        assertTrue(output.getAbsolutePath() + " does not exist.",
-	        		output.exists());
-
-	        // Check the files match
-	        assertTrue(expected + " and " + output + " do not match.",
-	        		FileUtils.contentEquals(expected, output));
-    	} catch (ExitException e) {
-        assertEquals("Exit status", 0, e.status);
-    	} catch (Exception e) {
-//    		e.printStackTrace();
-    		fail("Test Failed Due To Exception: " + e.getMessage());
-    	}
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
+    } catch (ExitException e) {
+      assertEquals("Exit status", 0, e.status);
+    } catch (Exception e) {
+      // e.printStackTrace();
+      fail("Test Failed Due To Exception: " + e.getMessage());
     }
+  }
+
+  @Test
+  public void testTransformCLI() {
+    try {
+      String testPath =
+          Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/int_transform-0.2.2");
+      System.out.println(testPath);
+      String outFilePath = TestConstants.TEST_OUT_DIR;
+      File output = new File(outFilePath + "/ELE_MOM.xml");
+      File expected = new File(testPath + "/ELE_MOM_expected.xml");
+
+      String[] args = {// "-d",
+          "-p", testPath + "/ELE_MOM.LBL", "-t", testPath + "/generic-pds3_to_pds4.vm", "-o",
+          outFilePath, "-b", testPath};
+      GenerateLauncher.main(args);
+
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
+
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
+
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
+    } catch (ExitException e) {
+      assertEquals("Exit status", 0, e.status);
+    } catch (Exception e) {
+      // e.printStackTrace();
+      fail("Test Failed Due To Exception: " + e.getMessage());
+    }
+  }
 
   /**
    *
@@ -206,29 +198,24 @@ public class GenerateIntegrationTest extends GenerateTest {
       File output = new File(outFilePath + "/ahalebp-1.xml");
       File expected = new File(testPath + "/ahalebp-1_expected.xml");
 
-        String[] args = {//"-d",
-            "-p", testPath + "/ahalebp-1.lbl",
-            "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath,
-            "-b", testPath
-            };
-        GenerateLauncher.main(args);
+      String[] args = {// "-d",
+          "-p", testPath + "/ahalebp-1.lbl", "-t", testPath + "/generic-pds3_to_pds4.vm", "-o",
+          outFilePath, "-b", testPath};
+      GenerateLauncher.main(args);
 
-        // Check expected file exists
-        assertTrue(expected.getAbsolutePath() + " does not exist.",
-            expected.exists());
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
 
-        // Check output was generated
-        assertTrue(output.getAbsolutePath() + " does not exist.",
-            output.exists());
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
 
-        // Check the files match
-        assertTrue(expected + " and " + output + " do not match.",
-            FileUtils.contentEquals(expected, output));
-    }  catch (ExitException e) {
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
+    } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
     } catch (IOException e) {
-     	  fail("Test Failed Due To Exception: " + e.getMessage());
+      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -241,29 +228,24 @@ public class GenerateIntegrationTest extends GenerateTest {
       File output = new File(outFilePath + "/ahalebp-3.xml");
       File expected = new File(testPath + "/ahalebp-3_expected.xml");
 
-        String[] args = {//"-d",
-            "-p", testPath + "/ahalebp-3.lbl",
-            "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath,
-            "-b", testPath
-            };
-        GenerateLauncher.main(args);
+      String[] args = {// "-d",
+          "-p", testPath + "/ahalebp-3.lbl", "-t", testPath + "/generic-pds3_to_pds4.vm", "-o",
+          outFilePath, "-b", testPath};
+      GenerateLauncher.main(args);
 
-        // Check expected file exists
-        assertTrue(expected.getAbsolutePath() + " does not exist.",
-            expected.exists());
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
 
-        // Check output was generated
-        assertTrue(output.getAbsolutePath() + " does not exist.",
-            output.exists());
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
 
-        // Check the files match
-        assertTrue(expected + " and " + output + " do not match.",
-            FileUtils.contentEquals(expected, output));
-    }  catch (ExitException e) {
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
+    } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
     } catch (IOException e) {
-     	  fail("Test Failed Due To Exception: " + e.getMessage());
+      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -279,30 +261,25 @@ public class GenerateIntegrationTest extends GenerateTest {
       File output = new File(outFilePath + "/OPTE_12.xml");
       File expected = new File(testPath + "/OPTE_12_expected.xml");
 
-        String[] args = {//"-d",
-            "-p", testPath + "/OPTE_12.LBL",
-            "-t", testPath + "/generic-pds3_to_pds4.vm",
-            "-o", outFilePath,
-            "-b", testPath
-            };
+      String[] args = {// "-d",
+          "-p", testPath + "/OPTE_12.LBL", "-t", testPath + "/generic-pds3_to_pds4.vm", "-o",
+          outFilePath, "-b", testPath};
 
-        GenerateLauncher.main(args);
+      GenerateLauncher.main(args);
 
-        // Check expected file exists
-        assertTrue(expected.getAbsolutePath() + " does not exist.",
-            expected.exists());
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
 
-        // Check output was generated
-        assertTrue(output.getAbsolutePath() + " does not exist.",
-            output.exists());
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
 
-        // Check the files match
-        assertTrue(expected + " and " + output + " do not match.",
-            FileUtils.contentEquals(expected, output));
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
     } catch (IOException e) {
-   	  fail("Test Failed Due To Exception: " + e.getMessage());
+      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
 
@@ -311,85 +288,81 @@ public class GenerateIntegrationTest extends GenerateTest {
     try {
       String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
       String outFilePath = TestConstants.TEST_OUT_DIR;
-      File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
-      File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
+      File output =
+          new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
+      File expected = new File(
+          testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
 
-        String[] args = {//"-d",
-            "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG",
-            "-t", testPath + "/units_test_simple.vm",
-            "-o", outFilePath,
-            "-b", testPath
-            };
+      String[] args = {// "-d",
+          "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG", "-t",
+          testPath + "/units_test_simple.vm", "-o", outFilePath, "-b", testPath};
 
-        GenerateLauncher.main(args);
+      GenerateLauncher.main(args);
 
-        // Check expected file exists
-        assertTrue(expected.getAbsolutePath() + " does not exist.",
-            expected.exists());
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
 
-        // Check output was generated
-        assertTrue(output.getAbsolutePath() + " does not exist.",
-            output.exists());
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
 
-        // Check the files match
-        assertTrue(expected + " and " + output + " do not match.",
-            FileUtils.contentEquals(expected, output));
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
     } catch (ExitException e) {
       assertEquals("Exit status", 0, e.status);
     } catch (IOException e) {
-   	  fail("Test Failed Due To Exception: " + e.getMessage());
+      fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }
-  
- @Test
- public void testUnitsProductTools() {
-   try {
-     String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
-     String outFilePath = TestConstants.TEST_OUT_DIR;
-     File output = new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
-     File expected = new File(testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
 
-     System.setProperty("pds.generate.parser.type", "product-tools");
-     
-       String[] args = {//"-d",
-           "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG",
-           "-t", testPath + "/units_test_simple.vm",
-           "-o", outFilePath,
-           "-b", testPath
-           };
+  @Test
+  public void testUnitsProductTools() {
+    try {
+      String testPath = Utility.getAbsolutePath(TestConstants.TEST_DATA_DIR + "/units");
+      String outFilePath = TestConstants.TEST_OUT_DIR;
+      File output =
+          new File(outFilePath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.xml");
+      File expected = new File(
+          testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00_expected.XML");
 
-       GenerateLauncher.main(args);
+      System.setProperty("pds.generate.parser.type", "product-tools");
 
-       // Check expected file exists
-       assertTrue(expected.getAbsolutePath() + " does not exist.",
-           expected.exists());
+      String[] args = {// "-d",
+          "-p", testPath + "/LRE_0022T0668856876_314ECM_N0010000SCAM16201_0000LUJ00.IMG", "-t",
+          testPath + "/units_test_simple.vm", "-o", outFilePath, "-b", testPath};
 
-       // Check output was generated
-       assertTrue(output.getAbsolutePath() + " does not exist.",
-           output.exists());
+      GenerateLauncher.main(args);
 
-       // Check the files match
-       assertTrue(expected + " and " + output + " do not match.",
-           FileUtils.contentEquals(expected, output));
-   } catch (ExitException e) {
-     assertEquals("Exit status", 0, e.status);
-   } catch (IOException e) {
-	 fail("Test Failed Due To Exception: " + e.getMessage());
-   }
- }
+      // Check expected file exists
+      assertTrue(expected.getAbsolutePath() + " does not exist.", expected.exists());
+
+      // Check output was generated
+      assertTrue(output.getAbsolutePath() + " does not exist.", output.exists());
+
+      // Check the files match
+      assertTrue(expected + " and " + output + " do not match.",
+          FileUtils.contentEquals(expected, output));
+    } catch (ExitException e) {
+      assertEquals("Exit status", 0, e.status);
+    } catch (IOException e) {
+      fail("Test Failed Due To Exception: " + e.getMessage());
+    }
+  }
 
   // FIXME Under construction, this doesn't work
   @Test
   @Ignore
   public void testTransformAPI() {
     try {
-      PDS3Label label = new PDS3Label(Utility.getAbsolutePath("src/main/resources/examples/mpf_example/i985135l.img"));
+      PDS3Label label = new PDS3Label(
+          Utility.getAbsolutePath("src/main/resources/examples/mpf_example/i985135l.img"));
       this.generator.setPDSObject(label);
-      File template = new File(Utility.getAbsolutePath("src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm"));
+      File template = new File(
+          Utility.getAbsolutePath("src/main/resources/examples/mpf_example/MPF_IMP_EDR7.vm"));
       this.generator.setTemplateFile(template);
       this.generator.generate(true);
     } catch (Exception e) {
-    //    e.printStackTrace();
+      // e.printStackTrace();
       fail("Test Failed Due To Exception: " + e.getMessage());
     }
   }

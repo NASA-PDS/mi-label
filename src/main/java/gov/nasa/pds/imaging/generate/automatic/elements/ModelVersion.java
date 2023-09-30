@@ -36,8 +36,7 @@ import gov.nasa.pds.imaging.generate.util.ToolInfo;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 /**
- * Class that can be used by a Velocity template to get the
- * data model version.
+ * Class that can be used by a Velocity template to get the data model version.
  * 
  * @author mcayanan
  *
@@ -52,15 +51,17 @@ public class ModelVersion implements Element {
 
   @Override
   public String getValue() throws TemplateException {
-	String v =  ToolInfo.getModelVersion().toString();
-	if (Debugger.debugFlag) System.out.printf("modelVersion.getValue %s\n", v);
+    String v = ToolInfo.getModelVersion().toString();
+    if (Debugger.debugFlag)
+      System.out.printf("modelVersion.getValue %s\n", v);
     return ToolInfo.getModelVersion().toString();
   }
-  
+
   @Override
   public void setParameters(PDSObject pdsObject) {
     // TODO Auto-generated method stub
-	  if (Debugger.debugFlag) System.out.printf("modelVersion.setParameters \n");
+    if (Debugger.debugFlag)
+      System.out.printf("modelVersion.setParameters \n");
   }
 
 }

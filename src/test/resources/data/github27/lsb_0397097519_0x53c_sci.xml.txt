@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<?xml-model href="http://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1G00.sch"        schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1G00_1500.sch"      schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1G00_1860.sch"   schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="http://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1G00_1930.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="/n/newsbndev4/pds4_migration/newhorizons/Dictionary/PDS4_SPACECRAFT_1H00_1000.sch" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<Product_Observational xmlns="http://pds.nasa.gov/pds4/pds/v1" 
+    xmlns:disp="http://pds.nasa.gov/pds4/disp/v1" 
+    xmlns:geom="http://pds.nasa.gov/pds4/geom/v1" 
+    xmlns:img="http://pds.nasa.gov/pds4/img/v1" 
+    xmlns:navcam="http://pds.nasa.gov/pds4/navcam/v1" 
+    xmlns:spacecraft="http://pds.nasa.gov/pds4/mission/spacecraft/v1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://pds.nasa.gov/pds4/pds/v1   http://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1G00.xsd     http://pds.nasa.gov/pds4/disp/v1  http://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1G00_1500.xsd     http://pds.nasa.gov/pds4/img/v1   http://pds.nasa.gov/pds4/img/v1/PDS4_IMG_1G00_1860.xsd     http://pds.nasa.gov/pds4/geom/v1  http://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1G00_1930.xsd     http://pds.nasa.gov/pds4/mission/spacecraft/v1     file:/n/newsbndev4/pds4_migration/newhorizons/Dictionary/PDS4_SPACECRAFT_1H00_1000.xsd     ">
+  <Identification_Area>
+    <logical_identifier>urn:nasa:pds:nh_leisa:kem1_cal:$label.PRODUCT_ID[0].toLowerCase()</logical_identifier>
+    <version_id>1.0</version_id>
+    <title>LEISA 3 KEM1</title>
+    <information_model_version>1.16.0.0</information_model_version>
+    <product_class>Product_Observational</product_class>
+    <Modification_History>
+      <Modification_Detail>
+        <modification_date>2022</modification_date>
+        <version_id>1.0</version_id>
+        <description>Migration from PDS3 (A. Gicquel)</description>
+      </Modification_Detail>
+    </Modification_History>
+  </Identification_Area>
+  <Observation_Area>
+    <Time_Coordinates>
+      <start_date_time>${label.START_TIME}Z</start_date_time>
+      <stop_date_time>${label.STOP_TIME}Z</stop_date_time>
+    </Time_Coordinates>
+    <Investigation_Area>
+      <name>New Horizons Kuiper Belt Extended Mission</name>
+      <type>Mission</type>
+      <Internal_Reference>
+        <lid_reference>urn:nasa:pds:context:investigation:mission.new_horizons</lid_reference>
+        <reference_type>data_to_investigation</reference_type>
+      </Internal_Reference>
+    </Investigation_Area>
+    <Observing_System>
+      <Observing_System_Component>
+        <name>New Horizon</name>
+        <type>Host</type>
+        <Internal_Reference>
+          <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.nh</lid_reference>
+          <reference_type>is_instrument_host</reference_type>
+        </Internal_Reference>
+      </Observing_System_Component>
+      <Observing_System_Component>
+        <name>Leisa</name>
+        <type>Instrument</type>
+        <description>Linear Etalon Imaging Spectral Array</description>
+        <Internal_Reference>
+          <lid_reference>urn:nasa:pds:context:instrument:leisa.nh</lid_reference>
+          <reference_type>is_instrument</reference_type>
+        </Internal_Reference>
+      </Observing_System_Component>
+    </Observing_System>
+    <Target_Identification>
+      <name>$label.TARGET_NAME</name>
+      <type>Star</type>
+    </Target_Identification>
+    <Mission_Area>
+      <spacecraft:Spacecraft_Dictionary_Parameters>
+        <spacecraft:Mission_Parameters>
+          <spacecraft:mission_phase_name>$label.MISSION_PHASE_NAME</spacecraft:mission_phase_name>
+          <spacecraft:sequence_id>$label.get("NEWHORIZONS:SEQUENCE_ID")</spacecraft:sequence_id>
+          <spacecraft:observation_description>$label.get("NEWHORIZONS:OBSERVATION_DESC")</spacecraft:observation_description>
+        </spacecraft:Mission_Parameters>
+        <spacecraft:Spacecraft_Parameters>
+          <spacecraft:spacecraft_clock_cnt_partition>$label.SPACECRAFT_CLOCK_CNT_PARTITION</spacecraft:spacecraft_clock_cnt_partition>
+          <spacecraft:spacecraft_clock_start_count>$label.SPACECRAFT_CLOCK_START_COUNT</spacecraft:spacecraft_clock_start_count>
+          <spacecraft:spacecraft_clock_stop_count>$label.SPACECRAFT_CLOCK_STOP_COUNT</spacecraft:spacecraft_clock_stop_count>
+        </spacecraft:Spacecraft_Parameters>
+        <spacecraft:Instrument_Parameters>
+          <spacecraft:telemetry_application_id>$label.TELEMETRY_APPLICATION_ID</spacecraft:telemetry_application_id>
+          <spacecraft:detector_type>$label.DETECTOR_TYPE</spacecraft:detector_type>
+          <spacecraft:instrument_compression_type>$label.INST_CMPRS_TYPE</spacecraft:instrument_compression_type>
+        </spacecraft:Instrument_Parameters>
+      </spacecraft:Spacecraft_Dictionary_Parameters>
+    </Mission_Area>
+    <Discipline_Area>
+      <disp:Display_Settings>
+        <Local_Internal_Reference>
+          <local_identifier_reference>Image</local_identifier_reference>
+          <local_reference_type>display_settings_to_array</local_reference_type>
+        </Local_Internal_Reference>
+        <disp:Display_Direction>
+          <disp:horizontal_display_axis>Sample</disp:horizontal_display_axis>
+          <disp:vertical_display_axis>Line</disp:vertical_display_axis>
+        </disp:Display_Direction>
+      </disp:Display_Settings>
+      <img:Imaging>
+        <Local_Internal_Reference>
+          <local_identifier_reference>Image</local_identifier_reference>
+          <local_reference_type>imaging_parameters_to_image_object</local_reference_type>
+        </Local_Internal_Reference>
+        <img:Exposure>
+          <img:exposure_duration unit="">$label.EXPOSURE_DURATION</img:exposure_duration>
+        </img:Exposure>
+      </img:Imaging>
+      <geom:Geometry>
+        <geom:Image_Display_Geometry>
+          <geom:Display_Direction>
+            <geom:horizontal_display_axis>Sample</geom:horizontal_display_axis>
+            <geom:horizontal_display_direction>Left to Right</geom:horizontal_display_direction>
+            <geom:vertical_display_axis>Line</geom:vertical_display_axis>
+            <geom:vertical_display_direction>Bottom to Top</geom:vertical_display_direction>
+          </geom:Display_Direction>
+          <geom:Object_Orientation_RA_Dec>
+            <geom:right_ascension_angle unit="deg">$label.RIGHT_ASCENSION</geom:right_ascension_angle>
+            <geom:declination_angle unit="deg">$label.DECLINATION</geom:declination_angle>
+            <geom:celestial_north_clock_angle unit="deg">$label.CELESTIAL_NORTH_CLOCK_ANGLE</geom:celestial_north_clock_angle>
+            <geom:Reference_Frame_Identification>
+              <geom:name>$label.COORDINATE_SYSTEM_ID</geom:name>
+            </geom:Reference_Frame_Identification>
+          </geom:Object_Orientation_RA_Dec>
+          <geom:Quaternion_Plus_To_From>
+            <geom:qcos>$label.QUATERNION.get(0)</geom:qcos>
+            <geom:qsin1>$label.QUATERNION.get(1)</geom:qsin1>
+            <geom:qsin2>$label.QUATERNION.get(2)</geom:qsin2>
+            <geom:qsin3>$label.QUATERNION.get(3)</geom:qsin3>
+            <geom:Rotate_From>
+              <geom:name>ALICE Coordinate System</geom:name>
+            </geom:Rotate_From>
+            <geom:Rotate_To>
+              <geom:name>J200</geom:name>
+            </geom:Rotate_To>
+          </geom:Quaternion_Plus_To_From>
+        </geom:Image_Display_Geometry>
+      </geom:Geometry>
+    </Discipline_Area>
+  </Observation_Area>
+  <File_Area_Observational>
+    <File>
+      <file_name>$label.PTR_IMAGE[0].toLowerCase()</file_name>
+    </File>
+  </File_Area_Observational>
+  <File_Area_Observational>
+    <File>
+      <file_name>${label.PRODUCT_ID[0].toLowerCase()}.lbl</file_name>
+    </File>
+    <Stream_Text>
+      <offset unit="byte">0</offset>
+      <parsing_standard_id>PDS3</parsing_standard_id>
+      <description>Copy of the PDS3 label for the corresponding browse product.</description>
+      <record_delimiter>Carriage-Return Line-Feed</record_delimiter>
+    </Stream_Text>
+  </File_Area_Observational>
+</Product_Observational>

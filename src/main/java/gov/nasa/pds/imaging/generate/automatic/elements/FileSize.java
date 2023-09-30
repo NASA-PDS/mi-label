@@ -43,8 +43,7 @@ public class FileSize implements Element {
   private File file;
   private ImageInputStream imageInputStream;
 
-  public FileSize() {
-  }
+  public FileSize() {}
 
   @Override
   public String getUnits() {
@@ -53,10 +52,10 @@ public class FileSize implements Element {
 
   @Override
   public String getValue() {
-    // -1 indicates an error, unable to get length 
+    // -1 indicates an error, unable to get length
     Debugger.debug("gov.nasa.pds.imaging.generate.automatic.elements.FileSize.getValue()");
-    Debugger.debug("file="+this.file+" imageInputStream="+this.imageInputStream);
-    long length =  -1;
+    Debugger.debug("file=" + this.file + " imageInputStream=" + this.imageInputStream);
+    long length = -1;
     if (this.imageInputStream != null) {
 
       try {
@@ -73,7 +72,7 @@ public class FileSize implements Element {
       length = -1;
     }
 
-    Debugger.debug("length = "+length);
+    Debugger.debug("length = " + length);
     return String.valueOf(length);
   }
 
