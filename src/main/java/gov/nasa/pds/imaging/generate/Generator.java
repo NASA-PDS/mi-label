@@ -546,7 +546,8 @@ public class Generator {
 
             String output = clean(sw);
 
-            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+            // TODO Need to validate products prior to this step to find WHY output == null
+            if (output == "null") {
               throw new TemplateException(
                   "Unknown error generating PDS4 Label. No output found. Verify input files are valid.");
             } else {
