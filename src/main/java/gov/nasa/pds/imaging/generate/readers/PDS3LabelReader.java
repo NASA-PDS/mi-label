@@ -30,27 +30,23 @@
 
 package gov.nasa.pds.imaging.generate.readers;
 
-import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
-import gov.nasa.pds.imaging.generate.label.FlatLabel;
-import gov.nasa.pds.imaging.generate.label.ItemNode;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import jpl.mipl.io.plugins.PDSLabelToDOM;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
+import gov.nasa.pds.imaging.generate.label.FlatLabel;
+import gov.nasa.pds.imaging.generate.label.ItemNode;
+import gov.nasa.pds.imaging.generate.util.Debugger;
+import jpl.mipl.io.plugins.PDSLabelToDOM;
 
 /**
  * 
@@ -405,41 +401,45 @@ public class PDS3LabelReader {
    * 
    * PDSLabelToDom: Within the DOM returned the Elements are:
    * 
-   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All
-   * commented text in label is contained within these elements item - A data
-   * item at base level of label GROUP - A group of related elements
-   * containing a collection of items OBJECT - A group of related elements
+   * PDS3 - At top of document to describe it is a PDS3 label COMMENT - All commented text in label
+   * is contained within these elements item - A data item at base level of label GROUP - A group of
+   * related elements containing a collection of items OBJECT - A group of related elements
    * containing a collection of items
    * 
    * @param filePath
-   * @throws FileNotFoundException
+   * @throws IOException
    */
-  public Document parseLabel(final String filePath) throws FileNotFoundException {
+  public Document parseLabel(final String filePath) throws IOException {
+    FileReader fr = null;
+    BufferedReader input = null;
+    PrintWriter output = null;
 
-    final BufferedReader input = new BufferedReader(new FileReader(filePath));
-    // TODO - what is the purpose of this
-    // in PDSLabelToDOM
-    final PrintWriter output = new PrintWriter(System.out);
-
-    // PDSLabelToDOM does not check if input file
-    // contains a valid PDS label.
-
-    // TODO Use VTool to determine if it is a valid PDS Label
     try {
+      // PDSLabelToDOM does not check if input file
+      // contains a valid PDS label.
+      fr = new FileReader(filePath);
+      input = new BufferedReader(fr);
+      output = new PrintWriter(System.out);
+
       // Handle some dependency collisions with Transcoder
-      System.getProperties().setProperty(
-          "javax.xml.parsers.DocumentBuilderFactory",
+      System.getProperties().setProperty("javax.xml.parsers.DocumentBuilderFactory",
           "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
       System.getProperties().setProperty("javax.xml.transform.TransformerFactory",
           "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
 
-      final PDSLabelToDOM pdsToDOM = new PDSLabelToDOM(input, output);
+      PDSLabelToDOM pdsToDOM = new PDSLabelToDOM(input, output);
       return pdsToDOM.getDocument();
-    } catch (Exception e) {
-
+    } finally {
+      if (fr != null) {
+        fr.close();
+      }
+      if (input != null) {
+        input.close();
+      }
+      if (output != null) {
+        output.close();
+      }
     }
-    return null;
-
   }
 
   /**
