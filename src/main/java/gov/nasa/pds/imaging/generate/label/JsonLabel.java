@@ -31,46 +31,29 @@
 
 package gov.nasa.pds.imaging.generate.label;
 
-import gov.nasa.pds.imaging.generate.TemplateException;
-import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
-import gov.nasa.pds.imaging.generate.context.ContextUtil;
-import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.readers.ParserType;
-import gov.nasa.pds.imaging.generate.readers.ProductToolsLabelReader;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.tools.label.Label;
-
-import gov.nasa.pds.imaging.generate.label.ItemNode;
-import gov.nasa.pds.imaging.generate.label.LabelObject;
-
+// added to parse a json file srl-4-20-18
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.imageio.stream.ImageInputStream;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
-// added to parse a json file srl-4-20-18
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.HashMap;
-
 import org.apache.commons.io.IOUtils;
-
+import org.apache.commons.lang.StringEscapeUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.nasa.pds.imaging.generate.TemplateException;
+import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
+import gov.nasa.pds.imaging.generate.context.ContextUtil;
+import gov.nasa.pds.imaging.generate.readers.ParserType;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class JsonLabel implements PDSObject {
 	
@@ -390,7 +373,7 @@ public class JsonLabel implements PDSObject {
 	  }
 
 	  @Override
-	  public void setMappings() {
+      public void setMappings() throws IOException {
 		if (debug)  System.out.println("JsonLabel.setMapping parserType = "+this.parserType);
 	   
 		// assume we will always use the JSON parser ???
@@ -405,7 +388,7 @@ public class JsonLabel implements PDSObject {
 		    if (!this.jsonFilename.equals("")) {
 		    	
 		    	if (debug) System.out.println("JsonLabel.setMappings() jsonFilename = "+this.jsonFilename);
-				FileInputStream fis;
+                FileInputStream fis = null;
 				try {
 					File f = new File(this.jsonFilename);
 					fis = new FileInputStream(f);
@@ -423,6 +406,10 @@ public class JsonLabel implements PDSObject {
 					// TODO Auto-generated catch block
 					System.out.printf("NullPointerException "+e); 
 					e.printStackTrace();
+                  } finally {
+                    if (fis != null) {
+                      fis.close();
+                    }
 				}
 				
 		    	// parse the string create the flatLabel
