@@ -1,8 +1,16 @@
 # Changelog
 
-## [release/1.3.0](https://github.com/NASA-PDS/mi-label/tree/release/1.3.0) (2023-09-30)
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2023-09-30)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.2...release/1.3.0)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...«unknown»)
+
+**Defects:**
+
+- Upgrade to latest product-tools to remove log4j security vulnerability [\#42](https://github.com/NASA-PDS/mi-label/issues/42) [[s.critical](https://github.com/NASA-PDS/mi-label/labels/s.critical)]
+
+## [v1.3.0](https://github.com/NASA-PDS/mi-label/tree/v1.3.0) (2023-09-30)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.2.2...v1.3.0)
 
 ## [v1.2.2](https://github.com/NASA-PDS/mi-label/tree/v1.2.2) (2022-04-14)
 
