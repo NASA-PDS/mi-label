@@ -30,19 +30,14 @@
 
 package gov.nasa.pds.imaging.generate;
 
-import gov.nasa.pds.imaging.generate.context.ContextMappings;
-import gov.nasa.pds.imaging.generate.label.PDSObject;
-import gov.nasa.pds.imaging.generate.util.Debugger;
-import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.imageio.stream.ImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,12 +51,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.Priority;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -75,8 +65,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import java.io.OutputStream;
+import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
+import gov.nasa.pds.imaging.generate.context.ContextMappings;
+import gov.nasa.pds.imaging.generate.label.PDSObject;
+import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class Generator {
 
@@ -198,10 +190,7 @@ public class Generator {
         
         if (this.inputFile != null)
             this.inputFilePath = this.inputFile.getParent();  //  this.inputFile.getParentFile();
-        
-        ConsoleAppender ca = new ConsoleAppender(new PatternLayout("%-5p %m%n"));
-        ca.setThreshold(Priority.FATAL);
-        BasicConfigurator.configure(ca);
+
 
         System.getProperties().setProperty(
                 "javax.xml.parsers.DocumentBuilderFactory",

@@ -68,7 +68,7 @@ POSSIBILITY OF SUCH DAMAGE.
   </licenses>
   
   <properties>
-    <pds3-product-tools-version>4.1.0</pds3-product-tools-version>
+    <pds3-product-tools-version>4.3.0</pds3-product-tools-version>
     <vicario-version>48.0.3-SNAPSHOT</vicario-version>
   </properties>
 
