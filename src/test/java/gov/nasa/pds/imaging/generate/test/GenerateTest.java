@@ -31,7 +31,6 @@
 package gov.nasa.pds.imaging.generate.test;
 
 import java.util.logging.Logger;
-
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.MethodRule;
@@ -65,33 +64,32 @@ public class GenerateTest {
 		}
 	};
 
-	/**
-	 * Custom rule to allow for performing one unit test at a time. Helpful when
-	 * a test is failing.
-	 * 
-	 * @author jpadams
-	 * 
-	 */
-	public class SingleTestRule implements MethodRule {
-		private String applyMethod;
+    /**
+     * Custom rule to allow for performing one unit test at a time. Helpful when a test is failing.
+     * 
+     * @author jpadams
+     * 
+     */
+    public class SingleTestRule implements MethodRule {
+      private String applyMethod;
 
-		public SingleTestRule(String applyMethod) {
-			this.applyMethod = applyMethod;
-		}
+      public SingleTestRule(String applyMethod) {
+        this.applyMethod = applyMethod;
+      }
 
-		@Override
-		public Statement apply(final Statement statement,
-				final FrameworkMethod method, final Object target) {
-			return new Statement() {
-				@Override
-				public void evaluate() throws Throwable {
-					if (applyMethod.equals(method.getName())) {
-						statement.evaluate();
-					} else if (applyMethod.equals("")) {
-						statement.evaluate();
-					}
-				}
-			};
-		}
-	}
+      @Override
+      public Statement apply(final Statement statement, final FrameworkMethod method,
+          final Object target) {
+        return new Statement() {
+          @Override
+          public void evaluate() throws Throwable {
+            if (applyMethod.equals(method.getName())) {
+              statement.evaluate();
+            } else if (applyMethod.isEmpty()) {
+              statement.evaluate();
+            }
+          }
+        };
+      }
+    }
 }

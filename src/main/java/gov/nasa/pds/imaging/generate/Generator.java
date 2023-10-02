@@ -317,7 +317,7 @@ public class Generator {
         // first lets check we have no child nodes (text or other)
         if (node.getChildNodes().getLength() == 0) {
             // next check if the value is null or empty string
-            if ("".equals(node.getNodeValue()) || node.getNodeValue() == null) {
+            if (node.getNodeValue().isEmpty() || node.getNodeValue() == null) {
                 // finally make sure it does not have xsi:nil attribute
                 if (node.getAttributes().getLength() == 0 || node.getAttributes().getNamedItem("xsi:nil") == null) {
                     node.getParentNode().removeChild(node);
@@ -546,7 +546,8 @@ public class Generator {
 
             String output = clean(sw);
 
-            if (output == "null") {	// TODO Need to validate products prior to this step to find WHY output == null
+            // TODO Need to validate products prior to this step to find WHY output == null
+            if (output == "null") {
               throw new TemplateException(
                   "Unknown error generating PDS4 Label. No output found. Verify input files are valid.");
             } else {
@@ -589,7 +590,7 @@ public class Generator {
         // VelocityEngine ve = new VelocityEngine();
         Debugger.debug(String.format("Generator.initTemplate() %s, this.inputFilePath = %s \n", this.templateFile.getParent(), this.inputFilePath ));
         this.ve = new VelocityEngine();
-        if (this.inputFilePath != null && !this.inputFilePath.equals("")) {
+        if (this.inputFilePath != null && !this.inputFilePath.isEmpty()) {
         	// add the directory of the input file to the path, check if a resource can be loaded from a full path
         	/// that would be supplied by the extra file
         	String paths = String.format("%s, %s", this.templateFile.getParent(), this.inputFilePath);
