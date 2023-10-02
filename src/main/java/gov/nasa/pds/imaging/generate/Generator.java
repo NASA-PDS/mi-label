@@ -675,17 +675,21 @@ public class Generator {
     	}
     }
     
-    public void setPDSObject(PDSObject pdsObject) {
+    public void setPDSObject(PDSObject pdsObject) throws TemplateException {
     	// could also call addPdsObject. Then loop thru them all?
     	if (pdsObject != null) {
-    		String context_label = pdsObject.getContext();
-    		Debugger.debug("Generator.setContext()  "+context_label+" ");
+    		String contextLabel = pdsObject.getContext();
+            Debugger.debug("Generator.setContext()  " + contextLabel + " ");
     		
-    		this.pdsObjects.put(context_label, pdsObject);
+    		this.pdsObjects.put(contextLabel, pdsObject);
     		if (noContext == true) {
     			Debugger.debug("addPdsObject  noContext is true. Not adding ");
     		} else {
-    			this.context.put(context_label, pdsObject);
+              // Check if context has been set
+              if (this.context == null) {
+                setContext();
+              }
+              this.context.put(contextLabel, pdsObject);
     		}
         }
     }
