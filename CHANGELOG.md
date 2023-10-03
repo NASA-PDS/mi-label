@@ -1,8 +1,8 @@
 # Changelog
 
-## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2023-10-02)
+## [release/1.4.0](https://github.com/NASA-PDS/mi-label/tree/release/1.4.0) (2023-10-02)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...«unknown»)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...release/1.4.0)
 
 **Defects:**
 
