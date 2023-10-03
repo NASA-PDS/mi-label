@@ -47,7 +47,7 @@ POSSIBILITY OF SUCH DAMAGE.
   
   <groupId>gov.nasa.pds</groupId>
   <artifactId>mi-label</artifactId>
-  <version>1.4.0-SNAPSHOT</version>
+  <version>1.4.0</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
