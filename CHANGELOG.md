@@ -1,8 +1,8 @@
 # Changelog
 
-## [release/1.4.0](https://github.com/NASA-PDS/mi-label/tree/release/1.4.0) (2023-10-02)
+## [v1.4.0](https://github.com/NASA-PDS/mi-label/tree/v1.4.0) (2023-10-03)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...release/1.4.0)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...v1.4.0)
 
 **Defects:**
 
@@ -28,19 +28,19 @@
 
 ## [v1.2.0](https://github.com/NASA-PDS/mi-label/tree/v1.2.0) (2021-01-28)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/1.1.3...v1.2.0)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.3...v1.2.0)
 
 **Improvements:**
 
 - Refactor itemNode to consistently return objects to enable units [\#15](https://github.com/NASA-PDS/mi-label/issues/15)
 
-## [1.1.3](https://github.com/NASA-PDS/mi-label/tree/1.1.3) (2020-12-11)
-
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.3...1.1.3)
-
 ## [v1.1.3](https://github.com/NASA-PDS/mi-label/tree/v1.1.3) (2020-12-11)
 
-[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.2...v1.1.3)
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/1.1.3...v1.1.3)
+
+## [1.1.3](https://github.com/NASA-PDS/mi-label/tree/1.1.3) (2020-12-11)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.1.2...1.1.3)
 
 **Defects:**
 
