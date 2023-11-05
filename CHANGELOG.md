@@ -1,5 +1,13 @@
 # Changelog
 
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2023-11-05)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.4.0...«unknown»)
+
+**Defects:**
+
+- Jackson-databind vulnerability identified [\#46](https://github.com/NASA-PDS/mi-label/issues/46) [[s.high](https://github.com/NASA-PDS/mi-label/labels/s.high)]
+
 ## [v1.4.0](https://github.com/NASA-PDS/mi-label/tree/v1.4.0) (2023-10-03)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.3.0...v1.4.0)
