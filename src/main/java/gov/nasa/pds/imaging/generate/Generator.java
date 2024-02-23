@@ -76,7 +76,7 @@ import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class Generator {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(Generator.class.getName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(Generator.class);
 
     private Map<String, PDSObject> pdsObjects ;
     private Template template;

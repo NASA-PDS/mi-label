@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ItemNode extends ArrayList<String>{
-	private static final Logger LOGGER = LoggerFactory.getLogger(ItemNode.class.getName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(ItemNode.class);
 
     private String name;
     public String units;

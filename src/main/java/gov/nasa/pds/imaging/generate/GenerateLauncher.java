@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
 public class GenerateLauncher {
 
 	/** Logger. **/
-	private static Logger LOGGER = LoggerFactory.getLogger(GenerateLauncher.class.getName());
+	private static Logger LOGGER = LoggerFactory.getLogger(GenerateLauncher.class);
 
     private String basePath;
     private List<String> lblList;
