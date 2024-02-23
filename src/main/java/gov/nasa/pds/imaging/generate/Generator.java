@@ -61,6 +61,8 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.ToolManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -68,10 +70,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import gov.nasa.pds.imaging.generate.automatic.elements.ExistTemplate;
 import gov.nasa.pds.imaging.generate.context.ContextMappings;
+import gov.nasa.pds.imaging.generate.label.ItemNode;
 import gov.nasa.pds.imaging.generate.label.PDSObject;
 import gov.nasa.pds.imaging.generate.util.Debugger;
 
 public class Generator {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Generator.class.getName());
 
     private Map<String, PDSObject> pdsObjects ;
     private Template template;
@@ -264,11 +269,12 @@ public class Generator {
 
                 return outputXmlString;
             } catch (SAXParseException e) {
-                System.err.println("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
-                System.err.println(e.getMessage());
-                System.err.println("Outputting without formatting. \n\n");
+                LOGGER.error("\n\nError applying XSLT to output XML.  Verify label and template are correctly formatted.");
+                LOGGER.error(e.getMessage());
+                LOGGER.error("Outputting without formatting. \n\n");
             } catch (Exception e) {
-                System.err.println("Error attempting to format XML. Malformed XML expected.");
+                LOGGER.error("Error attempting to format XML. Malformed XML expected.");
+                e.printStackTrace();
             }
             return sw.toString();
         } else {
@@ -317,7 +323,7 @@ public class Generator {
         // first lets check we have no child nodes (text or other)
         if (node.getChildNodes().getLength() == 0) {
             // next check if the value is null or empty string
-            if (node.getNodeValue().isEmpty() || node.getNodeValue() == null) {
+            if (node.getNodeValue() == null || node.getNodeValue().isEmpty()) {
                 // finally make sure it does not have xsi:nil attribute
                 if (node.getAttributes().getLength() == 0 || node.getAttributes().getNamedItem("xsi:nil") == null) {
                     node.getParentNode().removeChild(node);
@@ -421,7 +427,7 @@ public class Generator {
                 // ios.close();
                 // it seems writers do not close the stream. It will be done later
             } catch (final NullPointerException e) {
-                System.out.println("NullPointerException "+ e);
+                LOGGER.error("NullPointerException "+ e);
             }
         }
     }
@@ -481,10 +487,9 @@ public class Generator {
             if (output.equals("null")) {	// TODO Need to validate products prior to this step to find WHY output == null
                 throw new Exception("Error generating PDS4 Label. No output found. Validate input files.");
             } else {
-
-            	Debugger.debug("New PDS4 Label:");
                 out = new PrintWriter(os);
                 out.write(output);
+                LOGGER.info("New PDS4 Label: " + this.outputFile.getAbsolutePath());
             }
         } finally {
             sw.close();
@@ -556,11 +561,9 @@ public class Generator {
                 } else if (this.outputStream != null) {
                     // FIXME Need to implement this here
                 } else {
-                	Debugger.debug("New PDS4 Label: " + this.outputFile.getAbsolutePath());
-
                     out = new PrintWriter(this.outputFile);
                     out.write(output);
-
+                    LOGGER.info("New PDS4 Label: " + this.outputFile.getAbsolutePath());
                 }
             }
         } finally {

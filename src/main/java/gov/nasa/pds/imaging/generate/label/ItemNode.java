@@ -35,8 +35,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ItemNode extends ArrayList<String>{
+	private static final Logger LOGGER = LoggerFactory.getLogger(ItemNode.class.getName());
 
     private String name;
     public String units;
@@ -90,7 +93,14 @@ public class ItemNode extends ArrayList<String>{
     		return "";
     	}
     	
-    	return super.get(index);
+    	
+    	try {
+    		return super.get(index);
+    	} catch (IndexOutOfBoundsException e) {
+    		LOGGER.error(String.format("IndexOutOfBoundsException: %s[%d] does not exist. %d values found.", this.name, index, this.size()));
+    	}
+
+    	return "";
     }
     
     @Override

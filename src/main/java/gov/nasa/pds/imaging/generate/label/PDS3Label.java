@@ -39,8 +39,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.stream.ImageInputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import gov.nasa.pds.imaging.generate.Generator;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.collections.PDSTreeMap;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
@@ -60,7 +65,8 @@ import gov.nasa.pds.tools.label.Label;
  *
  */
 public class PDS3Label implements PDSObject {
-
+  private static final Logger LOGGER = LoggerFactory.getLogger(PDS3Label.class);
+	
   public static final String CONTEXT = "label";
   public ContextUtil ctxtUtil;
 
@@ -412,7 +418,7 @@ public class PDS3Label implements PDSObject {
 
   @Override
   public void setMappings() throws TemplateException, LabelParserException {
-	  Debugger.debug("PDS3Label.setMapping parserType = "+this.parserType);
+	  LOGGER.info("ParserType: "+this.parserType);
     if (this.parserType.equals(ParserType.VICAR)) {
       Debugger.debug("+++++++++++++++++++++++++++\n"
     		+ "PDS3Label.setMapping()\n"
