@@ -43,7 +43,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -51,6 +50,8 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class used as Command-line interface endpoint. Parses command-line arguments
@@ -62,7 +63,7 @@ import org.apache.commons.cli.ParseException;
 public class GenerateLauncher {
 
 	/** Logger. **/
-	private static Logger log = Logger.getLogger(GenerateLauncher.class.getName());
+	private static Logger LOGGER = LoggerFactory.getLogger(GenerateLauncher.class);
 
     private String basePath;
     private List<String> lblList;
@@ -102,10 +103,10 @@ public class GenerateLauncher {
      * 
      */
     public final void displayVersion() {
-        System.err.println("\n" + ToolInfo.getName());
-        System.err.println(ToolInfo.getVersion());
-        System.err.println("Release Date: " + ToolInfo.getReleaseDate());
-        System.err.println(ToolInfo.getCopyright() + "\n");
+        LOGGER.info("\n" + ToolInfo.getName());
+        LOGGER.info(ToolInfo.getVersion());
+        LOGGER.info("Release Date: " + ToolInfo.getReleaseDate());
+        LOGGER.info(ToolInfo.getCopyright() + "\n");
     }
 
     public final void generate(){
@@ -199,9 +200,9 @@ public class GenerateLauncher {
 
         // Let's default to the one label if -p flag was specified,
         // otherwise loop through the lbl list
-        if (this.lblList == null) {
-          throw new InvalidOptionException("Missing -p or -l flags.  " + 
-                    "One or many PDS3 label must be specified.");
+        if (this.lblList.isEmpty()) {
+          throw new InvalidOptionException("Missing --pds3-label flag.  " + 
+                    "One or more PDS3 labels required.");
         } else {
         	String filepath;
         	PDS3Label pdsLabel;
@@ -260,7 +261,7 @@ public class GenerateLauncher {
 			        this.generatorList.add(new Generator(pdsObj, this.templateFile,
 			                outputFile, this.isXML));
         		} else {
-        			log.warning(lbl + " does not exist.");
+        			LOGGER.warn(lbl + " does not exist.");
         		}
         	}
         }
@@ -293,9 +294,11 @@ public class GenerateLauncher {
             launcher.query(commandline);
             launcher.generate();
             // launcher.closeHandlers();
+        } catch (InvalidOptionException e) {
+        	LOGGER.error(e.getMessage());
+            System.exit(1);
         } catch (final ParseException pEx) {
-            System.err.println("Command-line parse failure: "
-                    + pEx.getMessage());
+            LOGGER.error("Command-line parse failure: " + pEx.getMessage());
             System.exit(1);
         } catch (final Exception e) {
             e.printStackTrace();
