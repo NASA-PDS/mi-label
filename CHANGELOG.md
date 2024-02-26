@@ -1,11 +1,12 @@
 # Changelog
 
-## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2024-02-22)
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2024-02-26)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.4.0...«unknown»)
 
 **Defects:**
 
+- Executing `pds-generate` does not output anything [\#64](https://github.com/NASA-PDS/mi-label/issues/64) [[s.high](https://github.com/NASA-PDS/mi-label/labels/s.high)]
 - Jackson-databind vulnerability identified [\#46](https://github.com/NASA-PDS/mi-label/issues/46) [[s.high](https://github.com/NASA-PDS/mi-label/labels/s.high)]
 
 ## [v1.4.0](https://github.com/NASA-PDS/mi-label/tree/v1.4.0) (2023-10-03)
