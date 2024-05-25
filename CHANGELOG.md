@@ -1,6 +1,6 @@
 # Changelog
 
-## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2024-04-11)
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2024-05-25)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.4.0...«unknown»)
 
@@ -17,7 +17,7 @@
 
 - Transform error when calling Generator directly [\#45](https://github.com/NASA-PDS/mi-label/issues/45) [[s.high](https://github.com/NASA-PDS/mi-label/labels/s.high)]
 - Upgrade to latest product-tools to remove log4j security vulnerability [\#42](https://github.com/NASA-PDS/mi-label/issues/42) [[s.critical](https://github.com/NASA-PDS/mi-label/labels/s.critical)]
-- Resource leaks and bad code identified per code scanning [\#39](https://github.com/NASA-PDS/mi-label/issues/39)
+- Resource leaks and bad code identified per code scanning [\#39](https://github.com/NASA-PDS/mi-label/issues/39) [[s.medium](https://github.com/NASA-PDS/mi-label/labels/s.medium)]
 
 ## [v1.3.0](https://github.com/NASA-PDS/mi-label/tree/v1.3.0) (2023-09-30)
 
