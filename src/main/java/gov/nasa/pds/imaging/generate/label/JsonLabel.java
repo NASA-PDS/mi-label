@@ -64,9 +64,7 @@ public class JsonLabel implements PDSObject {
 	// allow this to be set by the user?? Not final
 	public ContextUtil ctxtUtil;
 
-	/// private static final boolean debug = false;
-	private static final boolean debug = true;
-
+	private static final boolean debug = false;
 
 	private JsonNode jsonNode;	// The actual tree
 	  
