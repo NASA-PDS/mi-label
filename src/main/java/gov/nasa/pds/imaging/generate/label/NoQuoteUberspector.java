@@ -6,6 +6,7 @@ import org.apache.velocity.util.introspection.UberspectImpl;
 import org.apache.velocity.util.introspection.VelMethod;
 import org.apache.velocity.util.introspection.VelPropertyGet;
 import com.fasterxml.jackson.databind.node.ContainerNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /** The purpose of this class is to dequote values retrieved from 
@@ -39,6 +40,24 @@ public class NoQuoteUberspector extends UberspectImpl {
 	    return null;
 
         return new NoQuoteVelPropertyGetImpl(obj, identifier);
+    }
+
+    /** Intercept get(n) calls to array */
+
+    public VelMethod getMethod(Object obj, String method, Object[] args, Info i)
+					throws Exception {
+	if (obj == null)
+	    return null;
+	if (! (obj instanceof ArrayNode))
+	    return null;
+	if (args.length != 1)
+	    return null;
+	if (! method.equals("get"))
+	    return null;
+	if (! (args[0] instanceof Integer))
+	    return null;
+
+	return new NoQuoteVelMethodGetImpl(obj);
     }
 
     /** The infrastructure wants a class implementing an interface, I guess
@@ -97,5 +116,74 @@ public class NoQuoteUberspector extends UberspectImpl {
 
     }
 
+    /** The infrastructure wants a class implementing an interface, I guess
+      * to make it easier to cache?
+      */
+
+    protected class NoQuoteVelMethodGetImpl implements VelMethod {
+        Object _obj;
+
+        public NoQuoteVelMethodGetImpl(Object obj) {
+            _obj = obj;
+        }
+
+	/** Does the actual work.  I am honestly not sure of the difference
+	 * between the passed-in o and saved _obj - but in this case o worked
+	 * but obj did not.
+	 */
+
+        public Object invoke(Object o, Object[] params) {
+
+	    if (o == null) return null;
+	    if (_obj == null) return null;
+	    if (params == null) return null;
+	    if (params.length != 1) return null;
+
+
+	    // This shouldn't happen because of the type check in the main
+	    // class above... but just in case.
+
+	    if (! (_obj instanceof ContainerNode))
+		return null;
+	    if (! (params[0] instanceof Integer))
+		return null;
+
+	    ContainerNode cn = (ContainerNode) o;
+
+	    // Get the sub-node based on the identifier
+
+	    JsonNode jn = cn.get((int)params[0]);
+
+	    if (jn == null) {
+		return null;
+	    }
+
+	    // If it's a text mode, use asText - the whole point of this
+
+	    if (jn.isTextual()) {
+		return jn.asText();
+	    }
+	    return jn;
+        }
+
+        public String getMethodName()
+        {
+	    return "get";		// just to satisfy the interface
+					// we don't actually use Method calls
+	}
+
+        public boolean isCacheable() { return true; }
+
+	public Method getMethod()
+	{
+	    return null;		// Hoping this is not used...
+	}
+
+	public Class getReturnType()
+	{
+	    Object o = new Object();
+	    return o.getClass();
+	}
+    }
 }
 

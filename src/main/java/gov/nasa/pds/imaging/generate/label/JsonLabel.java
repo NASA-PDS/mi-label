@@ -38,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import javax.imageio.stream.ImageInputStream;
 import org.apache.commons.io.IOUtils;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -165,12 +166,24 @@ public class JsonLabel implements PDSObject {
 	    Debugger.debug("JsonLabel.setFilePath this.filePath = "+this.filePath+" ");
 	}
 
-	// Not sure if this is really needed with the redesign...
+	// findValues returns a List of items that match the key.  However,
+	// we want a list of children of that key.  Weirdly, there does not
+	// seem to be a JsonNode function that returns a List of all children,
+	// so we just build one from the Iterator.
+	// This function shouldn't be needed but some macros might expect it.
+	// Note that you lose tags (makes it an array implicitly) so it is
+	// really not that useful.
 	@Override
 	@SuppressWarnings("rawtypes")
 	public final List getList(final String key) throws TemplateException {
 	    if (debug)  System.out.printf("JsonLabel.getList(%s) \n", key);
-	    return jsonNode.findValues(key);
+	    JsonNode n = jsonNode.findValue(key);
+	    Iterator<JsonNode> iter = n.elements();
+	    List<JsonNode> list = new ArrayList<JsonNode>();
+	    while (iter.hasNext()) {
+		list.add(iter.next());
+	    }
+	    return list;
 	}
 
 
