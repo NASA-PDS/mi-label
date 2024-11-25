@@ -34,7 +34,7 @@
   </licenses>
   
   <properties>
-    <pds3-product-tools-version>4.4.0</pds3-product-tools-version>
+    <pds3-product-tools-version>4.4.2</pds3-product-tools-version>
   </properties>
 
   <build>
