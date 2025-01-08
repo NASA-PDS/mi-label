@@ -37,12 +37,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 import javax.imageio.stream.ImageInputStream;
 import org.apache.commons.io.IOUtils;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.nasa.pds.imaging.generate.TemplateException;
 import gov.nasa.pds.imaging.generate.context.ContextUtil;
@@ -136,9 +135,9 @@ public class JsonLabel implements PDSObject {
 	public final Object get(final String key) {
 	    JsonNode n = jsonNode.get(key);
 	    if (n == null)
-		return null;
+          return null;
 	    if (n.isTextual())
-		return n.asText();
+          return n.asText();
 	    return n;
 	}
 
