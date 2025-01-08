@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <Observation_Area>
+
+<extra>$extra</extra>
+
+
+<mission>$extra.MISSION_NAME</mission>
+<fr>$extra.SCALPSS_Metadata</fr>
+<fr>$extra.SCALPSS_Metadata.frame_number</fr>
+<array>$extra.Array</array>
+<array>$extra.Array[3]</array>
+<strarray>$extra.StrArray[2]</strarray>
+#set ($node = $extra.SCALPSS_Metadata)
+<node>$node.compression_type</node>
+<nodeclass>$node.getClass().getName().toString()</nodeclass>
+
+
+#set ($node = $extra.Embedded_Camera_Metadata)
+<node>$node</node>
+<nodeclass>$node.getClass().getName().toString()</nodeclass>
+<nodesub>$node.gain</nodesub>
+<nodesubsub>$node.gain.decibels</nodesubsub>
+<nodesubsub2>$node.gain.register_fields.control</nodesubsub2>
+<nodesubsub2>$node.gain.register_fields.state</nodesubsub2>
+<nodesubsub2>$node.gain.raw_register_value</nodesubsub2>
+<nodesubsub2>$node.gain.testing</nodesubsub2>
+#set ($db = $node.gain.decibels)
+<db>$db.getClass()</db>
+<db>$db</db>
+<ns>$node.auto_exposure.EV</ns>
+#set ($ctrl = $node.gain.register_fields.control)
+<ctrl>$ctrl</ctrl>
+
+<deep>$extra.Embedded_Camera_Metadata.brightness.percent</deep>
+<struc>$extra.StructureArray[1]</struc>
+<struc>$extra.StructureArray[1].b</struc>
+<struc>$extra.StructureArray[1].c</struc>
+<subarr>$extra.SCALPSS_Metadata.subarray</subarr>
+<subarrv>$extra.SCALPSS_Metadata.subarray[2]</subarrv>
+<subarrs>$extra.SCALPSS_Metadata.subStrArray</subarrs>
+<subarrvs>$extra.SCALPSS_Metadata.subStrArray[2]</subarrvs>
+#set ($list = $extra.getList("Embedded_Camera_Metadata"))
+<foo>$list.toString()</foo>
+#foreach ( $childNode in $list )
+  <frclass> $childNode.getClass().getName().toString()</frclass>
+  <frval> $childNode.toString()</frval>
+#end
+
+</Observation_Area>
