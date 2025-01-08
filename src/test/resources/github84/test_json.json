@@ -1,0 +1,91 @@
+{
+  "Array": [ 1, 2, 3, 4, 5 ],
+  "StrArray": [ "val1", "val2", "myval" ],
+  "StructureArray": [
+     {"a": 5, "b": 10, "c": "maybe"},
+     {"a": 1, "b": 15, "c": "def"}
+  ],
+
+  "SCALPSS_Metadata": {
+    "number_of_chunks": 18,
+    "compression_type": "binned",
+    "DSU_arrival_timestamp": "2024-02-18 07:28:44.362000",
+    "non-volatile_storage_timestamp": "2024-02-18 07:28:44.374000",
+    "capture_start_timestamp": "2024-02-18 07:28:39.553000",
+    "altitude": 358999648,
+    "frame_rate": 4,
+    "capture_number": 1,
+    "frame_number": 19,
+    "pixel_data_corrupt": false,
+    "camera_ID": 0,
+    "pixel_data_checksum": 1171724560,
+    "subarray": [ 100, 101, 102, 103 ],
+    "subStrArray": [ "val1", "val2", "myval" ]
+  },
+  "Embedded_Camera_Metadata": {
+    "timestamp": {
+      "seconds": 12.618269088669951,
+      "raw_register_value": 422912503,
+      "register_fields": {
+        "counts": 12,
+        "cycles": 4946,
+        "offset": 31
+      }
+    },
+    "gain": {
+      "decibels": 6.999164,
+      "raw_register_value": 3271557190,
+      "testing": "testval",
+      "register_fields": {
+        "presence": true,
+        "control": "absolute",
+        "one_push": "clear",
+        "state": "on",
+        "mode": "automatic",
+        "value": 70
+      }
+    },
+    "shutter": {
+      "seconds": 0.010006,
+      "raw_register_value": 3271557700,
+      "register_fields": {
+        "presence": true,
+        "control": "absolute",
+        "one_push": "clear",
+        "state": "on",
+        "mode": "automatic",
+        "value": 580
+      }
+    },
+    "brightness": {
+      "percent": 5.859375,
+      "raw_register_value": 3254780144,
+      "register_fields": {
+        "presence": true,
+        "control": "absolute",
+        "one_push": "clear",
+        "state": "on",
+        "mode": "manual",
+        "value": 240
+      }
+    },
+    "auto_exposure": {
+      "EV": 0.624512,
+      "raw_register_value": 3271557416,
+      "register_fields": {
+        "presence": true,
+        "control": "absolute",
+        "one_push": "clear",
+        "state": "on",
+        "mode": "automatic",
+        "value": 296
+      }
+    },
+    "white_balance": 0,
+    "frame_counter": 25,
+    "strobe_pattern": 2147483904,
+    "GPIO_pin_state": 805306368,
+    "ROI_position": 0
+  },
+  "MISSION_NAME": "scalpss"
+}

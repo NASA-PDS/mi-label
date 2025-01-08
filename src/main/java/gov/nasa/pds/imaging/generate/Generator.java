@@ -609,6 +609,11 @@ public class Generator {
         ve.setProperty("file.resource.loader.cache",
                 "false");
         
+	// Add an uberspector to intercept get calls to the JSON tree
+	// and dequote the values.
+	ve.setProperty("runtime.introspector.uberspect",
+		"gov.nasa.pds.imaging.generate.label.NoQuoteUberspector,org.apache.velocity.util.introspection.UberspectImpl");
+
         ve.init();
 
         this.context = new VelocityContext();
