@@ -1,5 +1,13 @@
 # Changelog
 
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2025-01-08)
+
+[Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.5.3...«unknown»)
+
+**Requirements:**
+
+- As a user, I want to provide metadata in JSON files [\#84](https://github.com/NASA-PDS/mi-label/issues/84)
+
 ## [v1.5.3](https://github.com/NASA-PDS/mi-label/tree/v1.5.3) (2024-11-25)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.5.2...v1.5.3)
