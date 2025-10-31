@@ -220,7 +220,7 @@
     <dependency>
       <groupId>gov.nasa.pds</groupId>
       <artifactId>vicario</artifactId>
-      <version>48.0.3-SNAPSHOT</version>
+      <version>48.0.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -245,6 +245,7 @@
   </dependencies>
 
   <repositories>
+    <!-- software-issues-repo#141: this was already present in the pom so taking advantage of it -->
     <repository>
       <id>project.local</id>
       <name>project</name>
