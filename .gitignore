@@ -44,6 +44,10 @@
 *.project
 *.classpath
 
+# Cursor/VSCode files
+.cursor/
+.vscode/
+
 # IntelliJ files
 .idea/
 *.iml

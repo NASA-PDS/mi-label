@@ -176,6 +176,38 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <!-- Only include local repo dependencies that cause issues for downstream projects -->
+              <artifactSet>
+                <includes>
+                  <include>gov.nasa.pds:vicario</include>
+                </includes>
+              </artifactSet>
+              <!-- Keep dependency-reduced POM clean -->
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+              <!-- Preserve existing manifest entries -->
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -220,7 +252,7 @@
     <dependency>
       <groupId>gov.nasa.pds</groupId>
       <artifactId>vicario</artifactId>
-      <version>48.0.3-SNAPSHOT</version>
+      <version>48.0.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -245,6 +277,7 @@
   </dependencies>
 
   <repositories>
+    <!-- software-issues-repo#141: this was already present in the pom so taking advantage of it -->
     <repository>
       <id>project.local</id>
       <name>project</name>
