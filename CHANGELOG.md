@@ -1,6 +1,6 @@
 # Changelog
 
-## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2025-10-13)
+## [«unknown»](https://github.com/NASA-PDS/mi-label/tree/«unknown») (2025-11-03)
 
 [Full Changelog](https://github.com/NASA-PDS/mi-label/compare/v1.5.3...«unknown»)
 
